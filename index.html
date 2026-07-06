@@ -8,6 +8,7 @@
   <meta property="og:title" content="OpenClaw Budget Sentinel, a working governance demonstration" />
   <meta property="og:description" content="An open model advises, rules decide, humans approve the exceptions. Measured live on a self-hosted model: 0% unsafe auto-approvals." />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231a2b3b'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%2331f2bf'/%3E%3C/svg%3E" />
+  <script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('ocbs-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));}catch(e){}</script>
   <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,9 +23,35 @@
       --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
       --shadow:rgba(12,25,39,0.06) 0 8px 24px 0, rgba(12,25,39,0.04) 0 2px 6px 0;
       --maxw:1120px;
+      --grn:#0f9c78; --amb:#8a6400; --blu:#2b6cb0;
     }
+    [data-theme="dark"]{
+      --navy:#e8edf3; --slate:#aab6c4; --graphite:#8794a3; --steel:#66717f;
+      --fog:#0f1621; --white:#18222f; --silver:#374453; --mist:#26313f; --abyss:#080d14;
+      --grn:#3fd6a6; --amb:#e0b34d; --blu:#7fb0e6;
+      --shadow:rgba(0,0,0,0.45) 0 10px 26px 0, rgba(0,0,0,0.3) 0 2px 6px 0;
+    }
+    [data-theme="dark"] body{background:radial-gradient(1100px 500px at 80% -10%, rgba(49,242,191,0.05), transparent 60%) fixed, var(--fog)}
+    [data-theme="dark"] nav.top{background:rgba(15,22,33,0.92)}
+    [data-theme="dark"] .ann{background:#080d14;color:var(--slate)}
+    [data-theme="dark"] .btn{background:var(--mint);border-color:var(--mint);color:#08131c}
+    [data-theme="dark"] .btn.ghost{background:transparent;color:var(--navy);border-color:var(--silver)}
+    [data-theme="dark"] .rq-item,[data-theme="dark"] .rinput,[data-theme="dark"] .anode,[data-theme="dark"] .stepc,[data-theme="dark"] .board .rowmain:hover{background:#131d29}
+    [data-theme="dark"] .pill.hold,[data-theme="dark"] .stamp.hold,[data-theme="dark"] .vp.h{background:rgba(224,179,77,0.12);color:var(--amb)}
+    [data-theme="dark"] .pill.escal,[data-theme="dark"] .stamp.escal,[data-theme="dark"] .vp.e{background:rgba(127,176,230,0.12);color:var(--blu)}
+    [data-theme="dark"] .pill.auto,[data-theme="dark"] .stamp.auto,[data-theme="dark"] .pill.resolved,[data-theme="dark"] .vp.g{background:rgba(49,242,191,0.12);color:var(--grn)}
+    [data-theme="dark"] .pill.block,[data-theme="dark"] .stamp.block,[data-theme="dark"] .vp.b{background:rgba(229,72,77,0.14);color:#f08a8a}
+    [data-theme="dark"] .flagchip{background:rgba(224,179,77,0.12);border-color:rgba(224,179,77,0.3);color:var(--amb)}
+    [data-theme="dark"] .rq-row.why{color:var(--amb)}
+    [data-theme="dark"] .rq-dec.ap,[data-theme="dark"] .cbox.ok{background:rgba(49,242,191,0.1);border-color:rgba(49,242,191,0.3);color:var(--grn)}
+    [data-theme="dark"] .rq-dec.rj{background:rgba(229,72,77,0.1);border-color:rgba(229,72,77,0.3);color:#f08a8a}
+    [data-theme="dark"] .cbox.miss{background:rgba(224,179,77,0.1);border-color:rgba(224,179,77,0.3);color:var(--amb)}
+    [data-theme="dark"] .stat.hero-metric,[data-theme="dark"] .chipstat .n.m{color:var(--grn)}
+    [data-theme="dark"] h1 .u::after{opacity:.8}
+    [data-theme="dark"] a[style*="#2b6cb0"]{color:var(--blu) !important}
     *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
+    html{scroll-behavior:smooth;scroll-padding-top:78px;scroll-snap-type:y proximity}
+    section,header.hero{scroll-snap-align:start}
     body{background:var(--fog);color:var(--navy);font-family:var(--sans);font-weight:400;line-height:1.5;-webkit-font-smoothing:antialiased;letter-spacing:-0.011em}
     .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
     a{color:inherit;text-decoration:none}
@@ -45,6 +72,11 @@
     .btn:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
     .btn:disabled{opacity:.55;cursor:default;transform:none;box-shadow:none}
     .btn.ghost{background:transparent;color:var(--navy);border-color:var(--silver)}
+    .navright{display:flex;align-items:center;gap:8px}
+    .tbtn{width:38px;height:38px;border-radius:8px;border:1px solid var(--silver);background:transparent;color:var(--navy);cursor:pointer;font-size:15px;display:inline-grid;place-items:center;transition:border-color .2s,transform .15s}
+    .tbtn:hover{border-color:var(--graphite);transform:translateY(-1px)}
+    .ti-sun{display:none}.ti-moon{display:inline}
+    [data-theme="dark"] .ti-sun{display:inline}[data-theme="dark"] .ti-moon{display:none}
 
     section{padding:64px 0}
     .band-white{background:var(--white);border-top:1px solid var(--mist);border-bottom:1px solid var(--mist)}
@@ -274,7 +306,10 @@
       <a href="#replay">The run</a><a href="#dashboard">All decisions</a><a href="#benchmark">Results</a>
       <a href="#how">How it works</a><a href="#summary">Summary</a><a href="report.html">Full report</a>
     </div>
-    <a class="btn ghost" href="https://github.com/malhiss/openclaw-budget-sentinel">Code</a>
+    <div class="navright">
+      <button class="tbtn" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode" onclick="toggleTheme()"><span class="ti-moon" aria-hidden="true">☾</span><span class="ti-sun" aria-hidden="true">☀</span></button>
+      <a class="btn ghost" href="https://github.com/malhiss/openclaw-budget-sentinel">Code</a>
+    </div>
   </div></nav>
 
   <!-- HERO (compact) -->
@@ -425,7 +460,7 @@
       <div class="sumrow"><div class="q">Selected model / tool</div><div class="a"><b>Kimi K2.6</b> (open-weight, evaluated from published benchmarks and pricing) and <b>Qwen</b> (open-weight, self-hosted; Qwen3-4B runs everything on this page). <a href="report.html#model">Why both</a></div></div>
       <div class="sumrow"><div class="q">What it does, in simple words</div><div class="a">Open-weight models are AI models you can run on your own computers instead of a paid cloud API, which keeps client data in-house and makes costs predictable. <a href="report.html#explain">Plain-words explanation</a></div></div>
       <div class="sumrow"><div class="q">The practical project</div><div class="a">This page: a working budget/PO gate for an AI-agent swarm, with a <a href="#replay">replayable live run</a>, a <a href="#dashboard">decision board and audit ledger</a>, and a <a href="#benchmark">measured benchmark</a>.</div></div>
-      <div class="sumrow"><div class="q">Landing page concept</div><div class="a">Included, with headline, subheadline, problem, solution, three benefits, use case, call to action, and a wireframe. <a href="landing/b/">View the landing page</a> (an <a href="landing/a/">alternate dark version</a> is included).</div></div>
+      <div class="sumrow"><div class="q">Landing page concept</div><div class="a">Included, with headline, subheadline, problem, solution, three benefits, use case, call to action, and a wireframe. <a href="landing/b/">View the landing page</a>. (This whole page also has a light/dark toggle, top right.)</div></div>
       <div class="sumrow"><div class="q">Use case for Elchai Group</div><div class="a">Governed spend control for OpenClaw's 52-agent swarm: routine spend auto-clears, exceptions go to a human, everything is auditable for regulated clients. <a href="report.html#usecase">Detail</a></div></div>
       <div class="sumrow"><div class="q">Departments that benefit</div><div class="a">Finance, Engineering, IT/Infrastructure, Product, Strategy, and Operations. <a href="report.html#departments">How each benefits</a></div></div>
       <div class="sumrow"><div class="q">Risks &amp; limitations</div><div class="a">Privacy, security, model accuracy, local hardware cost, integration difficulty, hallucination, reliability, and licensing, each with a built or recommended mitigation. <a href="report.html#risks">Full risk table</a></div></div>
@@ -463,6 +498,12 @@
   </div></footer>
 
   <script>
+    window.toggleTheme = function(){
+      var d = document.documentElement;
+      var t = d.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      d.setAttribute('data-theme', t);
+      try { localStorage.setItem('ocbs-theme', t); } catch(e) {}
+    };
     // ---- REAL DATA from the committed verified ledger + eval results ----
     const ACTIONS = [
       {id:"A1",t:"OpenAI API credit top-up",cost:120,cat:"api_topup",conf:0.95,flags:[],v:"AUTO_APPROVE",why:"Amount provided explicitly for a monthly OpenAI credit top-up.",note:"",hash:"620cc2b7"},

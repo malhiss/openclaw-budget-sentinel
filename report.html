@@ -6,6 +6,7 @@
   <title>Adoption report: open-source models for OpenClaw — Budget Sentinel</title>
   <meta name="description" content="Full assessment: open-weight models (Kimi K2.6, Qwen 3.6) as the engine for Elchai's OpenClaw. Measured benchmark, cost model, risks, and a controlled-pilot recommendation." />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231a2b3b'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%2331f2bf'/%3E%3C/svg%3E" />
+  <script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('ocbs-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));}catch(e){}</script>
   <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -13,6 +14,21 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root{--navy:#1a2b3b;--slate:#314352;--graphite:#5b6b7a;--steel:#8995a1;--fog:#edf0f2;--white:#fff;--mist:#e1e5e9;--silver:#caced2;--voltage:#e4ff33;--mint:#31f2bf;--rose:#e5484d;--sans:'General Sans',ui-sans-serif,system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,Menlo,monospace}
+    [data-theme="dark"]{--navy:#e8edf3;--slate:#aab6c4;--graphite:#8794a3;--steel:#66717f;--fog:#0f1621;--white:#18222f;--mist:#26313f;--silver:#374453}
+    [data-theme="dark"] nav.top{background:rgba(15,22,33,0.92)}
+    [data-theme="dark"] a{color:#7fb0e6}
+    [data-theme="dark"] .verdict{background:#0f1621;color:var(--navy);border:1px solid var(--silver)}
+    [data-theme="dark"] .st .n.m{color:#3fd6a6}
+    [data-theme="dark"] .btn{background:var(--mint);border-color:var(--mint);color:#08131c}
+    html{scroll-behavior:smooth;scroll-padding-top:70px}
+    .navright{display:flex;align-items:center;gap:8px}
+    .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 15px;border-radius:8px;font-size:13px;font-weight:500;font-family:var(--sans);background:var(--navy);color:var(--white);border:1px solid var(--navy);cursor:pointer;transition:transform .15s}
+    .btn:hover{transform:translateY(-1px);text-decoration:none}
+    .tbtn{width:36px;height:36px;border-radius:8px;border:1px solid var(--silver);background:transparent;color:var(--navy);cursor:pointer;font-size:15px;display:inline-grid;place-items:center;transition:border-color .2s}
+    .tbtn:hover{border-color:var(--graphite)}
+    .ti-sun{display:none}.ti-moon{display:inline}
+    [data-theme="dark"] .ti-sun{display:inline}[data-theme="dark"] .ti-moon{display:none}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
     *{box-sizing:border-box;margin:0;padding:0}
     body{background:var(--fog);color:var(--navy);font-family:var(--sans);line-height:1.6;letter-spacing:-0.011em;-webkit-font-smoothing:antialiased}
     a{color:#2b6cb0;text-decoration:none}a:hover{text-decoration:underline}
@@ -52,8 +68,12 @@
 <body>
   <nav class="top"><div class="row">
     <a class="brand" href="index.html"><span class="mk"></span> OpenClaw Budget Sentinel</a>
-    <a href="index.html" style="font-family:var(--mono);font-size:13px">&larr; back to the site</a>
+    <div class="navright">
+      <button class="tbtn" aria-label="Toggle dark mode" title="Toggle dark mode" onclick="toggleTheme()"><span class="ti-moon" aria-hidden="true">☾</span><span class="ti-sun" aria-hidden="true">☀</span></button>
+      <a class="btn" href="index.html">&larr; Back to the site</a>
+    </div>
   </div></nav>
+  <script>window.toggleTheme=function(){var d=document.documentElement,t=d.getAttribute('data-theme')==='dark'?'light':'dark';d.setAttribute('data-theme',t);try{localStorage.setItem('ocbs-theme',t);}catch(e){}};</script>
 
   <article class="doc">
     <p class="kicker">Elchai Group &middot; AI Agent &amp; OpenClaw Research Intern</p>
@@ -126,15 +146,14 @@
     so a mid-sized open model's imperfections turn into extra human review, never into unauthorized spend. A
     larger model (Qwen3.6-35B-A3B or Kimi K2.6) raises the exact-match rate; it cannot lower the safety floor, which is
     already 0% by construction.</p>
-    <p style="font-size:14px;color:var(--graphite)"><strong>Method and honest limits.</strong> The 25 benchmark
-    cases are synthetic and non-adversarial, and the ground-truth verdicts are my own interpretation of the
-    policy rules (an external adjudication is recommended before production). The safety metric measures one
-    direction on purpose: an item that should be reviewed but was auto-approved. The interactive replay on the
-    site uses a separate 12-action illustrative run, not the 25-case benchmark. On the ledger: the hash chain
-    detects any modification or reordering of recorded entries; detecting deletion of the most recent entries
-    also requires anchoring the latest hash externally (a standard, unimplemented-here extension). Because the
-    demo runs on a live model, re-running <code class="inline">npm run eval</code> may shift latency, tokens,
-    and which specific cases miss by a point or two.</p>
+    <h3>Method and honest limits</h3>
+    <ul style="font-size:14.5px">
+      <li>The 25 benchmark cases are <strong>synthetic and non-adversarial</strong>; ground-truth verdicts are my own reading of the policy rules (external adjudication recommended before production).</li>
+      <li>The safety metric measures one direction on purpose: an item that <strong>should</strong> have been reviewed but was auto-approved.</li>
+      <li>The site's interactive replay uses a <strong>separate 12-action illustrative run</strong>, not the 25-case benchmark.</li>
+      <li>The ledger detects any modification or reordering of recorded entries; detecting deletion of the newest entries also needs the latest hash <strong>anchored externally</strong> (a standard extension, not built here).</li>
+      <li>Because the eval runs on a live model, re-running <code class="inline">npm run eval</code> may shift latency, tokens, and which specific cases miss by a point or two.</li>
+    </ul>
 
     <h2 id="usecase">4. Use case for Elchai</h2>
     <p>Drop Budget Sentinel in front of an OpenClaw swarm's spend: routine top-ups and small tooling costs
