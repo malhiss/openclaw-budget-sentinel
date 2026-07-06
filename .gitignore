@@ -1,3 +1,4 @@
 **/node_modules/
 **/.env
 agent/data/ledger.jsonl
+.claude/launch.json
