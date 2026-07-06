@@ -1,0 +1,21 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="elchaiRing" x1="120" y1="60" x2="392" y2="452" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#16E0FF"/>
+      <stop offset=".305" stop-color="#64ADFF"/>
+      <stop offset=".715" stop-color="#B27AFF"/>
+      <stop offset="1" stop-color="#3EC6FF"/>
+    </linearGradient>
+    <linearGradient id="elchaiNode" x1="140" y1="120" x2="190" y2="170" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#59B4FF"/>
+      <stop offset="1" stop-color="#67ABFF"/>
+    </linearGradient>
+  </defs>
+  <!-- App-icon tile: matches site background #05060A so the mark stays legible on light and dark search results -->
+  <rect width="512" height="512" rx="112" fill="#05060A"/>
+  <!-- Orbit ring with a gap at the top-right, mirroring the Elchai brand mark -->
+  <circle cx="256" cy="256" r="150" fill="none" stroke="url(#elchaiRing)" stroke-width="26"
+          stroke-linecap="round" stroke-dasharray="862 80" transform="rotate(-32 256 256)"/>
+  <!-- Node dot at the upper-left of the ring -->
+  <circle cx="160" cy="141" r="27" fill="url(#elchaiNode)"/>
+</svg>

@@ -18,6 +18,7 @@
       --navy: #1a2b3b; --slate: #314352; --abyss: #0d1726; --graphite: #687887; --steel: #8995a1;
       --fog: #edf0f2; --white: #ffffff; --silver: #caced2; --mist: #e1e5e9; --pewter: #bdc2c8;
       --voltage: #e4ff33; --mint: #31f2bf;
+      --sky: #0c93b8; --skyglow: #18DEFF; --violet: #b07cff;
       --sans: 'General Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
       --mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
       --shadow: rgba(12,25,39,0.06) 0px 8px 24px 0px, rgba(12,25,39,0.04) 0px 2px 6px 0px;
@@ -30,7 +31,11 @@
     .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
     a { color: inherit; text-decoration: none; }
     .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
-    :focus-visible { outline: 2px solid var(--navy); outline-offset: 3px; }
+    :focus-visible { outline: 2px solid var(--sky); outline-offset: 3px; }
+    .forbrand { display: inline-flex; align-items: center; gap: 11px; flex-wrap: wrap; margin-bottom: 22px; }
+    .fb-tile { display: inline-flex; align-items: center; padding: 7px 12px; border-radius: 10px; background: #05060A; border: 1px solid rgba(24,222,255,0.22); box-shadow: 0 0 0 1px rgba(24,222,255,0.05), 0 10px 26px -14px rgba(24,222,255,0.5); }
+    .fb-tile img { height: 18px; width: auto; display: block; }
+    .fb-txt { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--graphite); }
 
     /* announcement bar */
     .ann { background: var(--navy); color: var(--fog); text-align: center; font-size: 13px; padding: 9px 12px; letter-spacing: 0; }
@@ -39,10 +44,10 @@
     nav { display: flex; align-items: center; justify-content: space-between; padding: 22px 0; }
     .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: -0.02em; }
     .brand .mk { width: 22px; height: 22px; border-radius: 6px; background: var(--navy); display: grid; place-items: center; }
-    .brand .mk::after { content: ""; width: 8px; height: 8px; border-radius: 99px; background: var(--mint); box-shadow: 0 0 8px var(--mint); }
+    .brand .mk::after { content: ""; width: 8px; height: 8px; border-radius: 99px; background: var(--skyglow); box-shadow: 0 0 8px var(--skyglow); }
     .navlinks { display: flex; gap: 4px; }
     .navlinks a { padding: 8px 14px; border-radius: 999px; color: var(--graphite); font-size: 15px; font-weight: 500; }
-    .navlinks a:hover { color: var(--navy); }
+    .navlinks a:hover { color: var(--sky); }
     .btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; border-radius: 8px; font-size: 15px;
       font-weight: 500; font-family: var(--sans); background: var(--navy); color: var(--white); border: 1px solid var(--navy); cursor: pointer; transition: transform .15s; }
     .btn:hover { transform: translateY(-1px); }
@@ -51,7 +56,7 @@
     .hero { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: center; padding: 56px 0 72px; }
     .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 12px; color: var(--slate);
       background: var(--white); border: 1px solid var(--mist); padding: 6px 12px; border-radius: 999px; margin-bottom: 26px; letter-spacing: 0; }
-    .eyebrow .d { width: 7px; height: 7px; border-radius: 99px; background: var(--mint); }
+    .eyebrow .d { width: 7px; height: 7px; border-radius: 99px; background: var(--skyglow); box-shadow: 0 0 8px var(--skyglow); }
     h1 { font-size: clamp(42px, 6.4vw, 76px); font-weight: 600; letter-spacing: -0.045em; line-height: 0.98; }
     h1 .u { position: relative; white-space: nowrap; }
     h1 .u::after { content: ""; position: absolute; left: -2px; right: -2px; bottom: 6px; height: 12px; background: var(--voltage); z-index: -1; }
@@ -68,7 +73,7 @@
     .node .k { font-family: var(--mono); font-size: 10px; color: var(--graphite); letter-spacing: 0.02em; }
     .node .t { font-size: 14px; font-weight: 500; }
     .node .tick { width: 9px; height: 9px; border-radius: 99px; background: var(--silver); }
-    .node.on .tick { background: var(--mint); box-shadow: 0 0 10px var(--mint); }
+    .node.on .tick { background: var(--skyglow); box-shadow: 0 0 10px var(--skyglow); }
     .node.human { border-color: var(--voltage); background: #fbffe6; }
     .verdicts { display: flex; gap: 6px; flex-wrap: wrap; padding-top: 16px; border-top: 1px solid var(--mist); }
     .vp { font-family: var(--mono); font-size: 10px; padding: 4px 9px; border-radius: 999px; border: 1px solid var(--silver); color: var(--slate); letter-spacing: 0; }
@@ -134,6 +139,11 @@
 
     <header class="hero">
       <div>
+        <div class="forbrand">
+          <span class="fb-tile"><img src="../../assets/brand/elchai_logo.svg" alt="Elchai Group" width="28" height="18" /></span>
+          <span class="fb-txt">Built for the Elchai Group assessment</span>
+        </div>
+        <br />
         <span class="eyebrow"><span class="d" aria-hidden="true"></span> AN OPENCLAW GOVERNANCE MODULE</span>
         <h1>AI executes.<br />You <span class="u">decide</span>.</h1>
         <p class="sub">Budget Sentinel puts a governed gate in front of every agent's spend. An open-weight model advises, hard rules decide, and a human approves only the 20 percent that matters.</p>
