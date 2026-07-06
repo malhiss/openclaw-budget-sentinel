@@ -13,19 +13,19 @@ your real volume.
 | Decisions / month | ~312,000 | 52 × 200 × 30 |
 | Tokens per decision | ~410 (≈340 in / 70 out) | **measured** on Qwen3-4B |
 | Monthly tokens | ~106M in / ~22M out | derived |
-| Kimi K2 price | $0.60 / M in, $2.50 / M out | [cited](https://openrouter.ai/moonshotai/kimi-k2-thinking) |
+| Kimi K2.6 price | $0.75 / M in, $3.50 / M out | [DeepInfra list](https://deepinfra.com/blog/kimi-k2-6-pricing-guide-deployment-tradeoffs); blended $1.15–2.15/1M across providers per [llm-stats](https://llm-stats.com/models/kimi-k2.6) |
 | Frontier closed price (illustrative) | ~$3 / M in, ~$15 / M out | typical mid-frontier list price |
-| Self-host GPU box (Qwen3-30B tier) | ~$6,000 capex / 3 yr + ~$30/mo power | assumption |
+| Self-host GPU box (Qwen3.6-35B-A3B tier) | ~$6,000 capex / 3 yr + ~$30/mo power | assumption |
 
 ## The three options
 
 | Option | Monthly cost | Scales with volume? | Data leaves your infra? |
 |---|---|---|---|
-| **Kimi K2 — cloud API** | **≈ $118** | Yes (linear) | **Yes** |
+| **Kimi K2.6 — cloud API** | **≈ $157** | Yes (linear) | **Yes** |
 | **Qwen3 — self-hosted** | **≈ $200 flat** (~$0 marginal) | No (flat) | **No** |
 | Frontier closed model | ≈ $645 | Yes (linear) | Yes |
 
-Math: Kimi = 106M×$0.60 + 22M×$2.50 ≈ $64 + $55 = **$118/mo**. Frontier = 106M×$3 + 22M×$15 ≈ $318 + $327 =
+Math: Kimi = 106M×$0.75 + 22M×$3.50 ≈ $80 + $77 = **$157/mo**. Frontier = 106M×$3 + 22M×$15 ≈ $318 + $327 =
 **$645/mo**. Self-host = $6,000/36 + $30 ≈ **$197/mo**, independent of how many decisions you run.
 
 ## The takeaways
@@ -39,4 +39,4 @@ Math: Kimi = 106M×$0.60 + 22M×$2.50 ≈ $64 + $55 = **$118/mo**. Frontier = 10
    only option that satisfies data residency."
 
 A realistic Elchai posture: **self-host Qwen3 for regulated / high-volume deployments** (sovereignty + flat
-cost), keep **Kimi K2 cloud** as an on-demand ceiling for non-sensitive, bursty, or highest-capability tasks.
+cost), keep **Kimi K2.6 cloud** as an on-demand ceiling for non-sensitive, bursty, or highest-capability tasks.

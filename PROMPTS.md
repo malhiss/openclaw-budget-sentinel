@@ -45,7 +45,7 @@ overrides the system role.
 
 One `classify()` interface, three backends (`agent/src/model.js`), selected by `MODE`:
 - `local` (default) — **Qwen3 via Ollama** on `127.0.0.1:11434`. Real, offline, self-hosted.
-- `cloud` — **Kimi K2** via its OpenAI-compatible endpoint (one env var, no code change).
+- `cloud` — **Kimi (K2.6)** via Moonshot's OpenAI-compatible endpoint (one env var, no code change; set the current model id in `.env`).
 - `mock` — a deterministic heuristic that mimics the JSON contract, for zero-setup runs and tests.
 
 ## Tools used to build this
@@ -56,7 +56,7 @@ One `classify()` interface, three backends (`agent/src/model.js`), selected by `
 | **Node.js 24** | runtime; built-in `fetch`, `node:crypto` (ledger hashing), `node:test` (unit tests) |
 | **zod** | the schema contract at the model→rules boundary (the only runtime dependency) |
 | **Claude Code (Opus 4.8)** | pair-built the agent, eval harness, and landing pages under a research→plan→build→verify workflow; design directions sourced from a reference-driven design library |
-| **Kimi K2 (Moonshot) — evaluated, cited** | the cloud capability ceiling; benchmarks and pricing cited, not run locally (paid) |
+| **Kimi K2.6 (Moonshot) — evaluated, cited** | the cloud capability ceiling; benchmarks and pricing cited, not run locally (paid) |
 
 ## Reproducing the benchmark
 

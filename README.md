@@ -11,8 +11,8 @@ rules *decide*, a human approves the risky 20%, and every action is written to a
 live dashboard on the real verified ledger, the measured benchmark, and the full report, all baked in (works
 offline too: just open `index.html`).
 
-**Selected model:** Kimi K2 (open-weight, cloud, the capability ceiling) with **Qwen3** as the self-hostable
-alternative. The live demo runs on **local Qwen3 via Ollama** — no cloud, no API key, data never leaves the
+**Selected model:** Kimi K2.6 (open-weight, cloud, the capability ceiling) with **Qwen** as the self-hostable
+alternative. The live demo runs on **local Qwen3-4B via Ollama** — no cloud, no API key, data never leaves the
 machine. See [`report/REPORT.md`](report/REPORT.md) for the full evaluation, benchmark, cost model, risks, and
 recommendation.
 
@@ -52,7 +52,7 @@ Proves the same pipeline on a genuinely self-hosted open-weight model.
 3. `npm start` and `npm run eval`
 
 `npm run eval` runs a 25-case labeled benchmark on the live model and writes `eval/results.json` — the numbers
-in the report are produced exactly this way. To point it at **Kimi K2** cloud instead, set `MODE=cloud` and
+in the report are produced exactly this way. To point it at **Kimi (K2.6)** cloud instead, set `MODE=cloud` and
 `KIMI_API_KEY` in `.env` (no code change).
 
 ## The landing page

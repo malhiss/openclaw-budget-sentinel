@@ -795,8 +795,8 @@ web-quality.
   plain-word explanation · the practical project (link demo + landing) · Elchai use case · departments ·
   **risk table** (privacy, security, accuracy, hardware cost, integration, hallucination, reliability, geo/vendor)
   each with a mitigation · final recommendation · **prompts & tools used**. Anchor with the eval table
-  (Phase 1) + TCO table (Task 12). Ground model facts in the real current models; flag the video's numbers
-  as illustrative; label measured vs cited.
+  (Phase 1) + TCO table (Task 12). Ground model facts in the real current models (the video's Kimi K2.6 and
+  Qwen 3.6 are real April 2026 releases); label measured vs cited.
 - [ ] **Task 16 — `README.md` + `PROMPTS.md`.** README: what it is + how to run (`npm start` / `npm run
   approve` / `npm run eval` / open `landing/`). PROMPTS.md: exact system/user prompts + rationale + the
   exact tool/skill list used to build the package.

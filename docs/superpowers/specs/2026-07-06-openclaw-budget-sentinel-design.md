@@ -25,9 +25,10 @@ infrastructure (the #1 blocker for their DIFC-finance, healthcare, and UAE-gover
 We prove it by building one real OpenClaw module — **Budget Sentinel** — running on a genuinely
 self-hosted open model, and measuring it.
 
-> Note: the reference video's version numbers (Kimi 2.6, Qwen 3.6 Plus, GPT-4.4, Opus 4.6, Gemini 3.1 Pro,
-> Gemma 4) are illustrative/near-future. This spec grounds everything in the **real** current models and
-> flags that distinction — attention to detail is an explicit evaluation criterion.
+> Note (corrected during the build): the reference video's models are REAL, current releases — Kimi K2.6
+> (Moonshot, April 2026, open-weight 1T MoE) and the Qwen 3.6 family (Alibaba, April 2026, Apache 2.0,
+> including the 35B-A3B the video cites). An earlier draft of this spec wrongly called them
+> "illustrative/near-future"; the final report evaluates the real releases directly.
 
 ## 2. What we're building — the adoption package
 

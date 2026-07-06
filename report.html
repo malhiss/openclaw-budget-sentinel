@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Adoption report: open-source models for OpenClaw — Budget Sentinel</title>
-  <meta name="description" content="Full assessment: open-weight models (Kimi K2, Qwen3) as the engine for Elchai's OpenClaw. Measured benchmark, cost model, risks, and a controlled-pilot recommendation." />
+  <meta name="description" content="Full assessment: open-weight models (Kimi K2.6, Qwen 3.6) as the engine for Elchai's OpenClaw. Measured benchmark, cost model, risks, and a controlled-pilot recommendation." />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231a2b3b'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%2331f2bf'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -67,22 +67,31 @@
     </div>
 
     <h2 id="model">1. Selected model and tool</h2>
-    <p><strong>Primary (capability ceiling): Kimi K2</strong>, Moonshot AI's open-weight agentic model.
-    <strong>Alternative actually run (self-host floor): Qwen3.</strong> The working demo and every measured number
-    below run on <strong>Qwen3-4B, self-hosted locally via Ollama</strong>, with no cloud call and no API key.
-    Kimi K2's figures are cited from published sources, not run locally (it is a paid cloud API, and the
-    assessment says paid tools are not required). This mirrors the task's "name your intended tool, the
-    alternative you used, and why."</p>
-    <blockquote>The reference video's version numbers (Kimi 2.6, Qwen 3.6, GPT-4.4, Opus 4.6, Gemini 3.1) are
-    illustrative or near-future. This report is grounded in the real, current models.</blockquote>
+    <p><strong>Primary (the tool I intended to use): Kimi K2.6</strong>, Moonshot AI's open-weight agentic model
+    from the reference video (released April 2026: a 1-trillion-parameter mixture-of-experts model with 32B
+    active parameters, Modified MIT license). <strong>Alternative actually run: Qwen</strong>, the other open
+    family the video covers. The working demo and every measured number below run on <strong>Qwen3-4B,
+    self-hosted locally via Ollama</strong>, with no cloud call and no API key.</p>
+    <p><strong>Why the alternative:</strong> Kimi K2.6 is a paid cloud API (the assessment notes paid tools are
+    not required) and self-hosting its 1T weights needs serious hardware, so its figures are cited from
+    published sources rather than run locally. Qwen is free, Apache-2.0, and self-hostable; I ran the 4B size
+    because that is what my laptop GPU supports, and the production recommendation targets the
+    <strong>Qwen3.6-35B-A3B</strong> tier the video describes (35B parameters, about 3B active).</p>
+    <blockquote>The models in the reference video are real, current releases: <strong>Kimi K2.6</strong>
+    (Moonshot AI, April 2026) and the <strong>Qwen 3.6</strong> family (Alibaba, April 2026, Apache 2.0),
+    including the 35B-A3B variant the video cites. This report evaluates those releases directly; the local
+    demo uses a smaller model from the same Qwen line because of laptop hardware limits.</blockquote>
 
     <h2 id="explain">2. What these models are, in plain words</h2>
-    <p><strong>Kimi K2</strong> and <strong>Qwen3</strong> are <em>open-weight</em> language models: the files are
-    published, so you can run them on your own hardware instead of only through a paid API. Both are strong at
-    <strong>agentic</strong> work (following instructions, using tools, returning structured output), which is
-    what an agent operating system needs. Kimi K2 is frontier-class (about 76 to 80% on SWE-bench Verified,
-    competitive with closed frontier models [cited]); Qwen3 ranges from tiny to very large, so you trade quality
-    for the hardware you have.</p>
+    <p><strong>Kimi K2.6</strong> and <strong>Qwen 3.6</strong> are <em>open-weight</em> language models: the
+    files are published, so you can run them on your own hardware instead of only through a paid API. Both are
+    strong at <strong>agentic</strong> work (following instructions, using tools, returning structured output),
+    which is what an agent operating system needs. Kimi K2.6 is frontier-class: it ties GPT-5.5 on SWE-Bench
+    Pro (58.6%) and leads Humanity's Last Exam with tools (54.0%), at roughly 80% lower cost per million tokens
+    than closed frontier models (cited: <a href="https://llm-stats.com/models/kimi-k2.6">llm-stats</a>,
+    <a href="https://www.verdent.ai/guides/what-is-kimi-k2-6">Verdent</a>). Qwen ranges from tiny to very large
+    (Qwen 3.6 includes the 35B-A3B: 35B parameters, about 3B active), so you trade quality for the hardware
+    you have.</p>
     <p><strong>Why this matters for Elchai.</strong> Elchai's flagship, <strong>OpenClaw</strong>, is itself an
     open-source, self-hosted agent framework that runs local models via Ollama and keeps data on your own
     machines (<a href="https://docs.ollama.com/integrations/openclaw">Ollama x OpenClaw</a>). Elchai deploys it as
@@ -114,7 +123,7 @@
     item instead of holding it, both of which still land in front of a human). Nothing risky was ever
     auto-approved. This is the point of the design: <strong>the deterministic gate, not the model, owns safety</strong>,
     so a mid-sized open model's imperfections turn into extra human review, never into unauthorized spend. A
-    larger model (Qwen3-30B or Kimi K2) raises the exact-match rate; it cannot lower the safety floor, which is
+    larger model (Qwen3.6-35B-A3B or Kimi K2.6) raises the exact-match rate; it cannot lower the safety floor, which is
     already 0% by construction.</p>
 
     <h2 id="usecase">4. Use case for Elchai</h2>
@@ -145,7 +154,7 @@
       <tr><td><strong>Local hardware cost</strong></td><td>4B runs on a laptop; production tiers need real GPUs</td><td>Size the model to the tier; self-host cost is flat vs. volume (see below)</td></tr>
       <tr><td><strong>Integration difficulty</strong></td><td>Must hook into real PO / spend systems</td><td>Clean <code class="inline">classify()</code> boundary and Zod contract; swap mock, local, or cloud by one env var (built)</td></tr>
       <tr><td><strong>Reliability</strong></td><td>Model or server could fail</td><td>Fail-closed: any error routes to human review, never an auto-approve (built)</td></tr>
-      <tr><td><strong>Vendor / geo / licensing</strong></td><td>Chinese open models raise governance questions</td><td>Weights run locally (no data leaves); confirm license (Qwen3 Apache-2.0, Kimi K2 open) before production (recommended)</td></tr>
+      <tr><td><strong>Vendor / geo / licensing</strong></td><td>Chinese open models raise governance questions</td><td>Weights run locally (no data leaves); licenses are permissive (Qwen 3.6 Apache-2.0, Kimi K2.6 Modified MIT) but confirm terms before production (recommended)</td></tr>
     </table>
 
     <h2 id="cost">7. Cost model</h2>
@@ -153,29 +162,31 @@
     prices are cited list prices. Volume assumption: 52 agents x 200 decisions/day is about 312,000 decisions/month.</p>
     <table>
       <tr><th>Option</th><th>Monthly cost</th><th>Scales with volume?</th><th>Data leaves your infra?</th></tr>
-      <tr><td><strong>Kimi K2, cloud API</strong></td><td>~ $118</td><td>Yes (linear)</td><td><strong>Yes</strong></td></tr>
-      <tr><td><strong>Qwen3, self-hosted</strong></td><td>~ $200 flat (~$0 marginal)</td><td>No (flat)</td><td><strong>No</strong></td></tr>
+      <tr><td><strong>Kimi K2.6, cloud API</strong></td><td>~ $157</td><td>Yes (linear)</td><td><strong>Yes</strong></td></tr>
+      <tr><td><strong>Qwen, self-hosted</strong></td><td>~ $200 flat (~$0 marginal)</td><td>No (flat)</td><td><strong>No</strong></td></tr>
       <tr><td>Frontier closed model</td><td>~ $645</td><td>Yes (linear)</td><td>Yes</td></tr>
     </table>
-    <p>Open-weight is 3 to 5 times cheaper than a frontier closed model. Self-host is a flat cost that wins
-    decisively at higher volume, and it is the only option that keeps data on-prem. Kimi K2 pricing cited at
-    $0.60/M input, $2.50/M output (<a href="https://openrouter.ai/moonshotai/kimi-k2-thinking">OpenRouter</a>).</p>
+    <p>Open-weight is 3 to 4 times cheaper than a frontier closed model. Self-host is a flat cost that wins
+    decisively at higher volume, and it is the only option that keeps data on-prem. Kimi K2.6 pricing cited at
+    $0.75/M input, $3.50/M output (<a href="https://deepinfra.com/blog/kimi-k2-6-pricing-guide-deployment-tradeoffs">DeepInfra list</a>;
+    blended rates across providers run $1.15 to $2.15 per 1M tokens per
+    <a href="https://llm-stats.com/models/kimi-k2.6">llm-stats</a>).</p>
 
     <h2 id="recommendation">8. Final recommendation</h2>
     <p><strong>Test it, a controlled internal pilot.</strong> The pattern is production-shaped and safe by
     construction, but exact-match accuracy (80% on a 4B) should be raised before wide rollout.</p>
     <ol>
-      <li><strong>Pilot</strong> Budget Sentinel on one OpenClaw branch with self-hosted Qwen3-30B, capped budget,
+      <li><strong>Pilot</strong> Budget Sentinel on one OpenClaw branch with self-hosted Qwen3.6-35B-A3B, capped budget,
       humans clearing every hold for the first two weeks.</li>
       <li><strong>Measure</strong> exact-match, unsafe rate (must stay 0), and human-review load against the committed baseline.</li>
-      <li><strong>Evaluate Kimi K2</strong> in parallel where a cloud call is acceptable, as the capability ceiling.</li>
+      <li><strong>Evaluate Kimi K2.6</strong> in parallel where a cloud call is acceptable, as the capability ceiling.</li>
       <li><strong>Expand</strong> branch by branch only after the ledger proves the safety and cost case, OpenClaw's own proof-before-expansion method.</li>
     </ol>
     <p><strong>Do not</strong> let any open model emit the final verdict, run without the deterministic gate, or auto-execute spend.</p>
 
     <h2 id="prompts">9. Prompts and tools used</h2>
     <p>Local Qwen3-4B (Ollama), Node 24, zod (the schema contract), a hash-chained ledger, and Claude Code as the
-    build pair. Kimi K2 evaluated from published benchmarks and pricing (cited, not run). The exact system prompt
+    build pair. Kimi K2.6 evaluated from published benchmarks and pricing (cited, not run). The exact system prompt
     and rationale are in the repository's <code class="inline">PROMPTS.md</code>.</p>
 
     <p class="note">Measured numbers are from a live local run, reproducible via <code class="inline">npm run eval</code>.
