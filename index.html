@@ -49,8 +49,18 @@
     [data-theme="dark"] .stat.hero-metric,[data-theme="dark"] .chipstat .n.m{color:var(--grn)}
     [data-theme="dark"] h1 .u::after{opacity:.8}
     [data-theme="dark"] a[style*="#2b6cb0"]{color:var(--blu) !important}
+    [data-theme="dark"] .anode.humann{background:rgba(228,255,51,0.06);border-color:rgba(228,255,51,0.42)}
+    [data-theme="dark"] .anode.ledgern{background:rgba(49,242,191,0.06);border-color:rgba(49,242,191,0.42)}
+    [data-theme="dark"] .lentry.human{background:rgba(228,255,51,0.05)}
+    [data-theme="dark"] .blk.human{background:rgba(228,255,51,0.08);border-color:rgba(228,255,51,0.4)}
+    [data-theme="dark"] .gate .rj{background:transparent;color:#f08a8a;border-color:#f08a8a}
     *{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth;scroll-padding-top:78px}
+    *{scrollbar-width:thin;scrollbar-color:var(--silver) transparent}
+    ::-webkit-scrollbar{width:11px;height:11px}
+    ::-webkit-scrollbar-track{background:transparent}
+    ::-webkit-scrollbar-thumb{background:var(--silver);border-radius:99px;background-clip:padding-box;border:3px solid transparent}
+    ::-webkit-scrollbar-thumb:hover{background:var(--graphite);background-clip:padding-box;border:3px solid transparent}
     body{background:var(--fog);color:var(--navy);font-family:var(--sans);font-weight:400;line-height:1.5;-webkit-font-smoothing:antialiased;letter-spacing:-0.011em}
     .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
     a{color:inherit;text-decoration:none}
@@ -324,7 +334,7 @@
     <div class="brand"><span class="mk"></span> OpenClaw <span style="color:var(--graphite);font-weight:500">Budget Sentinel</span></div>
     <div class="navlinks">
       <a href="#replay">The run</a><a href="#dashboard">All decisions</a><a href="#benchmark">Results</a>
-      <a href="#how">How it works</a><a href="#report">Report</a>
+      <a href="#how">How it works</a><a href="#report">Report</a><a href="landing/b/">Landing page</a>
     </div>
     <div class="navright">
       <button class="tbtn" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode" onclick="toggleTheme()"><span class="ti-moon" aria-hidden="true">☾</span><span class="ti-sun" aria-hidden="true">☀</span></button>
