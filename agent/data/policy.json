@@ -1,0 +1,14 @@
+{
+  "policy_version": "2026.07-p1",
+  "autoApproveLimit": 250,
+  "minConfidence": 0.75,
+  "deniedCategories": [],
+  "hardBlockFlags": ["policy_violation", "fraud_suspected", "sanctioned_entity"],
+  "perCategoryCap": {
+    "agent_tool_spend": 100,
+    "api_topup": 250,
+    "subscription": 300,
+    "vendor_invoice": 500,
+    "other": 0
+  }
+}

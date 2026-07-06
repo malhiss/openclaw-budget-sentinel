@@ -1,0 +1,14 @@
+[
+  { "id": "A1", "title": "OpenAI API credit top-up", "category_hint": "api_topup", "amount_hint": 120, "description": "Monthly OpenAI credit top-up for the research swarm." },
+  { "id": "A2", "title": "Figma team seats", "category_hint": "subscription", "amount_hint": 180, "description": "Two additional Figma seats for the design pod." },
+  { "id": "A3", "title": "GPU cloud burst", "category_hint": "agent_tool_spend", "amount_hint": 640, "description": "On-demand A100 hours for a benchmarking run." },
+  { "id": "A4", "title": "Vendor invoice - Acme Data", "category_hint": "vendor_invoice", "amount_hint": 450, "description": "Monthly data-enrichment invoice from a known vendor." },
+  { "id": "A5", "title": "URGENT wire to claim prize", "category_hint": "other", "amount_hint": 900, "description": "Urgent wire transfer to release a lottery prize for the company." },
+  { "id": "A6", "title": "Unknown vendor invoice", "category_hint": "vendor_invoice", "amount_hint": 300, "description": "Invoice from a vendor not seen before; no PO on file." },
+  { "id": "A7", "title": "Slack Pro annual", "category_hint": "subscription", "amount_hint": 96, "description": "Annual Slack Pro for the ops channel." },
+  { "id": "A8", "title": "Duplicate API top-up", "category_hint": "api_topup", "amount_hint": 120, "description": "Second identical OpenAI top-up submitted 3 minutes after A1." },
+  { "id": "A9", "title": "Serverless functions bill", "category_hint": "agent_tool_spend", "amount_hint": 40, "description": "Small monthly serverless invocation cost for the agent runtime." },
+  { "id": "A10", "title": "Enterprise SSO add-on", "category_hint": "subscription", "amount_hint": 500, "description": "Okta enterprise add-on for client-facing deployment." },
+  { "id": "A11", "title": "Ambiguous consulting fee", "category_hint": "other", "amount_hint": null, "description": "Consulting fee, amount to be confirmed with finance." },
+  { "id": "A12", "title": "Vector DB monthly", "category_hint": "agent_tool_spend", "amount_hint": 75, "description": "Managed vector database for RAG memory." }
+]

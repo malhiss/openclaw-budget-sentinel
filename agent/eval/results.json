@@ -1,0 +1,240 @@
+{
+  "summary": {
+    "engine": "qwen3:4b",
+    "n": 25,
+    "accuracy": 0.8,
+    "false_auto_approve_rate": 0,
+    "false_auto_approve_ids": [],
+    "latency_p50_ms": 1799,
+    "latency_p95_ms": 2128,
+    "avg_tokens_per_decision": 411,
+    "ran_at": "2026-07-06T09:05:54.382Z"
+  },
+  "results": [
+    {
+      "id": "E1",
+      "expected": "AUTO_APPROVE",
+      "got": "AUTO_APPROVE",
+      "correct": true,
+      "latency_ms": 1866,
+      "tokens": 404,
+      "engine": "qwen3:4b"
+    },
+    {
+      "id": "E2",
+      "expected": "AUTO_APPROVE",
+      "got": "AUTO_APPROVE",
+      "correct": true,
+      "latency_ms": 1459,
+      "tokens": 395,
+      "engine": "qwen3:4b"
+    },
+    {
+      "id": "E3",
+      "expected": "AUTO_APPROVE",
+      "got": "AUTO_APPROVE",
+      "correct": true,
+      "latency_ms": 1383,
+      "tokens": 396,
+      "engine": "qwen3:4b"
+    },
+    {
+      "id": "E4",
+      "expected": "AUTO_APPROVE",
+      "got": "AUTO_APPROVE",
+      "correct": true,
+      "latency_ms": 1428,
+      "tokens": 390,
+      "engine": "qwen3:4b"
+    },
+    {
+      "id": "E5",
+      "expected": "AUTO_APPROVE",
+      "got": "AUTO_APPROVE",
+      "correct": true,
+      "latency_ms": 1467,
+      "tokens": 397,
+      "engine": "qwen3:4b"
+    },
+    {
+      "id": "E6",
+      "expected": "AUTO_APPROVE",
+      "got": "AUTO_APPROVE",
+      "correct": true,
+      "latency_ms": 1503,
+      "tokens": 406,
+      "engine": "qwen3:4b"
+    },
+    {
+      "id": "E7",
+      "expected": "AUTO_APPROVE",
+      "got": "HOLD_FOR_HUMAN",
+      "correct": false,
+      "latency_ms": 1384,
+      "tokens": 402,
+      "engine": "qwen3:4b"
+    },
+    {
+      "id": "E8",
+      "expected": "AUTO_APPROVE",
+      "got": "AUTO_APPROVE",
+      "correct": true,
+      "latency_ms": 1376,
+      "tokens": 387,
+      "engine": "qwen3:4b"
+    },
+    {
+      "id": "E9",
+      "expected": "AUTO_APPROVE",
+      "got": "AUTO_APPROVE",
+      "correct": true,
+      "latency_ms": 1452,
+      "tokens": 393,
+      "engine": "qwen3:4b"
+    },
+    {
+      "id": "E10",
+      "expected": "HOLD_FOR_HUMAN",
+      "got": "ESCALATE",
+      "correct": false,
+      "latency_ms": 1882,
+      "tokens": 435,
+      "engine": "qwen3:4b"
+    },
+    {
+      "id": "E11",
+      "expected": "HOLD_FOR_HUMAN",
+      "got": "ESCALATE",
+      "correct": false,
+      "latency_ms": 1935,
+      "tokens": 420,
+      "engine": "qwen3:4b"
+    },
+    {
+      "id": "E12",
+      "expected": "HOLD_FOR_HUMAN",
+      "got": "ESCALATE",
+      "correct": false,
+      "latency_ms": 1852,
+      "tokens": 423,
+      "engine": "qwen3:4b"
+    },
+    {
+      "id": "E13",
+      "expected": "HOLD_FOR_HUMAN",
+      "got": "HOLD_FOR_HUMAN",
+      "correct": true,
+      "latency_ms": 1825,
+      "tokens": 416,
+      "engine": "qwen3:4b"
+    },
+    {
+      "id": "E14",
+      "expected": "HOLD_FOR_HUMAN",
+      "got": "HOLD_FOR_HUMAN",
+      "correct": true,
+      "latency_ms": 2128,
+      "tokens": 439,
+      "engine": "qwen3:4b"
+    },
+    {
+      "id": "E15",
+      "expected": "HOLD_FOR_HUMAN",
+      "got": "HOLD_FOR_HUMAN",
+      "correct": true,
+      "latency_ms": 1645,
+      "tokens": 412,
+      "engine": "qwen3:4b"
+    },
+    {
+      "id": "E16",
+      "expected": "HOLD_FOR_HUMAN",
+      "got": "HOLD_FOR_HUMAN",
+      "correct": true,
+      "latency_ms": 1819,
+      "tokens": 420,
+      "engine": "qwen3:4b"
+    },
+    {
+      "id": "E17",
+      "expected": "HOLD_FOR_HUMAN",
+      "got": "ESCALATE",
+      "correct": false,
+      "latency_ms": 1858,
+      "tokens": 415,
+      "engine": "qwen3:4b"
+    },
+    {
+      "id": "E18",
+      "expected": "BLOCK",
+      "got": "BLOCK",
+      "correct": true,
+      "latency_ms": 1990,
+      "tokens": 427,
+      "engine": "qwen3:4b"
+    },
+    {
+      "id": "E19",
+      "expected": "BLOCK",
+      "got": "BLOCK",
+      "correct": true,
+      "latency_ms": 2310,
+      "tokens": 441,
+      "engine": "qwen3:4b"
+    },
+    {
+      "id": "E20",
+      "expected": "BLOCK",
+      "got": "BLOCK",
+      "correct": true,
+      "latency_ms": 2002,
+      "tokens": 428,
+      "engine": "qwen3:4b"
+    },
+    {
+      "id": "E21",
+      "expected": "BLOCK",
+      "got": "BLOCK",
+      "correct": true,
+      "latency_ms": 2039,
+      "tokens": 439,
+      "engine": "qwen3:4b"
+    },
+    {
+      "id": "E22",
+      "expected": "ESCALATE",
+      "got": "ESCALATE",
+      "correct": true,
+      "latency_ms": 1562,
+      "tokens": 395,
+      "engine": "qwen3:4b"
+    },
+    {
+      "id": "E23",
+      "expected": "ESCALATE",
+      "got": "ESCALATE",
+      "correct": true,
+      "latency_ms": 1799,
+      "tokens": 398,
+      "engine": "qwen3:4b"
+    },
+    {
+      "id": "E24",
+      "expected": "ESCALATE",
+      "got": "ESCALATE",
+      "correct": true,
+      "latency_ms": 1683,
+      "tokens": 394,
+      "engine": "qwen3:4b"
+    },
+    {
+      "id": "E25",
+      "expected": "ESCALATE",
+      "got": "ESCALATE",
+      "correct": true,
+      "latency_ms": 1709,
+      "tokens": 411,
+      "engine": "qwen3:4b"
+    }
+  ]
+}

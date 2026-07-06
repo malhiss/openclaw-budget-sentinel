@@ -1,0 +1,4 @@
+node_modules/
+.env
+# The live ledger is regenerated on each run; a captured demo ledger (ledger.demo.jsonl) is committed as evidence.
+data/ledger.jsonl

@@ -1,0 +1,13 @@
+{
+  "name": "openclaw-budget-sentinel",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Governed open-model budget/PO agent — an Elchai OpenClaw module PoC",
+  "scripts": {
+    "start": "node src/agent.js",
+    "approve": "node src/approve.js",
+    "eval": "node eval/run.mjs",
+    "test": "node --test"
+  },
+  "dependencies": { "zod": "^3.23.8" }
+}

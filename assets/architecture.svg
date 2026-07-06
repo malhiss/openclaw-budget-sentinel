@@ -1,0 +1,102 @@
+<svg viewBox="0 0 940 520" xmlns="http://www.w3.org/2000/svg" font-family="'Satoshi','Segoe UI',system-ui,sans-serif">
+  <defs>
+    <marker id="arw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#868f97"/>
+    </marker>
+    <style>
+      .lbl{fill:#868f97;font-size:11px;letter-spacing:.02em;text-transform:uppercase}
+      .ttl{fill:#ffffff;font-size:14px;font-weight:600}
+      .sub{fill:#868f97;font-size:11.5px}
+      .mono{font-family:ui-monospace,Menlo,monospace}
+      .box{fill:#191919;stroke:#2a2a2a;stroke-width:1;rx:12}
+      .flow{stroke:#868f97;stroke-width:1.4;fill:none}
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="940" height="520" fill="#0b0b0b"/>
+  <text x="40" y="46" fill="#ffffff" font-size="20" font-weight="700" letter-spacing="-0.02em">OpenClaw Budget Sentinel — governance architecture</text>
+  <text x="40" y="68" class="sub">AI executes the 80%. Deterministic rules decide. A human approves the 20%. Everything is recorded.</text>
+
+  <!-- 1. Proposed action -->
+  <rect x="40" y="120" width="150" height="72" rx="12" fill="#191919" stroke="#2a2a2a"/>
+  <text x="56" y="150" class="lbl">Inbound</text>
+  <text x="56" y="170" class="ttl">Proposed action</text>
+  <text x="56" y="185" class="sub mono">spend / PO / API top-up</text>
+
+  <!-- 2. Model advises -->
+  <rect x="230" y="120" width="164" height="72" rx="12" fill="#191919" stroke="#2a2a2a"/>
+  <text x="246" y="150" class="lbl">Open model</text>
+  <text x="246" y="170" class="ttl">Qwen3 · advises</text>
+  <text x="246" y="185" class="sub" fill="#f2685f">never decides or acts</text>
+
+  <!-- 3. Zod contract -->
+  <rect x="434" y="120" width="150" height="72" rx="12" fill="#191919" stroke="#2a2a2a"/>
+  <text x="450" y="150" class="lbl">Contract</text>
+  <text x="450" y="170" class="ttl">Zod validate</text>
+  <text x="450" y="185" class="sub">malformed → fail closed</text>
+
+  <!-- 4. Deterministic gate -->
+  <rect x="624" y="112" width="176" height="88" rx="12" fill="#131313" stroke="#479ffa" stroke-width="1.4"/>
+  <text x="640" y="140" class="lbl" fill="#479ffa">Deterministic gate</text>
+  <text x="640" y="162" class="ttl">Rules own</text>
+  <text x="640" y="180" class="ttl">the verdict</text>
+  <text x="640" y="194" class="sub mono">policy + hard caps</text>
+
+  <!-- top flow arrows -->
+  <line x1="190" y1="156" x2="228" y2="156" class="flow" marker-end="url(#arw)"/>
+  <line x1="394" y1="156" x2="432" y2="156" class="flow" marker-end="url(#arw)"/>
+  <line x1="584" y1="156" x2="622" y2="156" class="flow" marker-end="url(#arw)"/>
+
+  <!-- verdict rail -->
+  <text x="40" y="256" class="lbl">Four verdicts</text>
+  <!-- AUTO_APPROVE (the 80%) -->
+  <rect x="40" y="272" width="200" height="66" rx="12" fill="#191919" stroke="#4ebe96" stroke-width="1.3"/>
+  <circle cx="64" cy="300" r="5" fill="#4ebe96"/>
+  <text x="80" y="298" class="ttl" fill="#4ebe96">AUTO_APPROVE</text>
+  <text x="80" y="316" class="sub">within all limits · no human needed</text>
+  <text x="80" y="331" class="sub mono" fill="#4ebe96">the ~80%</text>
+
+  <!-- the 20% cluster -->
+  <rect x="264" y="252" width="516" height="104" rx="12" fill="none" stroke="#ffa16c" stroke-dasharray="4 4" stroke-width="1"/>
+  <text x="278" y="246" class="lbl" fill="#ffa16c">The 20% — routed to a human</text>
+
+  <rect x="278" y="272" width="150" height="66" rx="10" fill="#191919" stroke="#2a2a2a"/>
+  <circle cx="298" cy="300" r="5" fill="#ffa16c"/>
+  <text x="312" y="298" class="ttl" fill="#ffa16c" font-size="13">HOLD</text>
+  <text x="294" y="320" class="sub">over budget cap</text>
+
+  <rect x="442" y="272" width="150" height="66" rx="10" fill="#191919" stroke="#2a2a2a"/>
+  <circle cx="462" cy="300" r="5" fill="#f2685f"/>
+  <text x="476" y="298" class="ttl" fill="#f2685f" font-size="13">BLOCK</text>
+  <text x="458" y="320" class="sub">policy / fraud flag</text>
+
+  <rect x="606" y="272" width="160" height="66" rx="10" fill="#191919" stroke="#2a2a2a"/>
+  <circle cx="626" cy="300" r="5" fill="#479ffa"/>
+  <text x="640" y="298" class="ttl" fill="#479ffa" font-size="13">ESCALATE</text>
+  <text x="622" y="320" class="sub">low confidence</text>
+
+  <!-- gate down to verdicts -->
+  <path d="M712 200 L712 224 L140 224 L140 270" class="flow" marker-end="url(#arw)"/>
+  <path d="M712 224 L353 224 L353 270" class="flow" marker-end="url(#arw)"/>
+  <path d="M712 224 L517 224 L517 270" class="flow" marker-end="url(#arw)"/>
+  <path d="M712 224 L686 224 L686 270" class="flow" marker-end="url(#arw)"/>
+
+  <!-- Human approve -->
+  <rect x="264" y="392" width="240" height="72" rx="12" fill="#191919" stroke="#ffa16c" stroke-width="1.2"/>
+  <text x="280" y="420" class="lbl" fill="#ffa16c">Human</text>
+  <text x="280" y="440" class="ttl">Approve / reject the 20%</text>
+  <text x="280" y="455" class="sub">separate process · real HITL boundary</text>
+  <path d="M520 338 L520 370 L390 370 L390 390" class="flow" marker-end="url(#arw)"/>
+
+  <!-- Ledger -->
+  <rect x="544" y="392" width="356" height="72" rx="12" fill="#131313" stroke="#4ebe96" stroke-width="1.2"/>
+  <text x="562" y="420" class="lbl" fill="#4ebe96">Audit</text>
+  <text x="562" y="440" class="ttl">Hash-chained ledger</text>
+  <text x="562" y="455" class="sub mono">entry.hash = sha256(prev_hash + payload) · replayable</text>
+
+  <!-- everything to ledger -->
+  <path d="M140 338 L140 428 L262 428" class="flow" marker-end="url(#arw)"/>
+  <path d="M504 428 L542 428" class="flow" marker-end="url(#arw)"/>
+
+  <text x="40" y="500" class="sub">Fail-closed: any model or parse error becomes a low-confidence advisory that routes to a human — never an unsafe auto-approval.</text>
+</svg>

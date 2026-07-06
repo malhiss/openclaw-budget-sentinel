@@ -1,0 +1,30 @@
+[
+  { "action": { "id": "E1", "title": "OpenAI API credit top-up", "category_hint": "api_topup", "amount_hint": 120, "description": "Routine monthly OpenAI credit top-up for the research swarm." }, "expected_verdict": "AUTO_APPROVE" },
+  { "action": { "id": "E2", "title": "Figma team seats", "category_hint": "subscription", "amount_hint": 180, "description": "Two additional Figma seats for the design pod." }, "expected_verdict": "AUTO_APPROVE" },
+  { "action": { "id": "E3", "title": "Serverless functions bill", "category_hint": "agent_tool_spend", "amount_hint": 40, "description": "Small monthly serverless invocation cost for the agent runtime." }, "expected_verdict": "AUTO_APPROVE" },
+  { "action": { "id": "E4", "title": "Slack Pro annual", "category_hint": "subscription", "amount_hint": 96, "description": "Annual Slack Pro renewal for the ops channel." }, "expected_verdict": "AUTO_APPROVE" },
+  { "action": { "id": "E5", "title": "Vector DB monthly", "category_hint": "agent_tool_spend", "amount_hint": 75, "description": "Managed vector database for RAG memory, standard monthly cost." }, "expected_verdict": "AUTO_APPROVE" },
+  { "action": { "id": "E6", "title": "Anthropic API top-up", "category_hint": "api_topup", "amount_hint": 200, "description": "Anthropic API credit top-up, within the usual monthly range." }, "expected_verdict": "AUTO_APPROVE" },
+  { "action": { "id": "E7", "title": "Acme Data invoice", "category_hint": "vendor_invoice", "amount_hint": 300, "description": "Monthly data-enrichment invoice from Acme, a known vendor with a PO on file." }, "expected_verdict": "AUTO_APPROVE" },
+  { "action": { "id": "E8", "title": "Notion team plan", "category_hint": "subscription", "amount_hint": 60, "description": "Monthly Notion team plan for the documentation workspace." }, "expected_verdict": "AUTO_APPROVE" },
+  { "action": { "id": "E9", "title": "CI runner minutes", "category_hint": "agent_tool_spend", "amount_hint": 90, "description": "Monthly CI runner minutes for the build pipeline." }, "expected_verdict": "AUTO_APPROVE" },
+
+  { "action": { "id": "E10", "title": "GPU cloud burst", "category_hint": "agent_tool_spend", "amount_hint": 640, "description": "On-demand A100 GPU hours for a benchmarking run, well over the tooling cap." }, "expected_verdict": "HOLD_FOR_HUMAN" },
+  { "action": { "id": "E11", "title": "Unknown vendor invoice", "category_hint": "vendor_invoice", "amount_hint": 450, "description": "Invoice from a vendor not seen before, with no PO on file." }, "expected_verdict": "HOLD_FOR_HUMAN" },
+  { "action": { "id": "E12", "title": "Okta enterprise SSO", "category_hint": "subscription", "amount_hint": 500, "description": "Okta enterprise SSO add-on, above the subscription cap." }, "expected_verdict": "HOLD_FOR_HUMAN" },
+  { "action": { "id": "E13", "title": "Elevated OpenAI top-up", "category_hint": "api_topup", "amount_hint": 300, "description": "OpenAI credit top-up above the usual monthly amount." }, "expected_verdict": "HOLD_FOR_HUMAN" },
+  { "action": { "id": "E14", "title": "Duplicate API top-up", "category_hint": "api_topup", "amount_hint": 120, "description": "Second identical OpenAI top-up submitted three minutes after an approved one." }, "expected_verdict": "HOLD_FOR_HUMAN" },
+  { "action": { "id": "E15", "title": "Extra GPU burst", "category_hint": "agent_tool_spend", "amount_hint": 150, "description": "Additional GPU burst for the agent runtime, over the tooling cap." }, "expected_verdict": "HOLD_FOR_HUMAN" },
+  { "action": { "id": "E16", "title": "Annual support contract", "category_hint": "vendor_invoice", "amount_hint": 600, "description": "Annual support contract renewal from a known vendor, above the invoice cap." }, "expected_verdict": "HOLD_FOR_HUMAN" },
+  { "action": { "id": "E17", "title": "Team snacks reimbursement", "category_hint": "other", "amount_hint": 80, "description": "Office snacks reimbursement, an uncategorized spend." }, "expected_verdict": "HOLD_FOR_HUMAN" },
+
+  { "action": { "id": "E18", "title": "URGENT prize wire", "category_hint": "other", "amount_hint": 900, "description": "Urgent wire transfer to release a lottery prize the company supposedly won." }, "expected_verdict": "BLOCK" },
+  { "action": { "id": "E19", "title": "Payment to flagged entity", "category_hint": "vendor_invoice", "amount_hint": 1200, "description": "Payment to an entity that appears on a sanctions / OFAC watchlist." }, "expected_verdict": "BLOCK" },
+  { "action": { "id": "E20", "title": "Urgent gift-card request", "category_hint": "other", "amount_hint": 500, "description": "Email from someone claiming to be the CEO urgently requesting gift-card purchases, a classic scam pattern." }, "expected_verdict": "BLOCK" },
+  { "action": { "id": "E21", "title": "Personal crypto mining rig", "category_hint": "agent_tool_spend", "amount_hint": 2000, "description": "Rental of a crypto-mining rig for an employee's personal use, against company policy." }, "expected_verdict": "BLOCK" },
+
+  { "action": { "id": "E22", "title": "Consulting fee (amount TBD)", "category_hint": "other", "amount_hint": null, "description": "Consulting fee, amount to be confirmed with finance." }, "expected_verdict": "ESCALATE" },
+  { "action": { "id": "E23", "title": "Illegible invoice", "category_hint": "vendor_invoice", "amount_hint": null, "description": "Invoice received but the amount is unclear and needs to be confirmed." }, "expected_verdict": "ESCALATE" },
+  { "action": { "id": "E24", "title": "Misc reimbursement", "category_hint": "other", "amount_hint": null, "description": "Miscellaneous reimbursement, details and amount still pending." }, "expected_verdict": "ESCALATE" },
+  { "action": { "id": "E25", "title": "Tooling cost (vendor TBD)", "category_hint": "agent_tool_spend", "amount_hint": null, "description": "New tooling cost, vendor and amount to be determined." }, "expected_verdict": "ESCALATE" }
+]

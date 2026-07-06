@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenClaw Budget Sentinel: governed spend for the AI-agent swarm</title>
+  <meta name="description" content="A governance module for OpenClaw. An open-weight model advises, deterministic rules decide, humans approve the 20% that matters, and every action is written to a tamper-evident ledger. Self-hosted, budget-capped, audit-ready." />
+  <meta property="og:title" content="OpenClaw Budget Sentinel" />
+  <meta property="og:description" content="AI executes the 80 percent. You decide the 20. Governed, self-hosted, tamper-evident spend control for the agent swarm." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #1a2b3b; --slate: #314352; --abyss: #0d1726; --graphite: #687887; --steel: #8995a1;
+      --fog: #edf0f2; --white: #ffffff; --silver: #caced2; --mist: #e1e5e9; --pewter: #bdc2c8;
+      --voltage: #e4ff33; --mint: #31f2bf;
+      --sans: 'General Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+      --shadow: rgba(12,25,39,0.06) 0px 8px 24px 0px, rgba(12,25,39,0.04) 0px 2px 6px 0px;
+      --maxw: 1120px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--fog); color: var(--navy); font-family: var(--sans); font-weight: 400;
+      line-height: 1.5; -webkit-font-smoothing: antialiased; letter-spacing: -0.011em; }
+    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+    a { color: inherit; text-decoration: none; }
+    .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+    :focus-visible { outline: 2px solid var(--navy); outline-offset: 3px; }
+
+    /* announcement bar */
+    .ann { background: var(--navy); color: var(--fog); text-align: center; font-size: 13px; padding: 9px 12px; letter-spacing: 0; }
+    .ann b { color: var(--voltage); font-weight: 600; }
+
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 22px 0; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: -0.02em; }
+    .brand .mk { width: 22px; height: 22px; border-radius: 6px; background: var(--navy); display: grid; place-items: center; }
+    .brand .mk::after { content: ""; width: 8px; height: 8px; border-radius: 99px; background: var(--mint); box-shadow: 0 0 8px var(--mint); }
+    .navlinks { display: flex; gap: 4px; }
+    .navlinks a { padding: 8px 14px; border-radius: 999px; color: var(--graphite); font-size: 15px; font-weight: 500; }
+    .navlinks a:hover { color: var(--navy); }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; border-radius: 8px; font-size: 15px;
+      font-weight: 500; font-family: var(--sans); background: var(--navy); color: var(--white); border: 1px solid var(--navy); cursor: pointer; transition: transform .15s; }
+    .btn:hover { transform: translateY(-1px); }
+    .btn.ghost { background: transparent; color: var(--navy); border-color: var(--silver); }
+
+    .hero { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: center; padding: 56px 0 72px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 12px; color: var(--slate);
+      background: var(--white); border: 1px solid var(--mist); padding: 6px 12px; border-radius: 999px; margin-bottom: 26px; letter-spacing: 0; }
+    .eyebrow .d { width: 7px; height: 7px; border-radius: 99px; background: var(--mint); }
+    h1 { font-size: clamp(42px, 6.4vw, 76px); font-weight: 600; letter-spacing: -0.045em; line-height: 0.98; }
+    h1 .u { position: relative; white-space: nowrap; }
+    h1 .u::after { content: ""; position: absolute; left: -2px; right: -2px; bottom: 6px; height: 12px; background: var(--voltage); z-index: -1; }
+    .sub { margin-top: 24px; font-size: 19px; color: var(--slate); max-width: 34ch; line-height: 1.5; }
+    .cta-row { margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap; }
+    .assurance { margin-top: 22px; font-size: 14px; color: var(--graphite); font-family: var(--mono); letter-spacing: 0; }
+    .assurance b { color: var(--navy); }
+
+    /* hero schematic (moving object) */
+    .panel { background: var(--white); border: 1px solid var(--mist); border-radius: 12px; box-shadow: var(--shadow); padding: 22px; }
+    .panel-head { display: flex; align-items: center; justify-content: space-between; font-family: var(--mono); font-size: 11px; color: var(--graphite); letter-spacing: 0; padding-bottom: 16px; border-bottom: 1px solid var(--mist); }
+    .pipe { display: grid; gap: 10px; margin: 18px 0; }
+    .node { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 13px 14px; border: 1px solid var(--mist); border-radius: 10px; background: var(--fog); position: relative; }
+    .node .k { font-family: var(--mono); font-size: 10px; color: var(--graphite); letter-spacing: 0.02em; }
+    .node .t { font-size: 14px; font-weight: 500; }
+    .node .tick { width: 9px; height: 9px; border-radius: 99px; background: var(--silver); }
+    .node.on .tick { background: var(--mint); box-shadow: 0 0 10px var(--mint); }
+    .node.human { border-color: var(--voltage); background: #fbffe6; }
+    .verdicts { display: flex; gap: 6px; flex-wrap: wrap; padding-top: 16px; border-top: 1px solid var(--mist); }
+    .vp { font-family: var(--mono); font-size: 10px; padding: 4px 9px; border-radius: 999px; border: 1px solid var(--silver); color: var(--slate); letter-spacing: 0; }
+    .vp.g { border-color: var(--mint); color: #0f9c78; }
+    .vp.v { border-color: #b7cc00; color: #6b7a00; background: #fbffe6; }
+    .panel-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; font-family: var(--mono); font-size: 11px; color: var(--graphite); letter-spacing: 0; }
+
+    @keyframes flow { 0%,100% { opacity: .35; } 50% { opacity: 1; } }
+
+    section { padding: 76px 0; }
+    .band-white { background: var(--white); border-top: 1px solid var(--mist); border-bottom: 1px solid var(--mist); }
+    .kicker { font-family: var(--mono); font-size: 12px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--graphite); margin-bottom: 16px; }
+    h2 { font-size: clamp(30px, 4vw, 44px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.08; max-width: 22ch; }
+    .lead { margin-top: 18px; font-size: 18px; color: var(--slate); max-width: 64ch; line-height: 1.55; }
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 52px; align-items: start; }
+    .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
+    .metric { border-left: 2px solid var(--voltage); padding-left: 18px; }
+    .metric .n { font-size: 34px; font-weight: 600; letter-spacing: -0.04em; }
+    .metric .l { font-size: 14px; color: var(--graphite); margin-top: 6px; }
+
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 44px; }
+    .card { background: var(--white); border: 1px solid var(--mist); border-radius: 12px; padding: 28px; box-shadow: var(--shadow); }
+    .card .ic { width: 36px; height: 36px; border-radius: 8px; background: var(--fog); display: grid; place-items: center; margin-bottom: 18px; font-size: 16px; color: var(--navy); border: 1px solid var(--mist); }
+    .card h3 { font-size: 19px; font-weight: 600; letter-spacing: -0.02em; }
+    .card p { margin-top: 10px; font-size: 15px; color: var(--slate); line-height: 1.55; }
+
+    .flow4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 40px; }
+    .stepc { background: var(--white); border: 1px solid var(--mist); border-radius: 12px; padding: 22px; box-shadow: var(--shadow); }
+    .stepc .k { font-family: var(--mono); font-size: 11px; color: var(--graphite); letter-spacing: 0.02em; }
+    .stepc h4 { font-size: 16px; font-weight: 600; margin-top: 10px; }
+    .stepc p { font-size: 14px; color: var(--slate); margin-top: 8px; line-height: 1.5; }
+    .stepc.human { border-color: var(--voltage); }
+
+    .band { text-align: center; padding: 20px 0 0; }
+    .band h2 { margin: 0 auto; }
+    .band .lead { margin: 18px auto 30px; }
+
+    footer { border-top: 1px solid var(--mist); padding: 46px 0 64px; color: var(--graphite); font-size: 14px; background: var(--white); }
+    .foot-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; align-items: start; }
+    .wire { font-family: var(--mono); font-size: 11px; color: var(--steel); line-height: 1.7; white-space: pre; overflow-x: auto; }
+
+    @media (max-width: 860px) {
+      .hero, .split, .foot-grid { grid-template-columns: 1fr; }
+      .cards, .flow4, .metrics { grid-template-columns: 1fr; }
+      .navlinks { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .node .tick, .flow { animation: none !important; } }
+  </style>
+</head>
+<body>
+  <div class="ann">Proof before expansion. Deployed branch by branch, scaled only when the ledger proves it. <b>Book a governance pilot.</b></div>
+  <div class="wrap">
+    <nav aria-label="Primary">
+      <div class="brand"><span class="mk" aria-hidden="true"></span> OpenClaw <span style="color:var(--graphite);font-weight:500">Budget Sentinel</span></div>
+      <div class="navlinks">
+        <a href="#problem">Problem</a>
+        <a href="#how">How it works</a>
+        <a href="#benefits">Why it matters</a>
+        <a href="#usecase">Use case</a>
+      </div>
+      <a class="btn ghost" href="#cta">Book a pilot</a>
+    </nav>
+
+    <header class="hero">
+      <div>
+        <span class="eyebrow"><span class="d" aria-hidden="true"></span> AN OPENCLAW GOVERNANCE MODULE</span>
+        <h1>AI executes.<br />You <span class="u">decide</span>.</h1>
+        <p class="sub">Budget Sentinel puts a governed gate in front of every agent's spend. An open-weight model advises, hard rules decide, and a human approves only the 20 percent that matters.</p>
+        <div class="cta-row">
+          <a class="btn" href="#cta">Book a governance pilot</a>
+          <a class="btn ghost" href="#how">See the 80/20 flow</a>
+        </div>
+        <p class="assurance"><b>0 unsafe auto-approvals</b>, by construction. Rules own the verdict; the model only advises.</p>
+      </div>
+
+      <!-- THE ONE LAW: the moving object, a governance pipeline with a live mint signal -->
+      <div class="panel" role="img" aria-label="Live schematic: a proposed agent spend action flows through the governance pipeline (model advises, contract validates, rules decide, human approves) with a signal pulsing through each stage and a tamper-evident ledger recording each decision.">
+        <div class="panel-head"><span>GOVERNANCE PIPELINE</span><span>policy v2026.07</span></div>
+        <div class="pipe" id="pipe">
+          <div class="node" data-i="0"><span class="k">MODEL</span><span class="t">Qwen3 advises</span><span class="tick" aria-hidden="true"></span></div>
+          <div class="node" data-i="1"><span class="k">CONTRACT</span><span class="t">Schema validates</span><span class="tick" aria-hidden="true"></span></div>
+          <div class="node" data-i="2"><span class="k">RULES</span><span class="t">Policy decides</span><span class="tick" aria-hidden="true"></span></div>
+          <div class="node human" data-i="3"><span class="k">HUMAN</span><span class="t">Approve the 20%</span><span class="tick" aria-hidden="true"></span></div>
+        </div>
+        <div class="verdicts">
+          <span class="vp g">AUTO-APPROVE</span><span class="vp v">HOLD</span><span class="vp">BLOCK</span><span class="vp">ESCALATE</span>
+        </div>
+        <div class="panel-foot"><span>ledger verified</span><span>block #<span id="hash">0000</span></span></div>
+      </div>
+    </header>
+  </div>
+
+  <section id="problem" class="band-white">
+    <div class="wrap">
+      <p class="kicker">The problem</p>
+      <h2>Enterprises stall on AI for one reason: loss of control.</h2>
+      <p class="lead">A swarm of autonomous agents that can each spend money, call vendors, and top up APIs is a productivity dream and a governance nightmare. One hallucinated cost, one duplicate charge, one prompt-injected "urgent wire," and both the budget and the trust are gone. Closed frontier APIs make it worse: sensitive spend data leaves your infrastructure, and per-token costs across a 52-agent swarm are hard to predict. For regulated clients in finance, healthcare, and government, that is a non-starter.</p>
+      <div class="metrics">
+        <div class="metric"><div class="n">80%</div><div class="l">of execution the swarm can safely handle alone</div></div>
+        <div class="metric"><div class="n">20%</div><div class="l">judgment, approvals, compliance and budget, kept human</div></div>
+        <div class="metric"><div class="n">100%</div><div class="l">of actions recorded to a tamper-evident ledger</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap split">
+      <div>
+        <p class="kicker">The solution</p>
+        <h2>A governed gate on every action, self-hosted by design.</h2>
+        <p class="lead">Budget Sentinel runs an <b style="color:var(--navy)">open-weight model on your own infrastructure</b>. For each proposed action it returns a structured assessment: category, estimated cost, risk flags, confidence. That advisory is validated against a strict contract and handed to a <b style="color:var(--navy)">deterministic policy engine</b> that owns the verdict. Nothing the model says can bypass a budget cap or a policy rule. Anything uncertain, over-limit, or flagged routes to a human, and every decision is chained into an audit ledger you can replay and prove.</p>
+      </div>
+      <div class="flow4" style="grid-template-columns:1fr 1fr">
+        <div class="stepc"><div class="k">MODEL</div><h4>Advise</h4><p>Local Qwen3 assesses the action. It never decides or acts.</p></div>
+        <div class="stepc"><div class="k">CONTRACT</div><h4>Validate</h4><p>Output is schema-checked. Malformed input fails closed to a human.</p></div>
+        <div class="stepc"><div class="k">RULES</div><h4>Decide</h4><p>Deterministic caps and policy own the verdict.</p></div>
+        <div class="stepc human"><div class="k">HUMAN</div><h4>Approve the 20%</h4><p>People clear the risky slice. Every call is logged.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="benefits" class="band-white">
+    <div class="wrap">
+      <p class="kicker">Three benefits</p>
+      <h2>Control that leadership can actually sign off on.</h2>
+      <div class="cards">
+        <div class="card">
+          <div class="ic" aria-hidden="true">◈</div>
+          <h3>Data sovereignty</h3>
+          <p>The model runs on your hardware. Spend data, vendor names, and PO details never leave your infrastructure, the requirement DIFC-finance, healthcare, and government clients cannot waive.</p>
+        </div>
+        <div class="card">
+          <div class="ic" aria-hidden="true">▤</div>
+          <h3>Budget control</h3>
+          <p>Hard, versioned caps per category and per action. An open-weight model costs cents per thousand decisions, so the whole 52-agent swarm stays inside a predictable, provable budget line.</p>
+        </div>
+        <div class="card">
+          <div class="ic" aria-hidden="true">⛓</div>
+          <h3>Tamper-evident audit</h3>
+          <p>Every decision is hash-chained into an append-only ledger. Change one past entry and verification breaks. Replay the whole chain to prove exactly what was approved, by whom, under which policy.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="usecase">
+    <div class="wrap">
+      <p class="kicker">Use case, the OpenClaw swarm</p>
+      <h2>52 agents, one budget line, zero surprises.</h2>
+      <p class="lead">In an OpenClaw deployment, dozens of agents run procurement, tooling, and API spend around the clock. Budget Sentinel sits in front of all of them: routine top-ups and small tooling costs clear automatically, over-cap GPU bursts and unknown-vendor invoices are held, fraud-pattern requests are blocked outright, and ambiguous items escalate, each one recorded. Leadership watches a single board and only touches the exceptions. That is the 80/20 model, deployed branch by branch, expanded only after the ledger proves it safe.</p>
+    </div>
+  </section>
+
+  <section id="cta" class="band-white">
+    <div class="wrap band">
+      <p class="kicker">Proof before expansion</p>
+      <h2 style="max-width:26ch">Pilot it on one branch. Expand only when the ledger proves it.</h2>
+      <p class="lead">A two-week controlled pilot on a capped budget, measured against your own policy, with a full audit trail to review.</p>
+      <a class="btn" href="#" aria-label="Book a governance assessment">Book a governance assessment</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap foot-grid">
+      <div>
+        <div class="brand" style="margin-bottom:14px"><span class="mk" aria-hidden="true"></span> OpenClaw Budget Sentinel</div>
+        <p style="max-width:46ch;line-height:1.6">A proof-of-concept governance module: an open-weight model bounded by deterministic rules and human approval. Concept design for Elchai Group; not an official Elchai product page.</p>
+        <p style="margin-top:16px;color:var(--steel)">Built with local Qwen3 (Ollama), a deterministic-first architecture, and a hash-chained audit ledger.</p>
+      </div>
+      <div>
+        <p class="kicker" style="margin-bottom:12px">Wireframe / layout</p>
+        <div class="wire">  announcement bar
+┌──────────────────────────────┐
+│ nav      links       [pilot] │
+├───────────────┬──────────────┤
+│ H1 + sub      │  PIPELINE    │
+│ CTAs          │  (hero obj)  │
+├───────────────┴──────────────┤
+│ PROBLEM   80 / 20 / 100      │
+│ SOLUTION  │  4-stage flow    │
+│ 3 BENEFIT CARDS              │
+│ USE CASE (52-agent swarm)    │
+│ [ CTA band ]                 │
+│ footer · wireframe · tools   │
+└──────────────────────────────┘</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // THE ONE LAW: the moving object, a signal pulsing through the governance pipeline.
+    (function () {
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = Array.prototype.slice.call(document.querySelectorAll('#pipe .node'));
+      var hashEl = document.getElementById('hash');
+      var block = 240;
+      if (reduce) { nodes.forEach(function (n) { n.classList.add('on'); }); hashEl.textContent = '0240'; return; }
+      var i = 0;
+      function step() {
+        nodes.forEach(function (n) { n.classList.remove('on'); });
+        for (var k = 0; k <= i; k++) nodes[k].classList.add('on');
+        if (i === nodes.length - 1) { block += 1; hashEl.textContent = String(block).padStart(4, '0'); }
+        i = (i + 1) % nodes.length;
+        setTimeout(step, i === 0 ? 900 : 620);
+      }
+      step();
+    })();
+  </script>
+</body>
+</html>
