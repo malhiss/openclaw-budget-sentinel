@@ -490,10 +490,20 @@
       <div class="row"><div class="k">Selected model</div><div class="v"><b>Kimi K2.6</b> (open-weight, the cloud capability ceiling: evaluated from published benchmarks and pricing) and <b>Qwen</b> (open-weight, self-hosted: Qwen3-4B ran every number on this page). Kimi is a paid API and its 1T weights are heavy to host, so I ran the free, self-hostable Qwen and cite Kimi.</div></div>
       <div class="row"><div class="k">In plain words</div><div class="v">Open-weight models are AI models you can run on your <b>own hardware</b> instead of a paid cloud API. That keeps client spend data in-house and makes cost predictable, which is exactly what OpenClaw's governed swarm needs for regulated clients.</div></div>
       <div class="row"><div class="k">Use case</div><div class="v">Govern the spend of OpenClaw's 52-agent swarm: routine top-ups auto-clear, over-cap or suspicious items go to a human, fraud is blocked, and every decision is written to an audit ledger. The 80/20 model, made enforceable.</div></div>
-      <div class="row"><div class="k">Departments</div><div class="v"><b>Finance</b> (hard caps + audit trail) · <b>Engineering</b> (a reusable governed-agent pattern) · <b>IT/Infra</b> (self-hosted, no data egress) · <b>Product</b> (a shippable OpenClaw module for pitches) · <b>Strategy</b> (no vendor lock-in, data-residency ready) · <b>Operations</b> (people touch only the ~20% of exceptions).</div></div>
     </div>
 
     <div class="rev" style="transition-delay:.1s">
+      <p class="rsub">Departments that benefit</p>
+      <table class="ctab">
+        <tr><th>Department</th><th>Benefit</th></tr>
+        <tr><td><strong>Finance</strong></td><td>Hard, versioned budget caps and a full audit trail; predictable swarm cost</td></tr>
+        <tr><td><strong>Engineering</strong></td><td>A reusable governed-agent pattern (rules own the verdict, model bounded to evidence)</td></tr>
+        <tr><td><strong>IT / Infrastructure</strong></td><td>Self-hosted model, so no third-party data egress; runs on existing hardware</td></tr>
+        <tr><td><strong>Product</strong></td><td>A shippable OpenClaw module and a governance story for regulated-client pitches</td></tr>
+        <tr><td><strong>Strategy</strong></td><td>Open-weight adoption de-risks vendor lock-in and supports data-residency requirements</td></tr>
+        <tr><td><strong>Operations</strong></td><td>People handle only the ~20% of exceptions; the rest is automated and logged</td></tr>
+      </table>
+
       <p class="rsub">Risks &amp; limitations</p>
       <div class="risks">
         <div class="r"><b>Privacy:</b> self-hosted, so spend data never leaves the box.</div>
