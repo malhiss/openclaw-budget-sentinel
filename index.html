@@ -193,7 +193,18 @@
     .board h3,.ledger h3{font-size:14px;font-weight:600;padding:16px 18px;border-bottom:1px solid var(--mist);display:flex;justify-content:space-between;align-items:center}
     .rowitem{border-bottom:1px solid var(--mist)}
     .rowitem:last-child{border-bottom:none}
-    .rowmain{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:13px 18px;cursor:pointer;transition:background .15s}
+    .rowmain{display:grid;grid-template-columns:1fr auto auto auto;gap:10px;align-items:center;padding:13px 18px;cursor:pointer;transition:background .15s}
+    .rowmain .chev{font-size:10px;color:var(--graphite);transition:transform .2s;justify-self:end}
+    .rowmain[aria-expanded="true"] .chev{transform:rotate(180deg)}
+    .dstage{font-size:13.5px;color:var(--slate);margin:7px 0;line-height:1.5}
+    .dstage b{color:var(--navy);font-weight:600}
+    .dl{font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--graphite);border:1px solid var(--mist);border-radius:4px;padding:2px 6px;margin-right:9px}
+    .dwhy{font-size:13px;color:var(--slate);margin:6px 0 6px 2px}
+    .dnote{font-size:12.5px;color:var(--graphite);font-style:italic;margin:4px 0 4px 2px}
+    .dmeta{font-family:var(--mono);font-size:10.5px;color:var(--graphite)}
+    .confb{display:inline-block;width:42px;height:6px;border-radius:99px;background:var(--mist);vertical-align:middle;overflow:hidden;margin:0 5px}
+    .confb > i{display:block;height:100%;background:var(--mint);border-radius:99px}
+    .confb.lo > i{background:#e0b34d}
     .rowmain:hover{background:var(--fog)}
     .rowmain .t{font-size:14px;font-weight:500}
     .rowmain .c{font-family:var(--mono);font-size:12px;color:var(--graphite)}
@@ -637,15 +648,15 @@
         div.innerHTML = `<div class="rowmain" role="button" tabindex="0" aria-expanded="false"
             onclick="this.nextElementSibling.classList.toggle('open');this.setAttribute('aria-expanded',this.nextElementSibling.classList.contains('open'))"
             onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
-            <span class="t">${a.t}</span><span class="c">$${a.cost}</span>${pill}</div>
+            <span class="t">${a.t}</span><span class="c">$${a.cost}</span>${pill}<span class="chev" aria-hidden="true">▾</span></div>
           <div class="detail">
-            <div class="kv">model advised: category ${a.cat} &middot; confidence ${a.conf} &middot; engine qwen3:4b</div>
-            <div class="kv">rules decided: ${a.v.replace(/_/g," ").toLowerCase()}</div>
+            <div class="dstage"><span class="dl">Model</span> advised <b>${a.cat.replace(/_/g," ")}</b> <span class="confb ${a.conf>=0.75?"":"lo"}" title="model confidence ${a.conf}"><i style="width:${Math.round(a.conf*100)}%"></i></span> <span class="dmeta">conf ${a.conf} · qwen3:4b</span></div>
+            <div class="dwhy">"${a.why}"</div>
+            ${a.note?`<div class="dnote">Model's note to the reviewer: ${a.note}</div>`:""}
             ${a.flags.length?`<div class="flags">${a.flags.map(f=>`<span class="flagchip">${f}</span>`).join("")}</div>`:""}
-            <div style="margin-top:6px">${a.why}</div>
-            ${a.note?`<div style="margin-top:6px;color:var(--graphite)"><i>Model's note to the reviewer: ${a.note}</i></div>`:""}
-            ${(a.v!=="AUTO_APPROVE" && !resolved[a.id])?`<div class="gate"><div class="btns"><button class="ap" onclick="review('${a.id}','APPROVE',event)">Approve</button><button class="rj" onclick="review('${a.id}','REJECT',event)">Reject</button></div></div>`:""}
-            ${resolved[a.id]?`<div style="margin-top:8px;font-family:var(--mono);font-size:11px;color:#0f9c78">decided by the human reviewer: ${resolved[a.id].hv.toLowerCase()} &middot; "${resolved[a.id].note}"</div>`:""}
+            <div class="dstage"><span class="dl">Rules</span> decided <b>${a.v.replace(/_/g," ").toLowerCase()}</b></div>
+            ${(a.v!=="AUTO_APPROVE" && !resolved[a.id])?`<div class="gate"><span class="dl">Human</span> awaiting your decision<div class="btns"><button class="ap" onclick="review('${a.id}','APPROVE',event)">Approve</button><button class="rj" onclick="review('${a.id}','REJECT',event)">Reject</button></div></div>`:""}
+            ${resolved[a.id]?`<div class="dstage"><span class="dl">Human</span> reviewer <b>${resolved[a.id].hv==="APPROVE"?"approved":"rejected"}</b> · "${resolved[a.id].note}"</div>`:""}
           </div>`;
         wrap.appendChild(div);
       });
