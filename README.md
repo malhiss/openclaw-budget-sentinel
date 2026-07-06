@@ -7,6 +7,10 @@ rules *decide*, a human approves the risky 20%, and every action is written to a
 > open-source model to Elchai's own OpenClaw philosophy: *AI executes the 80%, humans decide the 20%.*
 > Not an official Elchai product.
 
+**⚡ The whole submission is one page: https://malhiss.github.io/openclaw-budget-sentinel/** — the concept, a
+live dashboard on the real verified ledger, the measured benchmark, and the full report, all baked in (works
+offline too: just open `index.html`).
+
 **Selected model:** Kimi K2 (open-weight, cloud, the capability ceiling) with **Qwen3** as the self-hostable
 alternative. The live demo runs on **local Qwen3 via Ollama** — no cloud, no API key, data never leaves the
 machine. See [`report/REPORT.md`](report/REPORT.md) for the full evaluation, benchmark, cost model, risks, and
@@ -81,16 +85,18 @@ never to an unsafe approval.
 ## Repo layout
 
 ```
+index.html      THE deliverable — self-contained site: brief-map + dashboard + benchmark (works offline)
+report.html     the full report, rendered in-page
 agent/          the governed agent (Node, one dep: zod)
   src/          model · schema · prompt · governance · ledger · agent · approve
-  data/         actions.json (synthetic) · policy.json (versioned thresholds)
+  data/         actions.json (synthetic) · policy.json · ledger.demo.jsonl (verified evidence)
   eval/         cases.json (25 labeled) · run.mjs · results.json (committed evidence)
   test/         schema · governance · ledger  (node --test)
 landing/        two design directions (a: dark instrument, b: light institutional)
-web/            styled local dashboard for the triage + approve gate
 report/         REPORT.md (the memo) · tco.md · scorecard.md
-assets/         architecture diagram, screenshots
+assets/         architecture diagram
 docs/           design spec + implementation plan
+PROMPTS.md      exact prompts + rationale
 ```
 
 ## Tools used

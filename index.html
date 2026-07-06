@@ -7,6 +7,7 @@
   <meta name="description" content="A governance module for OpenClaw. An open-weight model advises, deterministic rules decide, humans approve the 20%, and every action is written to a tamper-evident ledger. Benchmarked live on self-hosted Qwen3: 80% accuracy, 0% unsafe auto-approvals." />
   <meta property="og:title" content="OpenClaw Budget Sentinel" />
   <meta property="og:description" content="AI executes the 80 percent. You decide the 20. Governed, self-hosted, tamper-evident spend control. 0% unsafe auto-approvals, measured." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231a2b3b'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%2331f2bf'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -14,7 +15,7 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --navy:#1a2b3b; --slate:#314352; --abyss:#0d1726; --graphite:#687887; --steel:#8995a1;
+      --navy:#1a2b3b; --slate:#314352; --abyss:#0d1726; --graphite:#5b6b7a; --steel:#8995a1;
       --fog:#edf0f2; --white:#fff; --silver:#caced2; --mist:#e1e5e9; --pewter:#bdc2c8;
       --voltage:#e4ff33; --mint:#31f2bf; --rose:#e5484d; --amber:#d98a1a;
       --sans:'General Sans',ui-sans-serif,system-ui,-apple-system,sans-serif;
@@ -132,8 +133,22 @@
     .foot-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:40px}
     code.inline{font-family:var(--mono);font-size:12px;background:var(--fog);border:1px solid var(--mist);border-radius:5px;padding:2px 7px}
 
-    @media(max-width:860px){.hero,.split,.dash,.foot-grid{grid-template-columns:1fr}.stats,.flow4,.cards{grid-template-columns:1fr 1fr}.cases{grid-template-columns:repeat(5,1fr)}.navlinks{display:none}.ledger{position:static}}
-    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+    /* hero pipeline pulse — the signal travelling through the gate */
+    .pnode{width:9px;height:9px;border-radius:99px;background:var(--silver);animation:pipePulse 3.9s infinite}
+    .pnode.n1{animation-delay:0s}.pnode.n2{animation-delay:1.3s}
+    .pnode.n3{animation-delay:2.6s;animation-name:pipePulseAmber}
+    @keyframes pipePulse{0%,100%{background:var(--silver);box-shadow:none}12%,38%{background:var(--mint);box-shadow:0 0 10px var(--mint)}}
+    @keyframes pipePulseAmber{0%,100%{background:var(--silver);box-shadow:none}12%,38%{background:#d4ea00;box-shadow:0 0 10px var(--voltage)}}
+
+    /* submission map */
+    .brief-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:32px}
+    .brief-item{background:var(--white);border:1px solid var(--mist);border-radius:10px;padding:16px 18px;box-shadow:var(--shadow)}
+    .brief-item .q{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.03em;color:var(--graphite)}
+    .brief-item .a{font-size:14px;font-weight:500;margin-top:6px;line-height:1.45}
+    .brief-item .a a{color:#2b6cb0}
+
+    @media(max-width:860px){.hero,.split,.dash,.foot-grid{grid-template-columns:1fr}.stats,.flow4,.cards,.brief-grid{grid-template-columns:1fr 1fr}.cases{grid-template-columns:repeat(5,1fr)}.navlinks{display:none}.ledger{position:static}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.pnode{animation:none;background:var(--mint)}.pnode.n3{background:var(--voltage)}}
   </style>
 </head>
 <body>
@@ -142,7 +157,7 @@
   <nav class="top"><div class="wrap row">
     <div class="brand"><span class="mk"></span> OpenClaw <span style="color:var(--graphite);font-weight:500">Budget Sentinel</span></div>
     <div class="navlinks">
-      <a href="#overview">Overview</a><a href="#dashboard">Dashboard</a><a href="#benchmark">Benchmark</a>
+      <a href="#brief">The brief</a><a href="#dashboard">Dashboard</a><a href="#benchmark">Benchmark</a>
       <a href="#how">How it works</a><a href="report.html">Full report</a>
     </div>
     <a class="btn ghost" href="#run">Run it</a>
@@ -156,20 +171,38 @@
       <p class="sub">A governed gate in front of every agent's spend. An open-weight model advises, hard rules decide, and a human approves only the 20 percent that matters.</p>
       <div class="cta-row"><a class="btn" href="#dashboard">See the live dashboard</a><a class="btn ghost" href="#benchmark">The measured results</a></div>
       <p class="assurance"><b>0 unsafe auto-approvals</b>, by construction. Rules own the verdict; the model only advises.</p>
+      <p class="assurance" style="margin-top:8px">Model: <b>Qwen3</b> (self-hosted, measured live) &middot; <b>Kimi K2</b> (evaluated as the cloud ceiling)</p>
     </div>
     <div class="panel">
       <div class="panel-head"><span>GOVERNANCE PIPELINE</span><span>policy v2026.07</span></div>
       <div style="display:grid;gap:10px;margin:16px 0">
-        <div style="display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:12px 14px;border:1px solid var(--mist);border-radius:10px;background:var(--fog)"><span class="mono" style="font-size:10px;color:var(--graphite)">MODEL</span><span style="font-size:14px;font-weight:500">Qwen3 advises</span><span style="width:9px;height:9px;border-radius:99px;background:var(--mint)"></span></div>
-        <div style="display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:12px 14px;border:1px solid var(--mist);border-radius:10px;background:var(--fog)"><span class="mono" style="font-size:10px;color:var(--graphite)">RULES</span><span style="font-size:14px;font-weight:500">Policy decides</span><span style="width:9px;height:9px;border-radius:99px;background:var(--mint)"></span></div>
-        <div style="display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:12px 14px;border:1px solid var(--voltage);border-radius:10px;background:#fbffe6"><span class="mono" style="font-size:10px;color:var(--graphite)">HUMAN</span><span style="font-size:14px;font-weight:500">Approve the 20%</span><span style="width:9px;height:9px;border-radius:99px;background:var(--voltage)"></span></div>
+        <div style="display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:12px 14px;border:1px solid var(--mist);border-radius:10px;background:var(--fog)"><span class="mono" style="font-size:10px;color:var(--graphite)">MODEL</span><span style="font-size:14px;font-weight:500">Qwen3 advises</span><span class="pnode n1"></span></div>
+        <div style="display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:12px 14px;border:1px solid var(--mist);border-radius:10px;background:var(--fog)"><span class="mono" style="font-size:10px;color:var(--graphite)">RULES</span><span style="font-size:14px;font-weight:500">Policy decides</span><span class="pnode n2"></span></div>
+        <div style="display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:12px 14px;border:1px solid var(--voltage);border-radius:10px;background:#fbffe6"><span class="mono" style="font-size:10px;color:var(--graphite)">HUMAN</span><span style="font-size:14px;font-weight:500">Approve the 20%</span><span class="pnode n3"></span></div>
       </div>
       <div class="panel-head" style="border-bottom:none;border-top:1px solid var(--mist);padding:14px 0 0"><span>ledger verified</span><span>self-hosted, no cloud</span></div>
     </div>
   </header>
 
+  <!-- SUBMISSION MAP -->
+  <section id="brief" class="band-white" style="padding:56px 0"><div class="wrap">
+    <p class="kicker">The brief, answered</p>
+    <h2>Everything the assessment asked for, and where it is.</h2>
+    <div class="brief-grid">
+      <div class="brief-item"><div class="q">Selected model / tool</div><div class="a"><a href="report.html#model">Kimi K2 + Qwen3 (self-hosted, measured)</a></div></div>
+      <div class="brief-item"><div class="q">Explained in simple words</div><div class="a"><a href="report.html#explain">What they are and why they fit Elchai</a></div></div>
+      <div class="brief-item"><div class="q">Practical project (working output)</div><div class="a"><a href="#dashboard">This site: a live, benchmarked governance module</a></div></div>
+      <div class="brief-item"><div class="q">Landing page, all 8 elements + wireframe</div><div class="a"><a href="landing/b/">Direction B</a> &middot; <a href="landing/a/">Direction A (dark)</a></div></div>
+      <div class="brief-item"><div class="q">Use case for Elchai Group</div><div class="a"><a href="report.html#usecase">Governed spend for the OpenClaw swarm</a></div></div>
+      <div class="brief-item"><div class="q">Departments that benefit</div><div class="a"><a href="report.html#departments">Finance, Engineering, IT, Product, Strategy, Ops</a></div></div>
+      <div class="brief-item"><div class="q">Risks &amp; limitations</div><div class="a"><a href="report.html#risks">8 risks, each with a built or recommended mitigation</a></div></div>
+      <div class="brief-item"><div class="q">Final recommendation</div><div class="a"><a href="report.html#recommendation">Test it: a controlled internal pilot</a></div></div>
+      <div class="brief-item"><div class="q">Prompts &amp; tools used</div><div class="a"><a href="report.html#prompts">Exact system prompt + toolchain</a></div></div>
+    </div>
+  </div></section>
+
   <!-- PROBLEM -->
-  <section id="problem" class="band-white"><div class="wrap">
+  <section id="problem"><div class="wrap">
     <p class="kicker">The problem</p>
     <h2>Enterprises stall on AI for one reason: loss of control.</h2>
     <p class="lead">A swarm of autonomous agents that can each spend money, call vendors, and top up APIs is a productivity dream and a governance nightmare. One hallucinated cost, one duplicate charge, one prompt-injected "urgent wire," and both the budget and the trust are gone. Closed frontier APIs make it worse: sensitive spend data leaves your infrastructure, and per-token cost across a 52-agent swarm is hard to predict. For regulated clients in finance, healthcare, and government, that is a non-starter.</p>
@@ -179,7 +212,7 @@
   <section id="dashboard"><div class="wrap">
     <p class="kicker">Live dashboard, real verified ledger</p>
     <h2>Every agent action, governed and recorded.</h2>
-    <p class="lead">These are the actual decisions from a live run on self-hosted Qwen3. Click any row to see what the model advised and why the rules decided as they did. Held and escalated items are the 20 percent: approve or reject one, and watch it chain into the tamper-evident ledger.</p>
+    <p class="lead">These are the actual decisions from a live run on self-hosted Qwen3. Click any row to see what the model advised and why the rules decided as they did. Held and escalated items are the 20 percent: approve or reject one, and watch it chain into the tamper-evident ledger. (The approve buttons on this static page simulate the chain; the repo writes the real one, reproducible with <code class="inline">npm start</code>.)</p>
     <div class="dash">
       <div class="board">
         <h3>Triage board <span class="mono" style="font-weight:400;color:var(--graphite);font-size:11px" id="counts"></span></h3>
@@ -239,7 +272,7 @@
       <div class="card"><div class="ic">▤</div><h3>Budget control</h3><p>Hard, versioned caps per category and per action. An open-weight model costs cents per thousand decisions, so the whole 52-agent swarm stays inside a predictable, provable budget line.</p></div>
       <div class="card"><div class="ic">⛓</div><h3>Tamper-evident audit</h3><p>Every decision is hash-chained into an append-only ledger. Change one past entry and verification breaks. Replay the chain to prove exactly what was approved, by whom, under which policy.</p></div>
     </div>
-    <p class="lead" style="margin-top:40px"><b style="color:var(--navy)">Use case, the OpenClaw swarm:</b> dozens of agents run procurement, tooling, and API spend around the clock. Budget Sentinel sits in front of all of them, leadership watches one board and only touches the exceptions. That is the 80/20 model, deployed branch by branch, expanded only after the ledger proves it safe. Full detail, departments, risks, cost model, and recommendation are in the <a href="report.html" style="color:#2b6cb0;font-weight:500">full report</a>.</p>
+    <p class="lead" style="margin-top:40px"><b style="color:var(--navy)">Use case, the OpenClaw swarm:</b> dozens of agents run procurement, tooling, and API spend around the clock. Budget Sentinel sits in front of all of them: routine spend auto-clears, over-cap and suspicious items are held, fraud patterns are blocked or escalated for review, and leadership watches one board, touching only the exceptions. That is the 80/20 model, deployed branch by branch, expanded only after the ledger proves it safe. Full detail, departments, risks, cost model, and recommendation are in the <a href="report.html" style="color:#2b6cb0;font-weight:500">full report</a>.</p>
   </div></section>
 
   <!-- RUN IT -->
@@ -306,7 +339,9 @@
         const div=document.createElement("div"); div.className="rowitem";
         const r=resolved[a.id];
         const pill = r ? `<span class="pill resolved">${r.hv==="APPROVE"?"approved":"rejected"}</span>` : `<span class="pill ${cls(a.v)}">${shortV(a.v)}</span>`;
-        div.innerHTML = `<div class="rowmain" onclick="this.nextElementSibling.classList.toggle('open')">
+        div.innerHTML = `<div class="rowmain" role="button" tabindex="0" aria-expanded="false"
+            onclick="this.nextElementSibling.classList.toggle('open');this.setAttribute('aria-expanded',this.nextElementSibling.classList.contains('open'))"
+            onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
             <span class="t">${a.t}</span><span class="c">$${a.cost}</span>${pill}</div>
           <div class="detail">
             <div class="kv">category: ${a.cat} &middot; confidence: ${a.conf} &middot; engine: qwen3:4b</div>

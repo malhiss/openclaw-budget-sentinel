@@ -5,13 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Adoption report: open-source models for OpenClaw — Budget Sentinel</title>
   <meta name="description" content="Full assessment: open-weight models (Kimi K2, Qwen3) as the engine for Elchai's OpenClaw. Measured benchmark, cost model, risks, and a controlled-pilot recommendation." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231a2b3b'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%2331f2bf'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
-    :root{--navy:#1a2b3b;--slate:#314352;--graphite:#687887;--steel:#8995a1;--fog:#edf0f2;--white:#fff;--mist:#e1e5e9;--silver:#caced2;--voltage:#e4ff33;--mint:#31f2bf;--rose:#e5484d;--sans:'General Sans',ui-sans-serif,system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,Menlo,monospace}
+    :root{--navy:#1a2b3b;--slate:#314352;--graphite:#5b6b7a;--steel:#8995a1;--fog:#edf0f2;--white:#fff;--mist:#e1e5e9;--silver:#caced2;--voltage:#e4ff33;--mint:#31f2bf;--rose:#e5484d;--sans:'General Sans',ui-sans-serif,system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,Menlo,monospace}
     *{box-sizing:border-box;margin:0;padding:0}
     body{background:var(--fog);color:var(--navy);font-family:var(--sans);line-height:1.6;letter-spacing:-0.011em;-webkit-font-smoothing:antialiased}
     a{color:#2b6cb0;text-decoration:none}a:hover{text-decoration:underline}
@@ -65,7 +66,7 @@
       <p>Safe by construction (rules own the verdict, the model only advises, everything is auditable and fails closed), and ready for a real pilot. Raise the model's exact-match accuracy before wide rollout.</p>
     </div>
 
-    <h2>1. Selected model and tool</h2>
+    <h2 id="model">1. Selected model and tool</h2>
     <p><strong>Primary (capability ceiling): Kimi K2</strong>, Moonshot AI's open-weight agentic model.
     <strong>Alternative actually run (self-host floor): Qwen3.</strong> The working demo and every measured number
     below run on <strong>Qwen3-4B, self-hosted locally via Ollama</strong>, with no cloud call and no API key.
@@ -75,7 +76,7 @@
     <blockquote>The reference video's version numbers (Kimi 2.6, Qwen 3.6, GPT-4.4, Opus 4.6, Gemini 3.1) are
     illustrative or near-future. This report is grounded in the real, current models.</blockquote>
 
-    <h2>2. What these models are, in plain words</h2>
+    <h2 id="explain">2. What these models are, in plain words</h2>
     <p><strong>Kimi K2</strong> and <strong>Qwen3</strong> are <em>open-weight</em> language models: the files are
     published, so you can run them on your own hardware instead of only through a paid API. Both are strong at
     <strong>agentic</strong> work (following instructions, using tools, returning structured output), which is
@@ -95,7 +96,7 @@
       cost), so a 52-agent swarm stays inside a predictable budget line.</li>
     </ul>
 
-    <h2>3. The practical project: OpenClaw Budget Sentinel</h2>
+    <h2 id="project">3. The practical project: OpenClaw Budget Sentinel</h2>
     <p>Rather than a slide, I built a working governance module and benchmarked it. It puts a governed gate in
     front of every agent's spend: the open model <strong>advises</strong>, a strict schema <strong>validates</strong>,
     deterministic rules <strong>decide</strong>, a human <strong>approves the 20%</strong>, and every action is
@@ -116,14 +117,14 @@
     larger model (Qwen3-30B or Kimi K2) raises the exact-match rate; it cannot lower the safety floor, which is
     already 0% by construction.</p>
 
-    <h2>4. Use case for Elchai</h2>
+    <h2 id="usecase">4. Use case for Elchai</h2>
     <p>Drop Budget Sentinel in front of an OpenClaw swarm's spend: routine top-ups and small tooling costs
     auto-clear, over-cap GPU bursts and unknown-vendor invoices are held, fraud or policy-violating requests are
     blocked, ambiguous ones escalate, each recorded to a replayable ledger. Leadership watches one board and only
     touches exceptions. This is OpenClaw's "budget control" and "PO hardening" made concrete, deployed branch by
     branch, expanded only after the ledger proves it safe.</p>
 
-    <h2>5. Departments that benefit</h2>
+    <h2 id="departments">5. Departments that benefit</h2>
     <table>
       <tr><th>Department</th><th>Benefit</th></tr>
       <tr><td><strong>Finance</strong></td><td>Hard, versioned budget caps plus a full audit trail; predictable swarm cost</td></tr>
@@ -134,7 +135,7 @@
       <tr><td><strong>Operations</strong></td><td>Humans handle only the ~20% of exceptions; the rest is automated and logged</td></tr>
     </table>
 
-    <h2>6. Risks and limitations</h2>
+    <h2 id="risks">6. Risks and limitations</h2>
     <table>
       <tr><th>Risk</th><th>Reality here</th><th>Mitigation</th></tr>
       <tr><td><strong>Privacy / data</strong></td><td>Spend data is sensitive</td><td>Self-hosted; data never leaves the box (built)</td></tr>
@@ -147,7 +148,7 @@
       <tr><td><strong>Vendor / geo / licensing</strong></td><td>Chinese open models raise governance questions</td><td>Weights run locally (no data leaves); confirm license (Qwen3 Apache-2.0, Kimi K2 open) before production (recommended)</td></tr>
     </table>
 
-    <h2>7. Cost model</h2>
+    <h2 id="cost">7. Cost model</h2>
     <p>Illustrative, with stated assumptions. Token count is <strong>measured</strong> (avg 411 per decision);
     prices are cited list prices. Volume assumption: 52 agents x 200 decisions/day is about 312,000 decisions/month.</p>
     <table>
@@ -160,7 +161,7 @@
     decisively at higher volume, and it is the only option that keeps data on-prem. Kimi K2 pricing cited at
     $0.60/M input, $2.50/M output (<a href="https://openrouter.ai/moonshotai/kimi-k2-thinking">OpenRouter</a>).</p>
 
-    <h2>8. Final recommendation</h2>
+    <h2 id="recommendation">8. Final recommendation</h2>
     <p><strong>Test it, a controlled internal pilot.</strong> The pattern is production-shaped and safe by
     construction, but exact-match accuracy (80% on a 4B) should be raised before wide rollout.</p>
     <ol>
@@ -172,7 +173,7 @@
     </ol>
     <p><strong>Do not</strong> let any open model emit the final verdict, run without the deterministic gate, or auto-execute spend.</p>
 
-    <h2>9. Prompts and tools used</h2>
+    <h2 id="prompts">9. Prompts and tools used</h2>
     <p>Local Qwen3-4B (Ollama), Node 24, zod (the schema contract), a hash-chained ledger, and Claude Code as the
     build pair. Kimi K2 evaluated from published benchmarks and pricing (cited, not run). The exact system prompt
     and rationale are in the repository's <code class="inline">PROMPTS.md</code>.</p>
