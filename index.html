@@ -39,11 +39,11 @@
     .brand .mk{width:22px;height:22px;border-radius:6px;background:var(--navy);display:grid;place-items:center}
     .brand .mk::after{content:"";width:8px;height:8px;border-radius:99px;background:var(--mint);box-shadow:0 0 8px var(--mint)}
     .navlinks{display:flex;gap:2px}
-    .navlinks a{padding:8px 11px;border-radius:999px;color:var(--graphite);font-size:14px;font-weight:500}
+    .navlinks a{padding:8px 11px;border-radius:999px;color:var(--graphite);font-size:14px;font-weight:500;transition:color .2s}
     .navlinks a:hover{color:var(--navy)}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:8px;font-size:14px;font-weight:500;font-family:var(--sans);background:var(--navy);color:#fff;border:1px solid var(--navy);cursor:pointer;transition:transform .15s}
-    .btn:hover{transform:translateY(-1px)}
-    .btn:disabled{opacity:.55;cursor:default;transform:none}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:8px;font-size:14px;font-weight:500;font-family:var(--sans);background:var(--navy);color:#fff;border:1px solid var(--navy);cursor:pointer;transition:transform .18s,box-shadow .18s}
+    .btn:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+    .btn:disabled{opacity:.55;cursor:default;transform:none;box-shadow:none}
     .btn.ghost{background:transparent;color:var(--navy);border-color:var(--silver)}
 
     section{padding:64px 0}
@@ -51,16 +51,27 @@
     .kicker{font-family:var(--mono);font-size:12px;letter-spacing:0.02em;text-transform:uppercase;color:var(--graphite);margin-bottom:14px}
     h1{font-size:clamp(36px,5.4vw,60px);font-weight:600;letter-spacing:-0.045em;line-height:1.0}
     h1 .u{position:relative;white-space:nowrap}
-    h1 .u::after{content:"";position:absolute;left:-2px;right:-2px;bottom:5px;height:11px;background:var(--voltage);z-index:-1}
+    h1 .u::after{content:"";position:absolute;left:-2px;right:-2px;bottom:5px;height:11px;background:var(--voltage);z-index:-1;transform:scaleX(0);transform-origin:left;animation:ink .7s .9s cubic-bezier(.2,.8,.3,1) forwards}
+    @keyframes ink{to{transform:scaleX(1)}}
     h2{font-size:clamp(26px,3.6vw,38px);font-weight:600;letter-spacing:-0.035em;line-height:1.08;max-width:26ch}
     .lead{margin-top:16px;font-size:17px;color:var(--slate);max-width:66ch;line-height:1.55}
 
+    /* reveal + motion */
+    .rev{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s ease}
+    .rev.in{opacity:1;transform:none}
+    @media(prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      .rev{opacity:1;transform:none;transition:none}
+      *{animation-duration:.001s !important;animation-delay:0s !important}
+    }
+
     .hero{padding:52px 0 56px;max-width:820px}
     .eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;color:var(--slate);background:var(--white);border:1px solid var(--mist);padding:6px 12px;border-radius:999px;margin-bottom:22px}
-    .eyebrow .d{width:7px;height:7px;border-radius:99px;background:var(--mint)}
+    .eyebrow .d{width:7px;height:7px;border-radius:99px;background:var(--mint);box-shadow:0 0 8px var(--mint)}
     .sub{margin-top:20px;font-size:18px;color:var(--slate);max-width:56ch;line-height:1.55}
     .chiprow{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
-    .chipstat{background:var(--white);border:1px solid var(--mist);border-radius:10px;padding:12px 18px;box-shadow:var(--shadow)}
+    .chipstat{background:var(--white);border:1px solid var(--mist);border-radius:10px;padding:12px 18px;box-shadow:var(--shadow);transition:transform .18s}
+    .chipstat:hover{transform:translateY(-2px)}
     .chipstat .n{font-weight:600;font-size:20px;letter-spacing:-0.02em}
     .chipstat .n.m{color:#0f9c78}
     .chipstat .l{font-family:var(--mono);font-size:10.5px;color:var(--graphite);margin-top:2px}
@@ -72,10 +83,17 @@
     .rpanel{background:var(--white);border:1px solid var(--mist);border-radius:12px;box-shadow:var(--shadow);padding:20px}
     .rctrl{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
     .rprog{font-family:var(--mono);font-size:12px;color:var(--graphite);margin-left:auto}
-    .rinput{border:1px solid var(--mist);border-radius:10px;background:var(--fog);padding:14px;min-height:84px}
-    .rinput .ri-t{font-weight:600;font-size:15px}
+    .rinput{position:relative;border:1.5px solid var(--mist);border-radius:10px;background:var(--fog);padding:14px;min-height:96px;transition:border-color .3s}
+    .rinput.f-auto{border-color:#0f9c78}.rinput.f-hold{border-color:#e0b34d}.rinput.f-block{border-color:var(--rose)}.rinput.f-escal{border-color:#7fb0e6}
+    .rinput .ri-t{font-weight:600;font-size:15px;max-width:70%}
     .rinput .ri-m{font-family:var(--mono);font-size:11px;color:var(--graphite);margin-top:2px}
-    .rinput .ri-d{font-size:13px;color:var(--slate);margin-top:6px}
+    .rinput .ri-d{font-size:13px;color:var(--slate);margin-top:6px;max-width:75%}
+    .stamp{position:absolute;right:12px;top:12px;font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.05em;padding:6px 10px;border:1.5px solid;border-radius:6px;background:var(--white);transform:rotate(-4deg);animation:stampIn .32s cubic-bezier(0.22,1,0.36,1) both}
+    @keyframes stampIn{0%{transform:rotate(-4deg) scale(1.9);opacity:0}100%{transform:rotate(-4deg) scale(1);opacity:1}}
+    .stamp.auto{color:#0f9c78;border-color:#0f9c78;background:#eafff8}
+    .stamp.hold{color:#8a6400;border-color:#e0b34d;background:#fdf6e3}
+    .stamp.block{color:var(--rose);border-color:var(--rose);background:#fdeceb}
+    .stamp.escal{color:#2b6cb0;border-color:#7fb0e6;background:#eef5fd}
     .rstage{display:grid;grid-template-columns:96px 1fr;gap:10px;align-items:start;padding:11px 0;border-bottom:1px solid var(--mist);font-size:13px}
     .rstage:last-child{border-bottom:none}
     .rstage .rk{font-family:var(--mono);font-size:10px;color:var(--graphite);padding-top:2px;text-transform:uppercase;line-height:1.5}
@@ -83,23 +101,42 @@
     .rstage.on .rv{color:var(--navy);font-weight:500}
     .thinking::after{content:"";animation:think 1.2s steps(4,end) infinite}
     @keyframes think{0%{content:""}25%{content:"."}50%{content:".."}75%{content:"..."}}
-    pre.rjson{font-family:var(--mono);font-size:11.5px;line-height:1.65;background:var(--abyss);color:#cdd7e0;border-radius:8px;padding:12px 14px;overflow-x:auto;margin:6px 0 0;white-space:pre-wrap;word-break:break-word;display:none}
+    pre.rjson{font-family:var(--mono);font-size:11.5px;line-height:1.65;background:var(--abyss);color:#cdd7e0;border-radius:8px;padding:12px 14px;overflow-x:auto;margin:6px 0 0;white-space:pre-wrap;word-break:break-word;display:none;animation:fadeUp .3s ease}
     pre.rjson.show{display:block}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}}
+
+    /* the chain */
+    .rchain{display:flex;gap:6px;overflow-x:auto;padding:12px 2px 4px;min-width:0}
+    .blk{display:flex;flex-direction:column;gap:1px;border:1px solid var(--silver);border-radius:8px;padding:5px 9px;flex:0 0 auto;background:var(--white);animation:blkIn .3s cubic-bezier(0.22,1,0.36,1) both}
+    @keyframes blkIn{from{transform:scale(.6);opacity:0}}
+    .blk .bt{font-family:var(--mono);font-size:9.5px;color:var(--navy);font-weight:500;text-transform:uppercase;white-space:nowrap}
+    .blk .bh{font-family:var(--mono);font-size:9.5px;color:var(--steel);white-space:nowrap}
+    .blk.human{border-color:#b7cc00;background:#fbffe6}
+    .blk.sim{border-style:dashed}
+    .blk.genesis{background:var(--fog)}
+
+    /* human queue */
     .rq-head{font-size:15px;font-weight:600;margin-bottom:2px}
-    .rq-sub{font-family:var(--mono);font-size:11px;color:var(--graphite);margin-bottom:14px}
-    .rq-item{border:1px solid var(--mist);border-radius:10px;padding:12px 14px;margin-bottom:10px;background:var(--fog)}
-    .rq-item .t{font-size:13.5px;font-weight:500}
-    .rq-item .m{font-family:var(--mono);font-size:11px;color:var(--graphite);margin-top:4px}
-    .rq-item .rec{font-family:var(--mono);font-size:11px;margin-top:8px;line-height:1.6}
-    .rq-empty{font-size:13px;color:var(--graphite);font-family:var(--mono)}
-    .gate{margin-top:10px;display:flex;gap:8px}
-    .gate button{font-family:var(--sans);font-size:12px;font-weight:500;padding:7px 14px;border-radius:6px;cursor:pointer;border:1px solid}
+    .rq-sub{font-family:var(--mono);font-size:11px;color:var(--graphite);margin-bottom:14px;line-height:1.6}
+    .rq-item{border:1px solid var(--mist);border-radius:10px;padding:13px 14px;margin-bottom:10px;background:var(--fog);animation:qIn .4s ease both}
+    @keyframes qIn{from{opacity:0;transform:translateX(14px)}}
+    .rq-item .t{font-size:14px;font-weight:600;display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+    .rq-item .t .amt{font-family:var(--mono);font-size:12px;color:var(--graphite);font-weight:400;white-space:nowrap}
+    .lblm{font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;color:var(--graphite);text-transform:uppercase;display:block;margin-bottom:3px}
+    .rq-row{margin-top:10px;font-size:12.5px;color:var(--slate);line-height:1.5}
+    .rq-row.why{color:#8a6400}
+    .gate{margin-top:12px}
+    .gate .btns{display:flex;gap:8px;margin-top:4px}
+    .gate button{font-family:var(--sans);font-size:12px;font-weight:500;padding:7px 16px;border-radius:6px;cursor:pointer;border:1px solid;transition:transform .15s}
+    .gate button:hover{transform:translateY(-1px)}
     .gate .ap{background:#0f9c78;border-color:#0f9c78;color:#fff}
     .gate .rj{background:#fff;border-color:var(--rose);color:var(--rose)}
-    .rchain{display:flex;gap:6px;overflow-x:auto;padding:10px 2px 4px;min-width:0}
-    .rchain .chip{font-family:var(--mono);font-size:10px;border:1px solid var(--silver);border-radius:6px;padding:3px 7px;color:var(--slate);white-space:nowrap}
-    .rchain .chip.human{border-color:#b7cc00;background:#fbffe6}
-    .rchain .chip.sim{border-style:dashed}
+    .rq-dec{margin-top:12px;border-radius:8px;padding:10px 12px;font-size:12.5px;line-height:1.5;animation:fadeUp .35s ease both}
+    .rq-dec.ap{background:#eafff8;border:1px solid #9fe8d0;color:#0c7a5e}
+    .rq-dec.rj{background:#fdeceb;border:1px solid #f2c4c1;color:#a33632}
+    .rq-dec b{font-weight:600}
+    .rq-dec .who{font-family:var(--mono);font-size:10px;display:block;margin-top:4px;opacity:.8}
+    .rq-empty{font-size:13px;color:var(--graphite);font-family:var(--mono)}
 
     /* dashboard */
     .dash{display:grid;grid-template-columns:1.35fr 1fr;gap:24px;margin-top:32px;align-items:start}
@@ -108,7 +145,7 @@
     .board h3,.ledger h3{font-size:14px;font-weight:600;padding:16px 18px;border-bottom:1px solid var(--mist);display:flex;justify-content:space-between;align-items:center}
     .rowitem{border-bottom:1px solid var(--mist)}
     .rowitem:last-child{border-bottom:none}
-    .rowmain{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:13px 18px;cursor:pointer}
+    .rowmain{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:13px 18px;cursor:pointer;transition:background .15s}
     .rowmain:hover{background:var(--fog)}
     .rowmain .t{font-size:14px;font-weight:500}
     .rowmain .c{font-family:var(--mono);font-size:12px;color:var(--graphite)}
@@ -119,13 +156,14 @@
     .pill.escal{border-color:#7fb0e6;color:#2b6cb0}
     .pill.resolved{border-color:var(--mint);background:#eafff8;color:#0f9c78}
     .detail{padding:0 18px 16px;font-size:13px;color:var(--slate);display:none}
-    .detail.open{display:block}
+    .detail.open{display:block;animation:fadeUp .25s ease}
     .detail .kv{font-family:var(--mono);font-size:11px;color:var(--graphite);margin:2px 0}
     .detail .flags{margin:8px 0}
     .flagchip{font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:4px;background:#fdf6e3;color:#8a6400;margin-right:5px;border:1px solid #f0e2b8}
     .ledger{background:var(--white);border:1px solid var(--mist);border-radius:12px;box-shadow:var(--shadow);overflow:hidden;position:sticky;top:70px}
     .ledger .badge{font-family:var(--mono);font-size:11px;color:#0f9c78;display:flex;align-items:center;gap:6px}
-    .ledger .badge .dot{width:7px;height:7px;border-radius:99px;background:var(--mint);box-shadow:0 0 8px var(--mint)}
+    .ledger .badge .dot{width:7px;height:7px;border-radius:99px;background:var(--mint);box-shadow:0 0 8px var(--mint);animation:pulseDot 2.4s infinite}
+    @keyframes pulseDot{0%,100%{box-shadow:0 0 6px var(--mint)}50%{box-shadow:0 0 14px var(--mint)}}
     .lentries{max-height:440px;overflow-y:auto}
     .lentry{padding:11px 18px;border-bottom:1px solid var(--mist);font-size:12px}
     .lentry:last-child{border-bottom:none}
@@ -136,27 +174,45 @@
 
     /* benchmark */
     .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:28px}
-    .stat{background:var(--white);border:1px solid var(--mist);border-radius:12px;padding:22px;box-shadow:var(--shadow)}
+    .stat{background:var(--white);border:1px solid var(--mist);border-radius:12px;padding:22px;box-shadow:var(--shadow);transition:transform .18s}
+    .stat:hover{transform:translateY(-3px)}
     .stat .n{font-size:36px;font-weight:600;letter-spacing:-0.04em}
     .stat .n.mint{color:#0f9c78}.stat .n.navy{color:var(--navy)}
     .stat .l{font-size:13px;color:var(--graphite);margin-top:8px;line-height:1.4}
     .stat.hero-metric{border-color:var(--mint);border-width:1.5px}
     .split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
     .cases{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:20px}
-    .cbox{aspect-ratio:1;border-radius:6px;display:grid;place-items:center;font-family:var(--mono);font-size:11px;font-weight:500;border:1px solid}
+    .cbox{aspect-ratio:1;border-radius:6px;display:grid;place-items:center;font-family:var(--mono);font-size:11px;font-weight:500;border:1px solid;opacity:0;transform:scale(.7)}
+    .cases.in .cbox{animation:pop .3s cubic-bezier(0.22,1,0.36,1) both;animation-delay:calc(var(--i)*28ms)}
+    @keyframes pop{to{opacity:1;transform:scale(1)}}
     .cbox.ok{background:#eafff8;border-color:var(--mint);color:#0f9c78}
     .cbox.miss{background:#fdf6e3;border-color:#e0b34d;color:#8a6400}
     .caption{font-size:13px;color:var(--graphite);margin-top:14px;font-family:var(--mono)}
 
-    /* how it works */
-    .flow4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:28px}
-    .stepc{background:var(--white);border:1px solid var(--mist);border-radius:12px;padding:18px;box-shadow:var(--shadow)}
-    .stepc .k{font-family:var(--mono);font-size:11px;color:var(--graphite)}
-    .stepc h4{font-size:15px;font-weight:600;margin-top:8px}
-    .stepc p{font-size:13px;color:var(--slate);margin-top:6px;line-height:1.5}
-    .stepc.human{border-color:var(--voltage)}
-    .archwrap{margin-top:28px;background:var(--white);border:1px solid var(--mist);border-radius:12px;box-shadow:var(--shadow);padding:8px;overflow:hidden}
-    .archwrap img{width:100%;display:block;border-radius:8px}
+    /* architecture (native, animated) */
+    .arch{margin-top:32px;background:var(--white);border:1px solid var(--mist);border-radius:12px;box-shadow:var(--shadow);padding:26px}
+    .apath{display:flex;align-items:stretch;gap:0}
+    .anode{flex:1;border:1px solid var(--mist);border-radius:10px;background:var(--fog);padding:14px 16px;min-width:0}
+    .anode .ak{font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--graphite);display:block}
+    .anode b{display:block;font-size:14px;font-weight:600;margin-top:5px;letter-spacing:-0.01em}
+    .anode span.d{display:block;font-size:12px;color:var(--slate);margin-top:3px;line-height:1.45}
+    .anode.gate{border-color:var(--navy);background:var(--white)}
+    .anode.humann{border-color:#d9e600;background:#fbffe6}
+    .anode.ledgern{border-color:var(--mint);background:#f2fffb}
+    .aarrow{flex:0 0 30px;align-self:center;height:2px;position:relative;margin:0 2px;
+      background:repeating-linear-gradient(90deg,var(--silver) 0 6px,transparent 6px 11px);
+      animation:aflow .9s linear infinite}
+    @keyframes aflow{to{background-position:11px 0}}
+    .aarrow::after{content:"";position:absolute;right:-1px;top:-4px;border:5px solid transparent;border-left-color:var(--silver)}
+    .averd{display:flex;gap:10px;margin:18px 0;flex-wrap:wrap;align-items:center}
+    .averd .lbl{font-family:var(--mono);font-size:10px;text-transform:uppercase;color:var(--graphite);margin-right:2px}
+    .averd .vp{font-family:var(--mono);font-size:10.5px;padding:5px 11px;border-radius:999px;border:1px solid}
+    .vp.g{border-color:var(--mint);color:#0f9c78;background:#eafff8}
+    .vp.h{border-color:#e0b34d;color:#8a6400;background:#fdf6e3}
+    .vp.b{border-color:var(--rose);color:var(--rose);background:#fdeceb}
+    .vp.e{border-color:#7fb0e6;color:#2b6cb0;background:#eef5fd}
+    .averd .to{font-family:var(--mono);font-size:10.5px;color:var(--graphite)}
+    .acap{font-size:13px;color:var(--graphite);margin-top:18px;line-height:1.55;border-top:1px solid var(--mist);padding-top:14px}
 
     /* submission summary */
     .sum{margin-top:28px;border-top:1px solid var(--mist)}
@@ -173,12 +229,17 @@
 
     @media(max-width:860px){
       .split,.dash,.replay,.foot-grid{grid-template-columns:1fr}
-      .stats,.flow4{grid-template-columns:1fr 1fr}
+      .stats{grid-template-columns:1fr 1fr}
       .cases{grid-template-columns:repeat(5,1fr)}
       .sumrow{grid-template-columns:1fr;gap:4px}
       .navlinks{display:none}.ledger{position:static}
+      .apath{flex-direction:column;gap:10px}
+      .aarrow{flex:0 0 22px;width:2px;height:22px;align-self:center;margin:0;
+        background:repeating-linear-gradient(180deg,var(--silver) 0 6px,transparent 6px 11px);animation:none}
+      .aarrow::after{right:-4px;top:auto;bottom:-1px;border:5px solid transparent;border-top-color:var(--silver)}
+      .rinput .ri-t,.rinput .ri-d{max-width:100%}
+      .stamp{position:static;display:inline-block;margin-top:10px}
     }
-    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   </style>
 </head>
 <body>
@@ -195,16 +256,16 @@
 
   <!-- HERO (compact) -->
   <header class="wrap hero">
-    <span class="eyebrow"><span class="d"></span> AI AGENT &amp; OPENCLAW RESEARCH INTERN · PRE-INTERVIEW TASK</span>
-    <h1>AI executes.<br />You <span class="u">decide</span>.</h1>
-    <p class="sub">A working demonstration of OpenClaw's 80/20 governance on an open-source model: self-hosted <b style="color:var(--navy)">Qwen3</b> advises, deterministic rules decide, a human approves the exceptions, and every step lands in a tamper-evident ledger. <b style="color:var(--navy)">Kimi K2</b> is evaluated as the cloud option in the report.</p>
-    <div class="chiprow">
+    <span class="eyebrow rev"><span class="d"></span> AI AGENT &amp; OPENCLAW RESEARCH INTERN · PRE-INTERVIEW TASK</span>
+    <h1 class="rev" style="transition-delay:.08s">AI executes.<br />You <span class="u">decide</span>.</h1>
+    <p class="sub rev" style="transition-delay:.16s">A working demonstration of OpenClaw's 80/20 governance on an open-source model: self-hosted <b style="color:var(--navy)">Qwen3</b> advises, deterministic rules decide, a human approves the exceptions, and every step lands in a tamper-evident ledger. <b style="color:var(--navy)">Kimi K2</b> is evaluated as the cloud option in the report.</p>
+    <div class="chiprow rev" style="transition-delay:.24s">
       <div class="chipstat"><div class="n m">0.0%</div><div class="l">UNSAFE AUTO-APPROVALS</div></div>
-      <div class="chipstat"><div class="n">80%</div><div class="l">DECISION ACCURACY (25 CASES)</div></div>
-      <div class="chipstat"><div class="n">1.8s</div><div class="l">LATENCY, LAPTOP GPU</div></div>
-      <div class="chipstat"><div class="n">100%</div><div class="l">SELF-HOSTED, NO DATA LEAVES</div></div>
+      <div class="chipstat"><div class="n"><span class="cnt" data-v="80" data-suf="%">0%</span></div><div class="l">DECISION ACCURACY (25 CASES)</div></div>
+      <div class="chipstat"><div class="n"><span class="cnt" data-v="1.8" data-dec="1" data-suf="s">0s</span></div><div class="l">LATENCY, LAPTOP GPU</div></div>
+      <div class="chipstat"><div class="n"><span class="cnt" data-v="100" data-suf="%">0%</span></div><div class="l">SELF-HOSTED, NO DATA LEAVES</div></div>
     </div>
-    <div class="cta-row">
+    <div class="cta-row rev" style="transition-delay:.32s">
       <a class="btn" href="#replay">Watch the recorded run</a>
       <a class="btn ghost" href="report.html">Read the full report</a>
     </div>
@@ -212,10 +273,12 @@
 
   <!-- THE DEMONSTRATION -->
   <section id="replay" class="band-white" style="padding-top:56px"><div class="wrap">
-    <p class="kicker">The demonstration · a real recorded run, replayed</p>
-    <h2>Watch the model advise, the rules decide, and the human approve.</h2>
-    <p class="lead">This replays the actual run: the real inputs, the exact JSON the model returned, the real response times, and the growing hash chain. Press play, or skip to the end. Then take the reviewer's seat and clear the queue yourself.</p>
-    <div class="replay">
+    <div class="rev">
+      <p class="kicker">The demonstration · a real recorded run, replayed</p>
+      <h2>Watch the model advise, the rules decide, and the human approve.</h2>
+      <p class="lead">This replays the actual run: the real inputs, the exact JSON the model returned, the real response times, and the growing decision chain. Press play, or skip to the end. Then take the reviewer's seat and clear the queue yourself.</p>
+    </div>
+    <div class="replay rev" style="transition-delay:.1s">
       <div class="rpanel">
         <div class="rctrl">
           <button class="btn" id="rp-play" onclick="rpPlay()">Play the recorded run</button>
@@ -231,24 +294,26 @@
           <div class="rstage" id="rs-adv"><span class="rk">Advisory</span><span class="rv" id="rv-adv">idle</span><span></span><pre class="rjson" id="rp-json"></pre></div>
           <div class="rstage" id="rs-zod"><span class="rk">Contract</span><span class="rv" id="rv-zod">idle · schema check; malformed output goes to a human</span></div>
           <div class="rstage" id="rs-rules"><span class="rk">Rules<br />(decide)</span><span class="rv" id="rv-rules">idle · the deterministic policy engine owns the verdict</span></div>
-          <div class="rstage" id="rs-ledger"><span class="rk">Ledger</span><span class="rv" id="rv-ledger">genesis block only</span></div>
+          <div class="rstage" id="rs-ledger"><span class="rk">Ledger</span><span class="rv" id="rv-ledger">chain started</span></div>
         </div>
-        <div class="rchain" id="rp-chain" aria-label="hash chain"><span class="chip">#genesis</span></div>
+        <div class="rchain" id="rp-chain" aria-label="decision chain"></div>
       </div>
       <div class="rpanel">
-        <div class="rq-head">The human review queue</div>
-        <div class="rq-sub">decisions the rules refused to automate · the 20%</div>
-        <div id="rp-queue"><p class="rq-empty">Empty. Held and escalated items land here during the run.</p></div>
+        <div class="rq-head">Needs a human decision</div>
+        <div class="rq-sub">The rules stopped these instead of auto-approving them. In OpenClaw this is the 20% a person keeps.</div>
+        <div id="rp-queue"><p class="rq-empty">Empty until the run reaches an item the rules refuse to automate.</p></div>
       </div>
     </div>
   </div></section>
 
   <!-- ALL DECISIONS -->
   <section id="dashboard"><div class="wrap">
-    <p class="kicker">All twelve decisions from the run</p>
-    <h2>Every agent action, governed and recorded.</h2>
-    <p class="lead">Click any row for the model's exact assessment and the rule that decided it. Verdict labels show who decided: the policy engine, or a human. (Approve buttons here simulate the chain; the repo writes the real one, reproducible with <code class="inline">npm start</code>.)</p>
-    <div class="dash">
+    <div class="rev">
+      <p class="kicker">All twelve decisions from the run</p>
+      <h2>Every agent action, governed and recorded.</h2>
+      <p class="lead">Click any row for the model's exact assessment and the rule that decided it. Verdict labels show who decided: the policy engine, or a human. (Approve buttons here simulate the chain; the repo writes the real one, reproducible with <code class="inline">npm start</code>.)</p>
+    </div>
+    <div class="dash rev" style="transition-delay:.1s">
       <div class="board">
         <h3>Triage board <span class="mono" style="font-weight:400;color:var(--graphite);font-size:11px" id="counts"></span></h3>
         <div id="rows"></div>
@@ -262,23 +327,25 @@
 
   <!-- RESULTS -->
   <section id="benchmark" class="band-white"><div class="wrap">
-    <p class="kicker">Measured, not asserted</p>
-    <h2>Benchmarked live on the self-hosted model.</h2>
-    <p class="lead">25 labeled spend cases through the real model on a consumer laptop (RTX 2060). Reproducible with <code class="inline">npm run eval</code>.</p>
+    <div class="rev">
+      <p class="kicker">Measured, not asserted</p>
+      <h2>Benchmarked live on the self-hosted model.</h2>
+      <p class="lead">25 labeled spend cases through the real model on a consumer laptop (RTX 2060). Reproducible with <code class="inline">npm run eval</code>.</p>
+    </div>
     <div class="stats">
-      <div class="stat hero-metric"><div class="n mint">0.0%</div><div class="l">unsafe auto-approvals. Nothing risky was ever auto-approved.</div></div>
-      <div class="stat"><div class="n navy">80%</div><div class="l">exact-verdict accuracy (20/25). Every miss was safe-direction.</div></div>
-      <div class="stat"><div class="n navy">1.8s</div><div class="l">warm latency p50 (2.1s p95) on a 6GB laptop GPU.</div></div>
-      <div class="stat"><div class="n navy">411</div><div class="l">tokens per decision. Cents per thousand at cloud rates.</div></div>
+      <div class="stat hero-metric rev"><div class="n mint">0.0%</div><div class="l">unsafe auto-approvals. Nothing risky was ever auto-approved.</div></div>
+      <div class="stat rev" style="transition-delay:.08s"><div class="n navy"><span class="cnt" data-v="80" data-suf="%">0%</span></div><div class="l">exact-verdict accuracy (20/25). Every miss was safe-direction.</div></div>
+      <div class="stat rev" style="transition-delay:.16s"><div class="n navy"><span class="cnt" data-v="1.8" data-dec="1" data-suf="s">0s</span></div><div class="l">warm latency p50 (2.1s p95) on a 6GB laptop GPU.</div></div>
+      <div class="stat rev" style="transition-delay:.24s"><div class="n navy"><span class="cnt" data-v="411">0</span></div><div class="l">tokens per decision. Cents per thousand at cloud rates.</div></div>
     </div>
     <div class="split" style="margin-top:40px">
-      <div>
+      <div class="rev">
         <h3 style="font-size:18px;font-weight:600;margin-bottom:4px">Per-case results</h3>
         <p style="font-size:14px;color:var(--slate);line-height:1.55">Green is an exact match. Amber is a miss, and in every case the model was <b>more</b> cautious: it held or escalated instead of auto-approving. None of the misses were unsafe.</p>
         <div class="cases" id="casegrid"></div>
         <p class="caption" id="casecap"></p>
       </div>
-      <div>
+      <div class="rev" style="transition-delay:.1s">
         <h3 style="font-size:18px;font-weight:600;margin-bottom:12px">Why this matters</h3>
         <p style="font-size:15px;color:var(--slate);line-height:1.6">The model is imperfect (80%). It does not matter, because the deterministic gate owns the verdict: an imperfect advisory can only ever route to <i>more</i> human review, never to unauthorized spend. The safety floor is 0% unsafe <b>by construction</b>, independent of which model you run. A bigger model (Qwen3-30B or Kimi K2) raises the exact-match rate; it cannot lower the safety floor, because the floor is not the model's job. That is the thesis: <b>govern the model, do not trust it.</b></p>
       </div>
@@ -287,23 +354,42 @@
 
   <!-- HOW IT WORKS -->
   <section id="how"><div class="wrap">
-    <p class="kicker">How it works</p>
-    <h2>A governed gate on every action, self-hosted by design.</h2>
-    <p class="lead">Agents that can spend money are the control risk that stalls enterprise adoption. The gate makes that risk governable: the model can never approve, act, or exceed a cap, and any failure routes to a human, never to an approval.</p>
-    <div class="flow4">
-      <div class="stepc"><div class="k">MODEL · ADVISES</div><h4>Assess</h4><p>Local Qwen3 assesses the action. It never decides or acts.</p></div>
-      <div class="stepc"><div class="k">CONTRACT</div><h4>Validate</h4><p>Output is schema-checked. Malformed input fails closed to a human.</p></div>
-      <div class="stepc"><div class="k">RULES · DECIDE</div><h4>Verdict</h4><p>Deterministic caps and policy own the verdict.</p></div>
-      <div class="stepc human"><div class="k">HUMAN · APPROVES</div><h4>The 20%</h4><p>People clear the risky slice. Every call is logged.</p></div>
+    <div class="rev">
+      <p class="kicker">How it works</p>
+      <h2>A governed gate on every action, self-hosted by design.</h2>
+      <p class="lead">Agents that can spend money are the control risk that stalls enterprise adoption. The gate makes that risk governable: the model can never approve, act, or exceed a cap, and any failure routes to a human, never to an approval.</p>
     </div>
-    <div class="archwrap"><img src="assets/architecture.svg" alt="Architecture diagram: a proposed action flows from the open model (which advises only) through a schema contract to a deterministic gate that owns the verdict (auto-approve, hold, block, or escalate); the exceptions route to a human, and everything is written to a hash-chained ledger." /></div>
+    <div class="arch rev" style="transition-delay:.1s">
+      <div class="apath">
+        <div class="anode"><span class="ak">Inbound</span><b>Proposed action</b><span class="d">a spend request from an agent in the swarm</span></div>
+        <span class="aarrow" aria-hidden="true"></span>
+        <div class="anode"><span class="ak">Model · advises</span><b>Qwen3 assesses</b><span class="d">category, cost, risk, confidence. It never decides.</span></div>
+        <span class="aarrow" aria-hidden="true"></span>
+        <div class="anode"><span class="ak">Contract</span><b>Schema check</b><span class="d">malformed output fails closed to a human</span></div>
+        <span class="aarrow" aria-hidden="true"></span>
+        <div class="anode gate"><span class="ak">Rules · decide</span><b>Policy engine</b><span class="d">caps and policy own the verdict</span></div>
+      </div>
+      <div class="averd">
+        <span class="lbl">Verdicts</span>
+        <span class="vp g">AUTO-APPROVE</span><span class="to">goes straight to the ledger</span>
+        <span class="vp h">HOLD</span><span class="vp b">BLOCK</span><span class="vp e">ESCALATE</span><span class="to">go through the human first</span>
+      </div>
+      <div class="apath">
+        <div class="anode humann"><span class="ak">Human · approves</span><b>The 20%</b><span class="d">a person clears every held, blocked, or escalated item</span></div>
+        <span class="aarrow" aria-hidden="true"></span>
+        <div class="anode ledgern"><span class="ak">Ledger</span><b>Hash-chained record</b><span class="d">every decision, machine or human, tamper-evident and replayable</span></div>
+      </div>
+      <p class="acap">Fail-closed by design: a model error, a malformed answer, or low confidence all route to the human. Nothing routes to an approval by accident.</p>
+    </div>
   </div></section>
 
   <!-- SUBMISSION SUMMARY -->
   <section id="summary" class="band-white"><div class="wrap">
-    <p class="kicker">Submission summary</p>
-    <h2>The short answers, with full detail one click away.</h2>
-    <div class="sum">
+    <div class="rev">
+      <p class="kicker">Submission summary</p>
+      <h2>The short answers, with full detail one click away.</h2>
+    </div>
+    <div class="sum rev" style="transition-delay:.08s">
       <div class="sumrow"><div class="q">Selected model / tool</div><div class="a"><b>Kimi K2</b> (open-weight, evaluated from published benchmarks and pricing) and <b>Qwen3</b> (open-weight, self-hosted; it runs everything on this page). <a href="report.html#model">Why both</a></div></div>
       <div class="sumrow"><div class="q">What it does, in simple words</div><div class="a">Open-weight models are AI models you can run on your own computers instead of a paid cloud API, which keeps client data in-house and makes costs predictable. <a href="report.html#explain">Plain-words explanation</a></div></div>
       <div class="sumrow"><div class="q">The practical project</div><div class="a">This page: a working budget/PO gate for an AI-agent swarm, with a <a href="#replay">replayable live run</a>, a <a href="#dashboard">decision board and audit ledger</a>, and a <a href="#benchmark">measured benchmark</a>.</div></div>
@@ -318,15 +404,17 @@
 
   <!-- REPRODUCE -->
   <section id="run"><div class="wrap">
-    <p class="kicker">Reproduce it</p>
-    <h2>Everything above regenerates from the code.</h2>
-    <p class="lead">Thirty seconds with only Node (a deterministic mock mode), or one env var to run the real self-hosted model. Full source: <a href="https://github.com/malhiss/openclaw-budget-sentinel" style="color:#2b6cb0;font-weight:500">github.com/malhiss/openclaw-budget-sentinel</a></p>
-    <div style="max-width:520px;text-align:left;background:var(--abyss);border-radius:10px;padding:20px 22px;color:#cdd7e0;font-family:var(--mono);font-size:13px;line-height:1.9;margin-top:24px">
-      <span style="color:var(--steel)"># run the governed agent + tests</span><br />
-      cd agent && npm install<br />
-      npm start<span style="color:var(--steel)">     # triage board + verified ledger</span><br />
-      npm test<span style="color:var(--steel)">      # 14 tests, deterministic core</span><br />
-      npm run eval<span style="color:var(--steel)">  # the live benchmark</span>
+    <div class="rev">
+      <p class="kicker">Reproduce it</p>
+      <h2>Everything above regenerates from the code.</h2>
+      <p class="lead">Thirty seconds with only Node (a deterministic mock mode), or one env var to run the real self-hosted model. Full source: <a href="https://github.com/malhiss/openclaw-budget-sentinel" style="color:#2b6cb0;font-weight:500">github.com/malhiss/openclaw-budget-sentinel</a></p>
+      <div style="max-width:520px;text-align:left;background:var(--abyss);border-radius:10px;padding:20px 22px;color:#cdd7e0;font-family:var(--mono);font-size:13px;line-height:1.9;margin-top:24px">
+        <span style="color:var(--steel)"># run the governed agent + tests</span><br />
+        cd agent && npm install<br />
+        npm start<span style="color:var(--steel)">     # triage board + verified ledger</span><br />
+        npm test<span style="color:var(--steel)">      # 14 tests, deterministic core</span><br />
+        npm run eval<span style="color:var(--steel)">  # the live benchmark</span>
+      </div>
     </div>
   </div></section>
 
@@ -366,6 +454,7 @@
     const CASES = ["ok","ok","ok","ok","ok","ok","miss","ok","ok","miss","miss","miss","ok","ok","ok","ok","miss","ok","ok","ok","ok","ok","ok","ok","ok"];
 
     const shortV = v => ({AUTO_APPROVE:"AUTO",HOLD_FOR_HUMAN:"HOLD",BLOCK:"BLOCK",ESCALATE:"ESCAL"}[v]);
+    const stampV = v => ({AUTO_APPROVE:"AUTO-APPROVED",HOLD_FOR_HUMAN:"HELD FOR HUMAN",BLOCK:"BLOCKED",ESCALATE:"ESCALATED"}[v]);
     const cls = v => ({AUTO_APPROVE:"auto",HOLD_FOR_HUMAN:"hold",BLOCK:"block",ESCALATE:"escal"}[v]);
     const resolved = {}; PRELOADED.forEach(p=>resolved[p.id]=p);
     let simHash = 0; const dh = s => { let h=5381; for(let i=0;i<s.length;i++) h=((h<<5)+h+s.charCodeAt(i))>>>0; return h.toString(16).padStart(8,"0"); };
@@ -388,7 +477,7 @@
             ${a.flags.length?`<div class="flags">${a.flags.map(f=>`<span class="flagchip">${f}</span>`).join("")}</div>`:""}
             <div style="margin-top:6px">${a.why}</div>
             ${a.note?`<div style="margin-top:6px;color:var(--graphite)"><i>Model's note to the reviewer: ${a.note}</i></div>`:""}
-            ${(a.v!=="AUTO_APPROVE" && !resolved[a.id])?`<div class="gate"><button class="ap" onclick="review('${a.id}','APPROVE',event)">Approve</button><button class="rj" onclick="review('${a.id}','REJECT',event)">Reject</button></div>`:""}
+            ${(a.v!=="AUTO_APPROVE" && !resolved[a.id])?`<div class="gate"><div class="btns"><button class="ap" onclick="review('${a.id}','APPROVE',event)">Approve</button><button class="rj" onclick="review('${a.id}','REJECT',event)">Reject</button></div></div>`:""}
             ${resolved[a.id]?`<div style="margin-top:8px;font-family:var(--mono);font-size:11px;color:#0f9c78">decided by the human reviewer: ${resolved[a.id].hv.toLowerCase()} &middot; "${resolved[a.id].note}"</div>`:""}
           </div>`;
         wrap.appendChild(div);
@@ -416,7 +505,7 @@
     };
     function renderCases(){
       const g=document.getElementById("casegrid");
-      CASES.forEach((c,i)=>g.insertAdjacentHTML("beforeend",`<div class="cbox ${c}" title="E${i+1}">E${i+1}</div>`));
+      CASES.forEach((c,i)=>g.insertAdjacentHTML("beforeend",`<div class="cbox ${c}" style="--i:${i}" title="E${i+1}">E${i+1}</div>`));
       const ok=CASES.filter(c=>c==="ok").length;
       document.getElementById("casecap").textContent=`${ok}/25 exact match, ${25-ok} safe-direction misses, 0 unsafe.`;
     }
@@ -442,6 +531,7 @@
       {id:"A5",hv:"REJECT",note:"phishing / lottery scam",hash:"e52440b7"},
       {id:"A6",hv:"APPROVE",note:"vendor verified out-of-band, PO raised",hash:"13ece00e"}
     ];
+    const RUNBY = {}; RUN.forEach(a=>RUNBY[a.id]=a);
     const rpReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let rpBusy=false, rpDone=false, rpSimSeq=0;
     const $id=(x)=>document.getElementById(x);
@@ -449,22 +539,26 @@
     const SPEED=0.35; // playback compression; the latencies shown are the real recorded ones
 
     function rpStage(k,txt,on){const rv=$id('rv-'+k);rv.textContent=txt;rv.classList.remove('thinking');$id('rs-'+k).classList.toggle('on',!!on);}
-    function rpChain(hash,cl,title){const c=$id('rp-chain');c.insertAdjacentHTML('beforeend',`<span class="chip ${cl||''}" title="${title||''}">#${hash}</span>`);c.scrollLeft=c.scrollWidth;}
-    function rpInput(a){$id('rp-input').innerHTML=`<div class="ri-t">${a.t}</div><div class="ri-m">${a.id} &middot; amount_hint: ${a.amt==null?"(none)":"$"+a.amt}</div><div class="ri-d">${a.desc}</div>`;}
+    function rpChain(top,hash,cl,title){const c=$id('rp-chain');c.insertAdjacentHTML('beforeend',`<span class="blk ${cl||''}" title="${title||''}"><span class="bt">${top}</span><span class="bh">#${hash}</span></span>`);c.scrollLeft=c.scrollWidth;}
+    function rpGenesis(){$id('rp-chain').innerHTML='<span class="blk genesis"><span class="bt">chain start</span><span class="bh">#genesis</span></span>';}
+    function rpInput(a){const el=$id('rp-input');el.className='rinput';el.innerHTML=`<div class="ri-t">${a.t}</div><div class="ri-m">${a.id} &middot; amount_hint: ${a.amt==null?"(none)":"$"+a.amt}</div><div class="ri-d">${a.desc}</div>`;}
+    function rpStamp(a){const el=$id('rp-input');el.classList.add('f-'+cls(a.v));el.insertAdjacentHTML('beforeend',`<span class="stamp ${cls(a.v)}">${stampV(a.v)}</span>`);}
     function rpQueueAdd(a){
       const q=$id('rp-queue');const empty=q.querySelector('.rq-empty');if(empty)empty.remove();
       q.insertAdjacentHTML('beforeend',`<div class="rq-item" id="rq-${a.id}">
-        <div class="t">${a.t} <span class="pill ${cls(a.v)}" style="margin-left:6px" title="decided by the policy engine">rules · ${shortV(a.v)}</span></div>
-        <div class="m">$${a.adv.est_cost_usd} &middot; model confidence ${a.adv.confidence}${a.adv.risk_flags.length?" &middot; "+a.adv.risk_flags.join(", "):""}</div>
-        <div class="gate" id="rqg-${a.id}"><button class="ap" onclick="rpHuman('${a.id}','APPROVE',false)">Approve</button><button class="rj" onclick="rpHuman('${a.id}','REJECT',false)">Reject</button></div>
+        <div class="t">${a.t} <span class="amt">$${a.adv.est_cost_usd}</span></div>
+        <div class="rq-row why"><span class="lblm">Why it stopped here</span>${a.reason}</div>
+        <div class="rq-row"><span class="lblm">What the model saw</span>"${a.adv.rationale}" &middot; confidence ${a.adv.confidence}${a.adv.risk_flags.length?" &middot; flags: "+a.adv.risk_flags.join(", "):""}</div>
+        <div class="gate" id="rqg-${a.id}"><span class="lblm">Your decision as the reviewer</span><div class="btns"><button class="ap" onclick="rpHuman('${a.id}','APPROVE',false)">Approve</button><button class="rj" onclick="rpHuman('${a.id}','REJECT',false)">Reject</button></div></div>
       </div>`);
     }
     window.rpHuman=function(id,hv,recorded,note,hash){
       const g=$id('rqg-'+id);if(g)g.remove();
       const item=$id('rq-'+id);if(!item)return;
       const h=recorded?hash:('sim'+(++rpSimSeq)).padEnd(8,'0');
-      item.insertAdjacentHTML('beforeend',`<div class="rec" style="color:${hv==='APPROVE'?'#0f9c78':'var(--rose)'}">${hv==='APPROVE'?'approved':'rejected'} by the human reviewer ${recorded?'(recorded in the live run: "'+note+'")':'(you, simulated on this page)'}</div>`);
-      rpChain(h,recorded?'human':'human sim',(recorded?'recorded human review ':'simulated human review ')+id);
+      const why=recorded?`"${note}"`:'your call, recorded to the chain';
+      item.insertAdjacentHTML('beforeend',`<div class="rq-dec ${hv==='APPROVE'?'ap':'rj'}"><b>${hv==='APPROVE'?'Approved':'Rejected'}</b> &middot; ${why}<span class="who">${recorded?'decided by the human reviewer in the live run':'decided by you, simulated on this page'}</span></div>`);
+      rpChain(`${id} · human · ${hv==='APPROVE'?'approve':'reject'}`,h,recorded?'human':'human sim',(recorded?'recorded human review ':'simulated human review ')+id);
     };
     async function rpOne(a,i,instant){
       rpInput(a);$id('rp-prog').textContent=`action ${i+1} of ${RUN.length}`;
@@ -478,10 +572,11 @@
       rpStage('zod','schema valid, passed to the gate',true);
       if(!instant)await rpSleep(320);
       rpStage('rules',`${a.v.replace(/_/g,' ')} · decided by the policy engine · ${a.reason}`,true);
-      rpChain(a.hash,'','agent decision '+a.id);
+      rpStamp(a);
+      rpChain(`${a.id} · rules · ${shortV(a.v).toLowerCase()}`,a.hash,'','agent decision '+a.id);
       rpStage('ledger',`block #${i+1} chained and verified`,true);
       if(a.v!=='AUTO_APPROVE'&&!$id('rq-'+a.id))rpQueueAdd(a);
-      if(!instant)await rpSleep(650);
+      if(!instant)await rpSleep(760);
     }
     async function rpRun(instant){
       if(rpBusy)return;rpBusy=true;$id('rp-play').disabled=true;
@@ -491,16 +586,42 @@
       rpBusy=false;rpDone=true;$id('rp-play').textContent='Replay from the start';$id('rp-play').disabled=false;
     }
     function rpReset(){
-      $id('rp-chain').innerHTML='<span class="chip">#genesis</span>';
-      $id('rp-queue').innerHTML='<p class="rq-empty">Empty. Held and escalated items land here during the run.</p>';
+      rpGenesis();
+      $id('rp-queue').innerHTML='<p class="rq-empty">Empty until the run reaches an item the rules refuse to automate.</p>';
       rpStage('model','idle · the model assesses; it never decides or acts',false);
       rpStage('adv','idle',false);
       rpStage('zod','idle · schema check; malformed output goes to a human',false);
       rpStage('rules','idle · the deterministic policy engine owns the verdict',false);
-      rpStage('ledger','genesis block only',false);$id('rp-json').classList.remove('show');rpSimSeq=0;
+      rpStage('ledger','chain started',false);$id('rp-json').classList.remove('show');rpSimSeq=0;
     }
     window.rpPlay=function(){if(rpBusy)return;if(rpDone){rpReset();rpDone=false;}rpRun(rpReduce);}
     window.rpSkip=function(){if(rpBusy)return;if(rpDone){rpReset();rpDone=false;}rpRun(true);}
+    rpGenesis();
+
+    // ---- motion: scroll reveals + count-ups (reduced-motion safe) ----
+    (function(){
+      const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const revs=document.querySelectorAll('.rev');
+      function countUp(el){
+        const v=parseFloat(el.dataset.v), dec=parseInt(el.dataset.dec||'0',10), suf=el.dataset.suf||'';
+        const t0=performance.now(), dur=850;
+        function tick(t){const p=Math.min(1,(t-t0)/dur), e=1-Math.pow(1-p,3);
+          el.textContent=(v*e).toFixed(dec)+suf; if(p<1)requestAnimationFrame(tick);}
+        requestAnimationFrame(tick);
+      }
+      function activate(el){
+        el.classList.add('in');
+        el.querySelectorAll('.cnt').forEach(c=>{ if(!c.dataset.done){c.dataset.done=1; reduce?c.textContent=parseFloat(c.dataset.v).toFixed(parseInt(c.dataset.dec||'0',10))+(c.dataset.suf||''):countUp(c);} });
+        const cg=el.querySelector?el.querySelector('.cases'):null; if(cg)cg.classList.add('in');
+        if(el.classList.contains('cases'))el.classList.add('in');
+      }
+      if(reduce){revs.forEach(activate);document.querySelectorAll('.cases').forEach(c=>c.classList.add('in'));return;}
+      const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){activate(e.target);io.unobserve(e.target);}}),{threshold:.12});
+      revs.forEach(el=>io.observe(el));
+      const cg=document.getElementById('casegrid'); if(cg){const io2=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io2.unobserve(e.target);}}),{threshold:.2}); io2.observe(cg.closest('.cases')||cg);}
+      // hero entrance on load
+      requestAnimationFrame(()=>document.querySelectorAll('.hero .rev').forEach(el=>activate(el)));
+    })();
   </script>
 </body>
 </html>
