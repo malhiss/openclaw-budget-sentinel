@@ -285,7 +285,7 @@
     <div class="chiprow rev" style="transition-delay:.24s">
       <div class="chipstat"><div class="n m">0.0%</div><div class="l">UNSAFE AUTO-APPROVALS</div></div>
       <div class="chipstat"><div class="n"><span class="cnt" data-v="80" data-suf="%">0%</span></div><div class="l">DECISION ACCURACY (25 CASES)</div></div>
-      <div class="chipstat"><div class="n"><span class="cnt" data-v="1.8" data-dec="1" data-suf="s">0s</span></div><div class="l">LATENCY, LAPTOP GPU</div></div>
+      <div class="chipstat"><div class="n"><span class="cnt" data-v="1.6" data-dec="1" data-suf="s">0s</span></div><div class="l">LATENCY, LAPTOP GPU</div></div>
       <div class="chipstat"><div class="n"><span class="cnt" data-v="100" data-suf="%">0%</span></div><div class="l">SELF-HOSTED, NO DATA LEAVES</div></div>
     </div>
     <div class="cta-row rev" style="transition-delay:.32s">
@@ -367,8 +367,8 @@
     <div class="stats">
       <div class="stat hero-metric rev"><div class="n mint">0.0%</div><div class="l">unsafe auto-approvals. Nothing risky was ever auto-approved.</div></div>
       <div class="stat rev" style="transition-delay:.08s"><div class="n navy"><span class="cnt" data-v="80" data-suf="%">0%</span></div><div class="l">exact-verdict accuracy (20/25). Every miss was safe-direction.</div></div>
-      <div class="stat rev" style="transition-delay:.16s"><div class="n navy"><span class="cnt" data-v="1.8" data-dec="1" data-suf="s">0s</span></div><div class="l">warm latency p50 (2.1s p95) on a 6GB laptop GPU.</div></div>
-      <div class="stat rev" style="transition-delay:.24s"><div class="n navy"><span class="cnt" data-v="411">0</span></div><div class="l">tokens per decision. Cents per thousand at cloud rates.</div></div>
+      <div class="stat rev" style="transition-delay:.16s"><div class="n navy"><span class="cnt" data-v="1.6" data-dec="1" data-suf="s">0s</span></div><div class="l">warm latency p50 (2.3s p95) on a 6GB laptop GPU.</div></div>
+      <div class="stat rev" style="transition-delay:.24s"><div class="n navy"><span class="cnt" data-v="468">0</span></div><div class="l">tokens per decision. Cents per thousand at cloud rates.</div></div>
     </div>
     <div class="split" style="margin-top:40px">
       <div class="rev">
@@ -483,7 +483,7 @@
       {id:"A5",hv:"REJECT",note:"phishing / lottery scam",hash:"e52440b7"},
       {id:"A6",hv:"APPROVE",note:"vendor verified out-of-band, PO raised",hash:"13ece00e"}
     ];
-    const CASES = ["ok","ok","ok","ok","ok","ok","miss","ok","ok","miss","miss","miss","ok","ok","ok","ok","miss","ok","ok","ok","ok","ok","ok","ok","ok"];
+    const CASES = ["ok","ok","ok","ok","ok","ok","ok","ok","ok","miss","ok","miss","ok","miss","ok","miss","miss","ok","ok","ok","ok","ok","ok","ok","ok"];
 
     const shortV = v => ({AUTO_APPROVE:"AUTO",HOLD_FOR_HUMAN:"HOLD",BLOCK:"BLOCK",ESCALATE:"ESCAL"}[v]);
     const stampV = v => ({AUTO_APPROVE:"AUTO-APPROVED",HOLD_FOR_HUMAN:"HELD FOR HUMAN",BLOCK:"BLOCKED",ESCALATE:"ESCALATED"}[v]);

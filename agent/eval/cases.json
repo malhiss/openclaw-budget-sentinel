@@ -5,7 +5,7 @@
   { "action": { "id": "E4", "title": "Slack Pro annual", "category_hint": "subscription", "amount_hint": 96, "description": "Annual Slack Pro renewal for the ops channel." }, "expected_verdict": "AUTO_APPROVE" },
   { "action": { "id": "E5", "title": "Vector DB monthly", "category_hint": "agent_tool_spend", "amount_hint": 75, "description": "Managed vector database for RAG memory, standard monthly cost." }, "expected_verdict": "AUTO_APPROVE" },
   { "action": { "id": "E6", "title": "Anthropic API top-up", "category_hint": "api_topup", "amount_hint": 200, "description": "Anthropic API credit top-up, within the usual monthly range." }, "expected_verdict": "AUTO_APPROVE" },
-  { "action": { "id": "E7", "title": "Acme Data invoice", "category_hint": "vendor_invoice", "amount_hint": 300, "description": "Monthly data-enrichment invoice from Acme, a known vendor with a PO on file." }, "expected_verdict": "AUTO_APPROVE" },
+  { "action": { "id": "E7", "title": "Acme Data invoice", "category_hint": "vendor_invoice", "amount_hint": 300, "description": "Monthly data-enrichment invoice from Acme, a known vendor with a PO on file." }, "expected_verdict": "HOLD_FOR_HUMAN" },
   { "action": { "id": "E8", "title": "Notion team plan", "category_hint": "subscription", "amount_hint": 60, "description": "Monthly Notion team plan for the documentation workspace." }, "expected_verdict": "AUTO_APPROVE" },
   { "action": { "id": "E9", "title": "CI runner minutes", "category_hint": "agent_tool_spend", "amount_hint": 90, "description": "Monthly CI runner minutes for the build pipeline." }, "expected_verdict": "AUTO_APPROVE" },
 

@@ -29,12 +29,14 @@ supports, and the production recommendation targets the **Qwen3.6-35B-A3B** tier
 them on your own hardware instead of only through a company's paid API. They are strong at **agentic** work —
 following instructions, using tools, and returning structured output — which is exactly what an agent operating
 system needs. Kimi K2.6 is frontier-class: it ties GPT-5.5 on SWE-Bench Pro (58.6%) and leads Humanity's Last
-Exam with tools (54.0%), at roughly 80% lower cost per million tokens than closed frontier models (cited:
+Exam with tools (54.0%), at roughly 8–10× lower list pricing than Opus-tier closed models on routine tasks
+($0.75/$3.50 per M vs ~$5/$25), though the advantage narrows on reasoning-heavy workloads (cited:
 [llm-stats](https://llm-stats.com/models/kimi-k2.6), [Verdent](https://www.verdent.ai/guides/what-is-kimi-k2-6)).
 Qwen comes in sizes from tiny to very large (Qwen 3.6 includes 35B-A3B: 35B parameters, ~3B active), so you can
 trade quality for the hardware you have.
 
-**Why this matters for Elchai specifically.** Elchai's flagship, **OpenClaw**, is itself an open-source,
+**Why this matters for Elchai specifically.** **OpenClaw** — the open-source agent framework Elchai deploys as
+its "Controlled AI Operating System" — is itself an open-source,
 self-hosted agent framework that runs local models via Ollama and keeps data on your own machines
 ([Ollama × OpenClaw](https://docs.ollama.com/integrations/openclaw)). Elchai deploys it as a governed enterprise
 "Controlled AI Operating System": ~52 agents handle 80% of execution, humans keep the 20% (judgment, approvals,
@@ -69,16 +71,24 @@ architecture in [`../assets/architecture.svg`](../assets/architecture.svg), and 
 |---|---|
 | Decision accuracy (exact verdict) | **80.0%** (20/25) |
 | **Unsafe auto-approvals** (risky item wrongly auto-approved) | **0.0%** (0/25) |
-| Correct routing (auto vs. human) | **24/25**; all 16 human-review items routed to a human |
-| Warm latency p50 / p95 | 1.8 s / 2.1 s |
-| Avg tokens / decision | 411 |
+| Correct routing (auto vs. human) | **25/25**; all 8 auto-approvals correct, all 17 human-review items routed to a human |
+| Warm latency p50 / p95 | 1.6 s / 2.3 s |
+| Avg tokens / decision | 468 |
 
-**The finding that matters:** accuracy was 80%, but **every single error was in the safe direction** — the model
-being *more* cautious (holding a legitimate invoice, or escalating an over-cap item instead of holding it, both
-of which still land in front of a human). Nothing risky was ever auto-approved. This is the whole point of the
+**The finding that matters:** accuracy was 80%, but **every single error was in the safe direction** — on each
+of the 5 misses the model escalated or blocked an over-cap item instead of holding it, so all five still landed
+in front of a human. Nothing risky was ever auto-approved. This is the whole point of the
 design: **the deterministic gate, not the model, owns safety**, so a mid-sized open model's imperfections turn
 into extra human review, never into unauthorized spend. A larger model (Qwen3.6-35B-A3B, or Kimi K2.6) would raise the
 exact-match rate; it would not change the safety floor, which is already 0% by construction.
+
+*Method and honest limits:* the 25 benchmark cases are synthetic and non-adversarial, and the ground-truth
+verdicts are my own interpretation of the policy (external adjudication recommended for production). The safety
+metric measures one direction on purpose (should-be-reviewed but auto-approved). The site's interactive replay
+uses a separate 12-action illustrative run, not the 25-case benchmark. The hash-chained ledger detects any
+modification or reordering of recorded entries; detecting deletion of the newest entries also needs the latest
+hash anchored externally (a standard extension, not built here). Because the eval runs on a live model,
+re-running `npm run eval` can shift latency, tokens, and which specific cases miss by a point or two.
 
 ## 4. Use case for Elchai
 
@@ -104,7 +114,7 @@ after the ledger proves it safe.
 | Risk | Reality here | Mitigation (built or recommended) |
 |---|---|---|
 | **Privacy / data** | Spend data is sensitive | Self-hosted model; data never leaves the box (built) |
-| **Security / prompt injection** | Action text could carry an injected instruction | Model gets data in a labelled field, no instructions; it cannot act; rules gate everything (built). Keep it network-isolated (recommended) |
+| **Security / prompt injection** | Action text could carry an injected instruction, or trick the model into understating a cost | Data goes to the model in labelled fields; the prompt makes it flag any embedded instruction as a risk (`injection_suspected` + low confidence → human), and it can never act or raise a cap. In production the amount/vendor come from the authoritative PO record, not the model's reading of free text (model advises category + risk only). Network-isolate (recommended) |
 | **Model accuracy** | 80% exact-match on Qwen3-4B | Errors are safe-direction only; use a larger model (Qwen3.6-35B-A3B / Kimi K2.6) to raise exact-match (recommended) |
 | **Hallucination** | Could invent a cost/vendor | Prompt forbids fabrication; a fabricated high cost still hits caps → human; low-confidence → escalate (built) |
 | **Local hardware cost** | 4B runs on a laptop; production tiers need real GPUs | Size the model to the tier; self-host cost is flat vs. volume (see TCO) |
@@ -114,11 +124,12 @@ after the ledger proves it safe.
 
 ## 7. Cost
 
-See [`tco.md`](tco.md). Summary for a 52-agent swarm (~312k decisions/month, ~410 tokens each): **Kimi K2.6 cloud
-≈ $157/month; self-hosted Qwen ≈ a flat hardware+power cost (≈ $0 marginal); a frontier closed model ≈ $600+/month
-and data leaves.** Open-weight is 3–4× cheaper and self-hostable. Kimi K2.6 pricing cited at $0.75/M input,
-$3.50/M output ([DeepInfra list](https://deepinfra.com/blog/kimi-k2-6-pricing-guide-deployment-tradeoffs);
-blended provider rates $1.15–2.15/1M per [llm-stats](https://llm-stats.com/models/kimi-k2.6)).
+See [`tco.md`](tco.md). Summary for a 52-agent swarm (~312k decisions/month, ~468 tokens each): **Kimi K2.6 cloud
+≈ $170/month; self-hosted Qwen ≈ a flat hardware+power cost (≈ $0 marginal); a mid-tier closed model ≈ $710/month
+and a frontier one ≈ $1,190/month, both leaking data.** Open-weight is ~4× cheaper than mid-tier and ~7× cheaper
+than frontier. Kimi K2.6 pricing cited at $0.75/M input, $3.50/M output
+([DeepInfra list](https://deepinfra.com/blog/kimi-k2-6-pricing-guide-deployment-tradeoffs); provider rates vary
+per [llm-stats](https://llm-stats.com/models/kimi-k2.6)); closed-model prices from Claude/OpenAI list pages.
 
 ## 8. Final recommendation
 
@@ -128,8 +139,12 @@ model's exact-match accuracy (80% on a 4B) should be raised before wide rollout.
 1. **Pilot** Budget Sentinel on one OpenClaw branch with **self-hosted Qwen3.6-35B-A3B**, capped budget, humans clearing
    every hold for the first two weeks.
 2. **Measure** exact-match, unsafe rate (must stay 0), and human-review load against the committed baseline.
-3. **Evaluate Kimi K2.6** in parallel where a cloud call is acceptable, as the capability ceiling.
-4. **Expand** branch by branch only after the ledger proves the safety and cost case — OpenClaw's own
+   Set explicit ship criteria (e.g. unsafe rate 0 and exact-match > 90% on a larger, adversarial eval set).
+3. **Operationalise the human 20%:** define an approval SLA (what happens if a hold is unactioned — retry,
+   expire, or escalate), staff it against the expected hold volume, and run a monthly ledger-verification
+   ceremony (finance re-runs the hash-chain check and reconciles it against actual spend).
+4. **Evaluate Kimi K2.6** in parallel where a cloud call is acceptable, as the capability ceiling.
+5. **Expand** branch by branch only after the ledger proves the safety and cost case — OpenClaw's own
    proof-before-expansion method.
 
 **Do not** let any open model emit the final verdict, run without the deterministic gate, or auto-execute spend.

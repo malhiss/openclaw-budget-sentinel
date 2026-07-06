@@ -31,6 +31,9 @@ export function append(path, payload) {
   return entry;
 }
 
+// Detects any modification or reordering of recorded entries. It does NOT detect
+// deletion of the most recent entries (truncation): closing that needs the latest
+// hash anchored externally (e.g. a signed checkpoint) — a standard extension, not built here.
 export function verify(path) {
   const entries = readAll(path);
   let prev_hash = GENESIS;
