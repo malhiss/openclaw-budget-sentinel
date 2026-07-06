@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://malhiss.github.io/openclaw-budget-sentinel/sitemap.xml
