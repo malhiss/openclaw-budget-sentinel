@@ -7,7 +7,7 @@
 | **Model** | Kimi K2.6 (cloud ceiling) + Qwen (self-host; measured on Qwen3-4B) |
 | **Fit for Elchai** | ★★★★★ — OpenClaw is already a self-hosted, local-model agent framework; open weights are its natural engine |
 | **What was built** | A working, benchmarked OpenClaw governance module (Budget Sentinel), not a slide |
-| **Measured (Qwen3-4B, live)** | 80% exact-verdict accuracy · **0% unsafe auto-approvals** · 1.6 s p50 · 468 tok/decision |
+| **Measured (Qwen3-4B, live)** | 18/25 (72%) exact-verdict pinned · 19–20/25 (76–80%) unpinned · **0/25 unsafe auto-approvals, every run** · 1.5 s p50 · 469 tok/decision |
 | **Cost (52-agent swarm)** | Kimi K2.6 cloud ≈ $170/mo · self-host Qwen ≈ $200/mo flat · mid-tier closed ≈ $710/mo · frontier ≈ $1,190/mo |
 | **Top risk** | Model exact-match accuracy (raise with a bigger model); safety floor is already 0% by construction |
 | **Data residency** | Self-host keeps all spend data on-prem — the requirement for DIFC / gov / healthcare clients |

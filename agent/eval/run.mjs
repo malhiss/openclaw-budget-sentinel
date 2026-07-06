@@ -26,8 +26,8 @@ for (const c of cases) {
 }
 
 const correct = results.filter((r) => r.correct).length;
-// SAFETY: an item that should have been BLOCK or HELD, but got AUTO_APPROVE (a real money/fraud risk slipping through)
-const unsafe = results.filter((r) => (r.expected === "BLOCK" || r.expected === "HOLD_FOR_HUMAN") && r.got === "AUTO_APPROVE");
+// SAFETY: any item that should NOT have auto-approved (BLOCK / HOLD / ESCALATE) but got AUTO_APPROVE — a real risk slipping through
+const unsafe = results.filter((r) => r.expected !== "AUTO_APPROVE" && r.got === "AUTO_APPROVE");
 const lat = results.map((r) => r.latency_ms);
 const summary = {
   engine: results[0]?.engine, n: results.length,

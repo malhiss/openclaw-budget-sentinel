@@ -20,7 +20,7 @@
   <meta name="twitter:description" content="An open model advises, rules decide, humans approve the exceptions. 0% unsafe auto-approvals, measured live." />
   <meta name="twitter:image" content="https://malhiss.github.io/openclaw-budget-sentinel/assets/brand/og-cover.png" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2305060A'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%2318DEFF'/%3E%3C/svg%3E" />
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"CreativeWork","name":"OpenClaw Budget Sentinel","headline":"A governed open-model spend gate for the AI-agent swarm","url":"https://malhiss.github.io/openclaw-budget-sentinel/","abstract":"An open-weight model advises, deterministic rules decide, a human approves the risky 20%, and every action is written to a hash-chained tamper-evident ledger. Benchmarked live on self-hosted Qwen3: 80% accuracy, 0% unsafe auto-approvals.","keywords":["AI governance","open-weight models","deterministic-first","human-in-the-loop","Kimi K2.6","Qwen","OpenClaw"],"creator":{"@type":"Person","name":"Sultan Malhis"},"about":"Pre-interview assessment for Elchai Group (AI Agent & OpenClaw Research Intern)","codeRepository":"https://github.com/malhiss/openclaw-budget-sentinel"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"CreativeWork","name":"OpenClaw Budget Sentinel","headline":"A governed open-model spend gate for the AI-agent swarm","url":"https://malhiss.github.io/openclaw-budget-sentinel/","abstract":"An open-weight model advises, deterministic rules decide, a human approves the risky 20%, and every action is written to a hash-chained tamper-evident ledger. Benchmarked live on self-hosted Qwen3: 0% unsafe auto-approvals on every run, 72–80% exact-verdict accuracy.","keywords":["AI governance","open-weight models","deterministic-first","human-in-the-loop","Kimi K2.6","Qwen","OpenClaw"],"creator":{"@type":"Person","name":"Sultan Malhis"},"about":"Pre-interview assessment for Elchai Group (AI Agent & OpenClaw Research Intern)","codeRepository":"https://github.com/malhiss/openclaw-budget-sentinel"}</script>
   <script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('ocbs-theme')||'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}</script>
   <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -389,9 +389,9 @@
     <h1 class="rev" style="transition-delay:.08s">AI executes.<br />You <span class="u">decide</span>.</h1>
     <p class="sub rev" style="transition-delay:.16s">A working demonstration of OpenClaw's 80/20 governance on an open-source model: self-hosted <b style="color:var(--navy)">Qwen3</b> advises, deterministic rules decide, a human approves the exceptions, and every step lands in a tamper-evident ledger. <b style="color:var(--navy)">Kimi K2.6</b> is evaluated as the cloud option in the report.</p>
     <div class="chiprow rev" style="transition-delay:.24s">
-      <div class="chipstat"><div class="n m">0.0%</div><div class="l">UNSAFE AUTO-APPROVALS</div></div>
-      <div class="chipstat"><div class="n"><span class="cnt" data-v="80" data-suf="%">0%</span></div><div class="l">DECISION ACCURACY (25 CASES)</div></div>
-      <div class="chipstat"><div class="n"><span class="cnt" data-v="1.6" data-dec="1" data-suf="s">0s</span></div><div class="l">LATENCY, LAPTOP GPU</div></div>
+      <div class="chipstat"><div class="n m">0.0%</div><div class="l">UNSAFE AUTO-APPROVALS, EVERY RUN</div></div>
+      <div class="chipstat"><div class="n"><span class="cnt" data-v="72" data-suf="%">0%</span></div><div class="l">EXACT-VERDICT ACCURACY (18/25)</div></div>
+      <div class="chipstat"><div class="n"><span class="cnt" data-v="1.5" data-dec="1" data-suf="s">0s</span></div><div class="l">LATENCY, LAPTOP GPU</div></div>
       <div class="chipstat"><div class="n"><span class="cnt" data-v="100" data-suf="%">0%</span></div><div class="l">SELF-HOSTED, NO DATA LEAVES</div></div>
     </div>
     <div class="cta-row rev" style="transition-delay:.32s">
@@ -471,21 +471,21 @@
       <p class="lead">25 labeled spend cases through the real model on a consumer laptop (RTX 2060). Reproducible with <code class="inline">npm run eval</code>.</p>
     </div>
     <div class="stats">
-      <div class="stat hero-metric rev"><div class="n mint">0.0%</div><div class="l">unsafe auto-approvals. Nothing risky was ever auto-approved.</div></div>
-      <div class="stat rev" style="transition-delay:.08s"><div class="n navy"><span class="cnt" data-v="80" data-suf="%">0%</span></div><div class="l">exact-verdict accuracy (20/25). Every miss was safe-direction.</div></div>
-      <div class="stat rev" style="transition-delay:.16s"><div class="n navy"><span class="cnt" data-v="1.6" data-dec="1" data-suf="s">0s</span></div><div class="l">warm latency p50 (2.3s p95) on a 6GB laptop GPU.</div></div>
-      <div class="stat rev" style="transition-delay:.24s"><div class="n navy"><span class="cnt" data-v="468">0</span></div><div class="l">tokens per decision. Cents per thousand at cloud rates.</div></div>
+      <div class="stat hero-metric rev"><div class="n mint">0.0%</div><div class="l">unsafe auto-approvals, on every run. Nothing risky was ever auto-approved.</div></div>
+      <div class="stat rev" style="transition-delay:.08s"><div class="n navy"><span class="cnt" data-v="72" data-suf="%">0%</span></div><div class="l">exact-verdict accuracy (18/25 pinned; 19–20/25 across 5 unpinned runs). Every miss was safe-direction.</div></div>
+      <div class="stat rev" style="transition-delay:.16s"><div class="n navy"><span class="cnt" data-v="1.5" data-dec="1" data-suf="s">0s</span></div><div class="l">warm latency p50 (2.1s p95) on a 6GB laptop GPU.</div></div>
+      <div class="stat rev" style="transition-delay:.24s"><div class="n navy"><span class="cnt" data-v="469">0</span></div><div class="l">tokens per decision. Cents per thousand at cloud rates.</div></div>
     </div>
     <div class="split" style="margin-top:40px">
       <div class="rev">
         <h3 style="font-size:18px;font-weight:600;margin-bottom:4px">Per-case results</h3>
-        <p style="font-size:14px;color:var(--slate);line-height:1.55">Green is an exact match. Amber is a miss, and in every case the model was <b>more</b> cautious: it held or escalated instead of auto-approving. None of the misses were unsafe.</p>
+        <p style="font-size:14px;color:var(--slate);line-height:1.55">Green is an exact match. Amber is a miss, and in every case the model was <b>more</b> cautious: it escalated or blocked instead of auto-approving. None of the misses were unsafe.</p>
         <div class="cases" id="casegrid"></div>
         <p class="caption" id="casecap"></p>
       </div>
       <div class="rev" style="transition-delay:.1s">
         <h3 style="font-size:18px;font-weight:600;margin-bottom:12px">Why this matters</h3>
-        <p style="font-size:15px;color:var(--slate);line-height:1.6">The model is imperfect (80%). It does not matter, because the deterministic gate owns the verdict: an imperfect advisory can only ever route to <i>more</i> human review, never to unauthorized spend. The safety floor is 0% unsafe <b>by construction</b>, independent of which model you run. A bigger model (Qwen3.6-35B-A3B or Kimi K2.6) raises the exact-match rate; it cannot lower the safety floor, because the floor is not the model's job. That is the thesis: <b>govern the model, do not trust it.</b></p>
+        <p style="font-size:15px;color:var(--slate);line-height:1.6">The model is imperfect (72–80%). It does not matter, because the deterministic gate owns the verdict: an imperfect advisory can only ever route to <i>more</i> human review, never to unauthorized spend. The safety floor is 0% unsafe <b>by construction</b>, independent of which model you run. A bigger model (Qwen3.6-35B-A3B or Kimi K2.6) raises the exact-match rate; it cannot lower the safety floor, because the floor is not the model's job. That is the thesis: <b>govern the model, do not trust it.</b></p>
       </div>
     </div>
   </div></section>
@@ -568,7 +568,7 @@
       <p class="rsub">Risks &amp; limitations</p>
       <div class="risks">
         <div class="r"><b>Privacy:</b> self-hosted, so spend data never leaves the box.</div>
-        <div class="r"><b>Model accuracy:</b> 80% on a small 4B; every error was safe-direction (to a human, never auto-approved). A bigger model raises it.</div>
+        <div class="r"><b>Model accuracy:</b> 72–80% on a small 4B (18/25 pinned); every error was safe-direction (to a human, never auto-approved). A bigger model raises it.</div>
         <div class="r"><b>Prompt injection:</b> field text is treated as untrusted data and flagged to a human; in production the amount comes from the authoritative PO record, not the model.</div>
         <div class="r"><b>Hallucination:</b> the prompt forbids inventing figures; a fabricated high cost still hits a cap and routes to a human.</div>
         <div class="r"><b>Hardware / integration:</b> size the model to the tier; a clean <code class="inline">classify()</code> boundary swaps mock, local, or cloud by one env var.</div>
@@ -583,7 +583,7 @@
         <tr><td>Mid-tier closed ($3/$15)</td><td>~$710</td><td>yes</td><td>yes</td></tr>
         <tr><td>Frontier closed ($5/$25)</td><td>~$1,190</td><td>yes</td><td>yes</td></tr>
       </table>
-      <p style="font-size:14px;color:var(--graphite);margin-top:2px">Open-weight is ~4× cheaper than mid-tier and ~7× than frontier, and only self-host keeps data on-prem. (Illustrative volume: 52 agents × 200 decisions/day; measured 468 tokens/decision.)</p>
+      <p style="font-size:14px;color:var(--graphite);margin-top:2px">Open-weight is ~4× cheaper than mid-tier and ~7× than frontier, and only self-host keeps data on-prem. (Illustrative volume: 52 agents × 200 decisions/day; measured 469 tokens/decision.)</p>
 
       <div class="vbox">
         <div class="vl">Final recommendation</div>
@@ -659,7 +659,7 @@
       {id:"A5",hv:"REJECT",note:"phishing / lottery scam",hash:"e52440b7"},
       {id:"A6",hv:"APPROVE",note:"vendor verified out-of-band, PO raised",hash:"13ece00e"}
     ];
-    const CASES = ["ok","ok","ok","ok","ok","ok","ok","ok","ok","miss","ok","miss","ok","miss","ok","miss","miss","ok","ok","ok","ok","ok","ok","ok","ok"];
+    const CASES = ["ok","ok","ok","ok","ok","ok","ok","ok","ok","miss","miss","miss","miss","miss","ok","miss","miss","ok","ok","ok","ok","ok","ok","ok","ok"];
 
     const shortV = v => ({AUTO_APPROVE:"AUTO",HOLD_FOR_HUMAN:"HOLD",BLOCK:"BLOCK",ESCALATE:"ESCAL"}[v]);
     const stampV = v => ({AUTO_APPROVE:"AUTO-APPROVED",HOLD_FOR_HUMAN:"HELD FOR HUMAN",BLOCK:"BLOCKED",ESCALATE:"ESCALATED"}[v]);

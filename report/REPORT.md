@@ -69,26 +69,29 @@ architecture in [`../assets/architecture.svg`](../assets/architecture.svg), and 
 
 | Metric | Result |
 |---|---|
-| Decision accuracy (exact verdict) | **80.0%** (20/25) |
-| **Unsafe auto-approvals** (risky item wrongly auto-approved) | **0.0%** (0/25) |
+| Decision accuracy (exact verdict) | **18/25 (72%)** on the reproducible pinned run · **19–20/25 (76–80%)** across 5 unpinned runs |
+| **Unsafe auto-approvals** (risky item wrongly auto-approved) | **0/25 (0%)** — on every run, pinned and unpinned |
 | Correct routing (auto vs. human) | **25/25**; all 8 auto-approvals correct, all 17 human-review items routed to a human |
-| Warm latency p50 / p95 | 1.6 s / 2.3 s |
-| Avg tokens / decision | 468 |
+| Warm latency p50 / p95 | 1.5 s / 2.1 s |
+| Avg tokens / decision | 469 |
 
-**The finding that matters:** accuracy was 80%, but **every single error was in the safe direction** — on each
-of the 5 misses the model escalated or blocked an over-cap item instead of holding it, so all five still landed
-in front of a human. Nothing risky was ever auto-approved. This is the whole point of the
+**The finding that matters:** exact-verdict accuracy was 18/25 (72%) on the pinned run and 19–20/25 (76–80%)
+across unpinned runs, but **every single error was in the safe direction** — on each of the 7 misses the model
+escalated or blocked a should-be-held item instead of holding it, so all of them still landed in front of a
+human. **Unsafe auto-approvals stayed at 0/25 on every run.** This is the whole point of the
 design: **the deterministic gate, not the model, owns safety**, so a mid-sized open model's imperfections turn
 into extra human review, never into unauthorized spend. A larger model (Qwen3.6-35B-A3B, or Kimi K2.6) would raise the
 exact-match rate; it would not change the safety floor, which is already 0% by construction.
 
 *Method and honest limits:* the 25 benchmark cases are synthetic and non-adversarial, and the ground-truth
 verdicts are my own interpretation of the policy (external adjudication recommended for production). The safety
-metric measures one direction on purpose (should-be-reviewed but auto-approved). The site's interactive replay
-uses a separate 12-action illustrative run, not the 25-case benchmark. The hash-chained ledger detects any
-modification or reordering of recorded entries; detecting deletion of the newest entries also needs the latest
-hash anchored externally (a standard extension, not built here). Because the eval runs on a live model,
-re-running `npm run eval` can shift latency, tokens, and which specific cases miss by a point or two.
+metric uses the strict definition — **any** item that should not have auto-approved (BLOCK, HOLD, or ESCALATE)
+but did — and it was 0/25 on every run. The eval is pinned (temperature 0.2, fixed seed), so `npm run eval`
+reproduces the committed 18/25 run exactly; across 5 unpinned runs exact-match ranged 19–20/25 (76–80%) while
+unsafe stayed 0. These are small counts on a 25-case set — read them as directional, not precise. The site's
+interactive replay uses a separate 12-action illustrative run, not the 25-case benchmark. The hash-chained
+ledger detects any modification or reordering of recorded entries; detecting deletion of the newest entries
+also needs the latest hash anchored externally (a standard extension, not built here).
 
 ## 4. Use case for Elchai
 
@@ -115,7 +118,7 @@ after the ledger proves it safe.
 |---|---|---|
 | **Privacy / data** | Spend data is sensitive | Self-hosted model; data never leaves the box (built) |
 | **Security / prompt injection** | Action text could carry an injected instruction, or trick the model into understating a cost | Data goes to the model in labelled fields; the prompt makes it flag any embedded instruction as a risk (`injection_suspected` + low confidence → human), and it can never act or raise a cap. In production the amount/vendor come from the authoritative PO record, not the model's reading of free text (model advises category + risk only). Network-isolate (recommended) |
-| **Model accuracy** | 80% exact-match on Qwen3-4B | Errors are safe-direction only; use a larger model (Qwen3.6-35B-A3B / Kimi K2.6) to raise exact-match (recommended) |
+| **Model accuracy** | 72–80% exact-match on Qwen3-4B (18/25 pinned, 19–20/25 unpinned) | Errors are safe-direction only; use a larger model (Qwen3.6-35B-A3B / Kimi K2.6) to raise exact-match (recommended) |
 | **Hallucination** | Could invent a cost/vendor | Prompt forbids fabrication; a fabricated high cost still hits caps → human; low-confidence → escalate (built) |
 | **Local hardware cost** | 4B runs on a laptop; production tiers need real GPUs | Size the model to the tier; self-host cost is flat vs. volume (see TCO) |
 | **Integration difficulty** | Must hook into real PO/spend systems | Clean `classify()` boundary + Zod contract; swap mock→local→cloud by one env var (built) |
@@ -124,7 +127,7 @@ after the ledger proves it safe.
 
 ## 7. Cost
 
-See [`tco.md`](tco.md). Summary for a 52-agent swarm (~312k decisions/month, ~468 tokens each): **Kimi K2.6 cloud
+See [`tco.md`](tco.md). Summary for a 52-agent swarm (~312k decisions/month, ~469 tokens each): **Kimi K2.6 cloud
 ≈ $170/month; self-hosted Qwen ≈ a flat hardware+power cost (≈ $0 marginal); a mid-tier closed model ≈ $710/month
 and a frontier one ≈ $1,190/month, both leaking data.** Open-weight is ~4× cheaper than mid-tier and ~7× cheaper
 than frontier. Kimi K2.6 pricing cited at $0.75/M input, $3.50/M output
@@ -134,7 +137,7 @@ per [llm-stats](https://llm-stats.com/models/kimi-k2.6)); closed-model prices fr
 ## 8. Final recommendation
 
 **Test it — a controlled internal pilot.** The pattern is production-shaped and safe by construction, but the
-model's exact-match accuracy (80% on a 4B) should be raised before wide rollout. Concretely:
+model's exact-match accuracy (72–80% on a 4B) should be raised before wide rollout. Concretely:
 
 1. **Pilot** Budget Sentinel on one OpenClaw branch with **self-hosted Qwen3.6-35B-A3B**, capped budget, humans clearing
    every hold for the first two weeks.

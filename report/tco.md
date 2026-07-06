@@ -1,7 +1,7 @@
 # Cost model — running the OpenClaw swarm three ways
 
 All figures are **illustrative with stated, adjustable assumptions**. The token count is **measured**
-(from `npm run eval`, avg 468 tokens/decision); prices are **cited list prices**. Adjust the assumptions to
+(from `npm run eval`, avg 469 tokens/decision); prices are **cited list prices**. Adjust the assumptions to
 your real volume.
 
 ## Assumptions
@@ -11,7 +11,7 @@ your real volume.
 | Agents in the swarm | 52 | Elchai OpenClaw description |
 | Decisions per agent per day | 200 | assumption (tune to reality) |
 | Decisions / month | ~312,000 | 52 × 200 × 30 |
-| Tokens per decision | ~468 (≈395 in / 73 out) | **measured** on Qwen3-4B |
+| Tokens per decision | ~469 (≈396 in / 73 out) | **measured** on Qwen3-4B |
 | Monthly tokens | ~123M in / ~23M out | derived |
 | Kimi K2.6 price | $0.75 / M in, $3.50 / M out | [DeepInfra list](https://deepinfra.com/blog/kimi-k2-6-pricing-guide-deployment-tradeoffs); provider rates vary per [llm-stats](https://llm-stats.com/models/kimi-k2.6) |
 | Mid-tier closed price | ~$3 / M in, ~$15 / M out | e.g. Claude Sonnet-5 list ([Claude pricing](https://platform.claude.com/docs/en/about-claude/pricing)) |

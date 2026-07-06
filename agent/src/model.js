@@ -19,7 +19,7 @@ async function callLocal(action) {
     stream: false,
     format: "json",
     think: false,
-    options: { temperature: 0.2 }
+    options: { temperature: 0.2, seed: 42 } // fixed seed → reproducible eval at the sampling temperature
   };
   const res = await fetch(`${OLLAMA_URL}/api/chat`, {
     method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body)

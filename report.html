@@ -165,23 +165,24 @@
     <h3>Measured results (live, on self-hosted Qwen3-4B)</h3>
     <div class="statrow">
       <div class="st"><div class="n m">0.0%</div><div class="l">unsafe auto-approvals</div></div>
-      <div class="st"><div class="n">80%</div><div class="l">exact-verdict accuracy</div></div>
-      <div class="st"><div class="n">1.6s</div><div class="l">warm latency p50</div></div>
-      <div class="st"><div class="n">468</div><div class="l">tokens per decision</div></div>
+      <div class="st"><div class="n">18/25</div><div class="l">exact-verdict accuracy (72% pinned; 19–20/25 unpinned)</div></div>
+      <div class="st"><div class="n">1.5s</div><div class="l">warm latency p50</div></div>
+      <div class="st"><div class="n">469</div><div class="l">tokens per decision</div></div>
     </div>
-    <p><strong>The finding that matters:</strong> accuracy was 80%, but every one of the 5 errors was in the safe
-    direction: on each miss the model escalated or blocked an over-cap item instead of holding it, so all five
-    still landed in front of a human. Nothing risky was ever auto-approved. This is the point of the design: <strong>the deterministic gate, not the model, owns safety</strong>,
+    <p><strong>The finding that matters:</strong> accuracy was 18/25 (72%) on the pinned run and 19–20/25 (76–80%)
+    across unpinned runs, but every one of the 7 errors was in the safe direction: on each miss the model
+    escalated or blocked a should-be-held item instead of holding it, so all of them still landed in front of a
+    human. Unsafe auto-approvals stayed 0/25 on every run. This is the point of the design: <strong>the deterministic gate, not the model, owns safety</strong>,
     so a mid-sized open model's imperfections turn into extra human review, never into unauthorized spend. A
     larger model (Qwen3.6-35B-A3B or Kimi K2.6) raises the exact-match rate; it cannot lower the safety floor, which is
     already 0% by construction.</p>
     <h3>Method and honest limits</h3>
     <ul style="font-size:14.5px">
       <li>The 25 benchmark cases are <strong>synthetic and non-adversarial</strong>; ground-truth verdicts are my own reading of the policy rules (external adjudication recommended before production).</li>
-      <li>The safety metric measures one direction on purpose: an item that <strong>should</strong> have been reviewed but was auto-approved.</li>
+      <li>The safety metric uses the strict definition: <strong>any</strong> item that should not have auto-approved (BLOCK, HOLD, or ESCALATE) but did. It was 0/25 on every run.</li>
       <li>The site's interactive replay uses a <strong>separate 12-action illustrative run</strong>, not the 25-case benchmark.</li>
       <li>The ledger detects any modification or reordering of recorded entries; detecting deletion of the newest entries also needs the latest hash <strong>anchored externally</strong> (a standard extension, not built here).</li>
-      <li>Because the eval runs on a live model, re-running <code class="inline">npm run eval</code> may shift latency, tokens, and which specific cases miss by a point or two.</li>
+      <li>The eval is pinned (temperature 0.2, fixed seed), so <code class="inline">npm run eval</code> reproduces the committed 18/25 run exactly; across 5 unpinned runs exact-match ranged 19–20/25 (76–80%) while unsafe stayed 0.</li>
     </ul>
 
     <h2 id="usecase">4. Use case for Elchai</h2>
@@ -207,7 +208,7 @@
       <tr><th>Risk</th><th>Reality here</th><th>Mitigation</th></tr>
       <tr><td><strong>Privacy / data</strong></td><td>Spend data is sensitive</td><td>Self-hosted; data never leaves the box (built)</td></tr>
       <tr><td><strong>Security / prompt injection</strong></td><td>Action text could carry an injected instruction, or trick the model into understating a cost</td><td>Data goes to the model in labelled fields; the prompt instructs it to treat any embedded instruction as a risk (flag <code class="inline">injection_suspected</code>, lower confidence) so it routes to a human; and the model can never act or raise a cap. In production the amount and vendor come from the authoritative PO/invoice record, not the model's reading of free text: the model advises category and risk only. Keep it network-isolated (recommended).</td></tr>
-      <tr><td><strong>Model accuracy</strong></td><td>80% exact-match on Qwen3-4B</td><td>Errors are safe-direction only; use a larger model to raise exact-match (recommended)</td></tr>
+      <tr><td><strong>Model accuracy</strong></td><td>72–80% exact-match on Qwen3-4B (18/25 pinned, 19–20/25 unpinned)</td><td>Errors are safe-direction only; use a larger model to raise exact-match (recommended)</td></tr>
       <tr><td><strong>Hallucination</strong></td><td>Could invent a cost or vendor</td><td>Prompt forbids fabrication; a fabricated high cost still hits caps then a human; low confidence escalates (built)</td></tr>
       <tr><td><strong>Local hardware cost</strong></td><td>4B runs on a laptop; production tiers need real GPUs</td><td>Size the model to the tier; self-host cost is flat vs. volume (see below)</td></tr>
       <tr><td><strong>Integration difficulty</strong></td><td>Must hook into real PO / spend systems</td><td>Clean <code class="inline">classify()</code> boundary and Zod contract; swap mock, local, or cloud by one env var (built)</td></tr>
@@ -216,7 +217,7 @@
     </table>
 
     <h2 id="cost">7. Cost model</h2>
-    <p>Illustrative, with stated assumptions. Token count is <strong>measured</strong> (avg 468 per decision,
+    <p>Illustrative, with stated assumptions. Token count is <strong>measured</strong> (avg 469 per decision,
     about 395 in / 73 out); prices are cited list prices. Volume assumption: 52 agents x 200 decisions/day is
     about 312,000 decisions/month.</p>
     <table>
@@ -236,7 +237,7 @@
 
     <h2 id="recommendation">8. Final recommendation</h2>
     <p><strong>Test it, a controlled internal pilot.</strong> The pattern is production-shaped and safe by
-    construction, but exact-match accuracy (80% on a 4B) should be raised before wide rollout.</p>
+    construction, but exact-match accuracy (72–80% on a 4B) should be raised before wide rollout.</p>
     <ol>
       <li><strong>Pilot</strong> Budget Sentinel on one OpenClaw branch with self-hosted Qwen3.6-35B-A3B, capped budget,
       humans clearing every hold for the first two weeks.</li>

@@ -35,7 +35,7 @@ Rules: be conservative — when unsure, lower confidence and add a risk flag. Ne
   spend agent: a made-up cost or vendor.
 - **"When unsure, lower confidence and add a risk flag."** Pushes uncertainty into signals the deterministic
   gate uses to route to a human (low confidence → ESCALATE), rather than into a confident wrong answer.
-- **Temperature 0.2.** Low, for consistent structured output.
+- **Temperature 0.2 with a fixed seed (42).** Low temperature for consistent structured output; the fixed seed makes `npm run eval` reproduce the committed run exactly.
 
 The user message per action is a plain, labelled field list (`buildUserMessage`) — id, title, category hint,
 amount hint, description — with no instructions, so the action data cannot smuggle in prompt injection that
@@ -63,3 +63,8 @@ One `classify()` interface, three backends (`agent/src/model.js`), selected by `
 `npm run eval` sends the 25 labeled cases in `agent/eval/cases.json` through the live model, compares the
 resulting governed verdict to ground truth, and writes `agent/eval/results.json` (accuracy, the false
 auto-approve safety rate, latency, tokens). The numbers in `report/REPORT.md` come straight from that file.
+
+The eval is **pinned** (temperature 0.2, seed 42), so it reproduces the committed **18/25 (72%)** run exactly.
+Across 5 **unpinned** runs the exact-verdict match ranged **19–20/25 (76–80%)**, while the safety metric —
+**unsafe auto-approvals** (any BLOCK/HOLD/ESCALATE item that got AUTO_APPROVE) — stayed **0/25 on every run**.
+On a 25-case synthetic set, read the exact-match as directional; the load-bearing, invariant number is the 0.

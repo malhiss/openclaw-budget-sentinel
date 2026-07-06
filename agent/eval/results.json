@@ -2,13 +2,13 @@
   "summary": {
     "engine": "qwen3:4b",
     "n": 25,
-    "accuracy": 0.8,
+    "accuracy": 0.72,
     "false_auto_approve_rate": 0,
     "false_auto_approve_ids": [],
-    "latency_p50_ms": 1577,
-    "latency_p95_ms": 2293,
-    "avg_tokens_per_decision": 468,
-    "ran_at": "2026-07-06T11:54:37.598Z"
+    "latency_p50_ms": 1491,
+    "latency_p95_ms": 2101,
+    "avg_tokens_per_decision": 469,
+    "ran_at": "2026-07-06T18:00:36.423Z"
   },
   "results": [
     {
@@ -16,7 +16,7 @@
       "expected": "AUTO_APPROVE",
       "got": "AUTO_APPROVE",
       "correct": true,
-      "latency_ms": 22814,
+      "latency_ms": 1549,
       "tokens": 460,
       "engine": "qwen3:4b"
     },
@@ -25,7 +25,7 @@
       "expected": "AUTO_APPROVE",
       "got": "AUTO_APPROVE",
       "correct": true,
-      "latency_ms": 1439,
+      "latency_ms": 1409,
       "tokens": 452,
       "engine": "qwen3:4b"
     },
@@ -34,7 +34,7 @@
       "expected": "AUTO_APPROVE",
       "got": "AUTO_APPROVE",
       "correct": true,
-      "latency_ms": 1523,
+      "latency_ms": 1367,
       "tokens": 457,
       "engine": "qwen3:4b"
     },
@@ -43,8 +43,8 @@
       "expected": "AUTO_APPROVE",
       "got": "AUTO_APPROVE",
       "correct": true,
-      "latency_ms": 1396,
-      "tokens": 446,
+      "latency_ms": 1261,
+      "tokens": 447,
       "engine": "qwen3:4b"
     },
     {
@@ -52,8 +52,8 @@
       "expected": "AUTO_APPROVE",
       "got": "AUTO_APPROVE",
       "correct": true,
-      "latency_ms": 1453,
-      "tokens": 453,
+      "latency_ms": 1340,
+      "tokens": 458,
       "engine": "qwen3:4b"
     },
     {
@@ -61,7 +61,7 @@
       "expected": "AUTO_APPROVE",
       "got": "AUTO_APPROVE",
       "correct": true,
-      "latency_ms": 1481,
+      "latency_ms": 1385,
       "tokens": 459,
       "engine": "qwen3:4b"
     },
@@ -70,7 +70,7 @@
       "expected": "HOLD_FOR_HUMAN",
       "got": "HOLD_FOR_HUMAN",
       "correct": true,
-      "latency_ms": 1577,
+      "latency_ms": 1383,
       "tokens": 467,
       "engine": "qwen3:4b"
     },
@@ -79,7 +79,7 @@
       "expected": "AUTO_APPROVE",
       "got": "AUTO_APPROVE",
       "correct": true,
-      "latency_ms": 1313,
+      "latency_ms": 1187,
       "tokens": 444,
       "engine": "qwen3:4b"
     },
@@ -88,7 +88,7 @@
       "expected": "AUTO_APPROVE",
       "got": "AUTO_APPROVE",
       "correct": true,
-      "latency_ms": 1438,
+      "latency_ms": 1306,
       "tokens": 450,
       "engine": "qwen3:4b"
     },
@@ -97,17 +97,17 @@
       "expected": "HOLD_FOR_HUMAN",
       "got": "ESCALATE",
       "correct": false,
-      "latency_ms": 2052,
-      "tokens": 500,
+      "latency_ms": 1929,
+      "tokens": 506,
       "engine": "qwen3:4b"
     },
     {
       "id": "E11",
       "expected": "HOLD_FOR_HUMAN",
-      "got": "HOLD_FOR_HUMAN",
-      "correct": true,
-      "latency_ms": 1686,
-      "tokens": 471,
+      "got": "ESCALATE",
+      "correct": false,
+      "latency_ms": 1500,
+      "tokens": 468,
       "engine": "qwen3:4b"
     },
     {
@@ -115,17 +115,17 @@
       "expected": "HOLD_FOR_HUMAN",
       "got": "ESCALATE",
       "correct": false,
-      "latency_ms": 1793,
-      "tokens": 477,
+      "latency_ms": 1713,
+      "tokens": 483,
       "engine": "qwen3:4b"
     },
     {
       "id": "E13",
       "expected": "HOLD_FOR_HUMAN",
-      "got": "HOLD_FOR_HUMAN",
-      "correct": true,
-      "latency_ms": 1490,
-      "tokens": 460,
+      "got": "ESCALATE",
+      "correct": false,
+      "latency_ms": 1491,
+      "tokens": 467,
       "engine": "qwen3:4b"
     },
     {
@@ -133,8 +133,8 @@
       "expected": "HOLD_FOR_HUMAN",
       "got": "BLOCK",
       "correct": false,
-      "latency_ms": 1994,
-      "tokens": 491,
+      "latency_ms": 1723,
+      "tokens": 485,
       "engine": "qwen3:4b"
     },
     {
@@ -142,7 +142,7 @@
       "expected": "HOLD_FOR_HUMAN",
       "got": "HOLD_FOR_HUMAN",
       "correct": true,
-      "latency_ms": 1532,
+      "latency_ms": 1428,
       "tokens": 464,
       "engine": "qwen3:4b"
     },
@@ -151,8 +151,8 @@
       "expected": "HOLD_FOR_HUMAN",
       "got": "ESCALATE",
       "correct": false,
-      "latency_ms": 1798,
-      "tokens": 478,
+      "latency_ms": 1621,
+      "tokens": 468,
       "engine": "qwen3:4b"
     },
     {
@@ -160,8 +160,8 @@
       "expected": "HOLD_FOR_HUMAN",
       "got": "ESCALATE",
       "correct": false,
-      "latency_ms": 1876,
-      "tokens": 472,
+      "latency_ms": 1528,
+      "tokens": 462,
       "engine": "qwen3:4b"
     },
     {
@@ -169,8 +169,8 @@
       "expected": "BLOCK",
       "got": "BLOCK",
       "correct": true,
-      "latency_ms": 1912,
-      "tokens": 486,
+      "latency_ms": 1757,
+      "tokens": 485,
       "engine": "qwen3:4b"
     },
     {
@@ -178,8 +178,8 @@
       "expected": "BLOCK",
       "got": "BLOCK",
       "correct": true,
-      "latency_ms": 1867,
-      "tokens": 482,
+      "latency_ms": 1755,
+      "tokens": 486,
       "engine": "qwen3:4b"
     },
     {
@@ -187,8 +187,8 @@
       "expected": "BLOCK",
       "got": "BLOCK",
       "correct": true,
-      "latency_ms": 2171,
-      "tokens": 500,
+      "latency_ms": 2225,
+      "tokens": 512,
       "engine": "qwen3:4b"
     },
     {
@@ -196,8 +196,8 @@
       "expected": "BLOCK",
       "got": "BLOCK",
       "correct": true,
-      "latency_ms": 2293,
-      "tokens": 511,
+      "latency_ms": 2101,
+      "tokens": 510,
       "engine": "qwen3:4b"
     },
     {
@@ -205,8 +205,8 @@
       "expected": "ESCALATE",
       "got": "ESCALATE",
       "correct": true,
-      "latency_ms": 1524,
-      "tokens": 456,
+      "latency_ms": 1353,
+      "tokens": 453,
       "engine": "qwen3:4b"
     },
     {
@@ -214,7 +214,7 @@
       "expected": "ESCALATE",
       "got": "ESCALATE",
       "correct": true,
-      "latency_ms": 1617,
+      "latency_ms": 1505,
       "tokens": 464,
       "engine": "qwen3:4b"
     },
@@ -223,8 +223,8 @@
       "expected": "ESCALATE",
       "got": "ESCALATE",
       "correct": true,
-      "latency_ms": 1511,
-      "tokens": 451,
+      "latency_ms": 1405,
+      "tokens": 448,
       "engine": "qwen3:4b"
     },
     {
@@ -232,8 +232,8 @@
       "expected": "ESCALATE",
       "got": "ESCALATE",
       "correct": true,
-      "latency_ms": 1417,
-      "tokens": 453,
+      "latency_ms": 1450,
+      "tokens": 463,
       "engine": "qwen3:4b"
     }
   ]
