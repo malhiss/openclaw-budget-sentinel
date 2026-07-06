@@ -92,7 +92,7 @@ agent/          the governed agent (Node, one dep: zod)
   data/         actions.json (synthetic) · policy.json · ledger.demo.jsonl (verified evidence)
   eval/         cases.json (25 labeled) · run.mjs · results.json (committed evidence)
   test/         schema · governance · ledger  (node --test)
-landing/        two design directions (a: dark instrument, b: light institutional)
+landing/        the standalone landing-page concept (b) the brief asked for
 report/         REPORT.md (the memo) · tco.md · scorecard.md
 assets/         architecture diagram
 docs/           design spec + implementation plan

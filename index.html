@@ -8,7 +8,7 @@
   <meta property="og:title" content="OpenClaw Budget Sentinel, a working governance demonstration" />
   <meta property="og:description" content="An open model advises, rules decide, humans approve the exceptions. Measured live on a self-hosted model: 0% unsafe auto-approvals." />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231a2b3b'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%2331f2bf'/%3E%3C/svg%3E" />
-  <script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('ocbs-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));}catch(e){}</script>
+  <script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('ocbs-theme')||'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}</script>
   <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -50,8 +50,7 @@
     [data-theme="dark"] h1 .u::after{opacity:.8}
     [data-theme="dark"] a[style*="#2b6cb0"]{color:var(--blu) !important}
     *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth;scroll-padding-top:78px;scroll-snap-type:y proximity}
-    section,header.hero{scroll-snap-align:start}
+    html{scroll-behavior:smooth;scroll-padding-top:78px}
     body{background:var(--fog);color:var(--navy);font-family:var(--sans);font-weight:400;line-height:1.5;-webkit-font-smoothing:antialiased;letter-spacing:-0.011em}
     .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
     a{color:inherit;text-decoration:none}
@@ -260,6 +259,27 @@
     .sumrow .a{font-size:15px;color:var(--slate);line-height:1.55}
     .sumrow .a a{color:#2b6cb0;font-weight:500}
     .sumrow .a b{color:var(--navy)}
+    /* lean report */
+    .rl{margin-top:10px}
+    .rl .row{display:grid;grid-template-columns:180px 1fr;gap:18px;padding:13px 0;border-bottom:1px solid var(--mist)}
+    .rl .row .k{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.02em;color:var(--graphite);padding-top:2px}
+    .rl .row .v{font-size:15.5px;color:var(--slate);line-height:1.5}
+    .rl .row .v b{color:var(--navy)}
+    .rsub{font-size:17px;font-weight:600;margin:32px 0 6px}
+    .risks{display:grid;grid-template-columns:1fr 1fr;gap:11px 26px;margin-top:8px}
+    .risks .r{font-size:14.5px;color:var(--slate);line-height:1.5;padding-left:15px;position:relative}
+    .risks .r::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:99px;background:var(--mint)}
+    .risks .r b{color:var(--navy)}
+    .ctab{width:100%;border-collapse:collapse;margin:10px 0;font-size:14px}
+    .ctab th,.ctab td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--mist);color:var(--slate)}
+    .ctab th{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;color:var(--graphite);letter-spacing:.03em;font-weight:500}
+    .ctab td strong{color:var(--navy)}
+    .vbox{background:var(--navy);color:var(--fog);border-radius:12px;padding:22px 24px;margin:26px 0 0}
+    [data-theme="dark"] .vbox{background:#131d29;border:1px solid var(--silver);color:var(--navy)}
+    .vbox .vl{font-family:var(--mono);font-size:11px;color:var(--voltage);text-transform:uppercase;letter-spacing:.04em}
+    .vbox .vt{font-size:21px;font-weight:600;margin-top:6px;letter-spacing:-0.02em}
+    .vbox ul{margin:12px 0 0 18px;font-size:14.5px;line-height:1.5}.vbox li{margin:4px 0}
+    @media(max-width:640px){.rl .row{grid-template-columns:1fr;gap:4px}.risks{grid-template-columns:1fr}}
 
     footer{border-top:1px solid var(--mist);padding:40px 0 56px;background:var(--white);color:var(--graphite);font-size:14px}
     .foot-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:40px}
@@ -304,7 +324,7 @@
     <div class="brand"><span class="mk"></span> OpenClaw <span style="color:var(--graphite);font-weight:500">Budget Sentinel</span></div>
     <div class="navlinks">
       <a href="#replay">The run</a><a href="#dashboard">All decisions</a><a href="#benchmark">Results</a>
-      <a href="#how">How it works</a><a href="#summary">Summary</a><a href="report.html">Full report</a>
+      <a href="#how">How it works</a><a href="#report">Report</a>
     </div>
     <div class="navright">
       <button class="tbtn" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode" onclick="toggleTheme()"><span class="ti-moon" aria-hidden="true">☾</span><span class="ti-sun" aria-hidden="true">☀</span></button>
@@ -325,7 +345,7 @@
     </div>
     <div class="cta-row rev" style="transition-delay:.32s">
       <a class="btn" href="#replay">Watch the recorded run</a>
-      <a class="btn ghost" href="report.html">Read the full report</a>
+      <a class="btn ghost" href="#report">Read the report</a>
     </div>
   </header>
 
@@ -450,22 +470,52 @@
     </div>
   </div></section>
 
-  <!-- SUBMISSION SUMMARY -->
-  <section id="summary" class="band-white"><div class="wrap">
+  <!-- THE REPORT (lean, in-page) -->
+  <section id="report" class="band-white"><div class="wrap">
     <div class="rev">
-      <p class="kicker">Submission summary</p>
-      <h2>The short answers, with full detail one click away.</h2>
+      <p class="kicker">The report</p>
+      <h2>The whole assessment, in brief.</h2>
     </div>
-    <div class="sum rev" style="transition-delay:.08s">
-      <div class="sumrow"><div class="q">Selected model / tool</div><div class="a"><b>Kimi K2.6</b> (open-weight, evaluated from published benchmarks and pricing) and <b>Qwen</b> (open-weight, self-hosted; Qwen3-4B runs everything on this page). <a href="report.html#model">Why both</a></div></div>
-      <div class="sumrow"><div class="q">What it does, in simple words</div><div class="a">Open-weight models are AI models you can run on your own computers instead of a paid cloud API, which keeps client data in-house and makes costs predictable. <a href="report.html#explain">Plain-words explanation</a></div></div>
-      <div class="sumrow"><div class="q">The practical project</div><div class="a">This page: a working budget/PO gate for an AI-agent swarm, with a <a href="#replay">replayable live run</a>, a <a href="#dashboard">decision board and audit ledger</a>, and a <a href="#benchmark">measured benchmark</a>.</div></div>
-      <div class="sumrow"><div class="q">Landing page concept</div><div class="a">Included, with headline, subheadline, problem, solution, three benefits, use case, call to action, and a wireframe. <a href="landing/b/">View the landing page</a>. (This whole page also has a light/dark toggle, top right.)</div></div>
-      <div class="sumrow"><div class="q">Use case for Elchai Group</div><div class="a">Governed spend control for OpenClaw's 52-agent swarm: routine spend auto-clears, exceptions go to a human, everything is auditable for regulated clients. <a href="report.html#usecase">Detail</a></div></div>
-      <div class="sumrow"><div class="q">Departments that benefit</div><div class="a">Finance, Engineering, IT/Infrastructure, Product, Strategy, and Operations. <a href="report.html#departments">How each benefits</a></div></div>
-      <div class="sumrow"><div class="q">Risks &amp; limitations</div><div class="a">Privacy, security, model accuracy, local hardware cost, integration difficulty, hallucination, reliability, and licensing, each with a built or recommended mitigation. <a href="report.html#risks">Full risk table</a></div></div>
-      <div class="sumrow"><div class="q">Final recommendation</div><div class="a"><b>Test it.</b> A controlled internal pilot on one branch with a capped budget, expanded only after the ledger proves the safety and cost case. <a href="report.html#recommendation">The pilot plan</a></div></div>
-      <div class="sumrow"><div class="q">Prompts &amp; tools used</div><div class="a">The exact system prompt, model settings, and toolchain. <a href="report.html#prompts">Prompts and tools</a></div></div>
+    <div class="rl rev" style="transition-delay:.06s">
+      <div class="row"><div class="k">Selected model</div><div class="v"><b>Kimi K2.6</b> (open-weight, the cloud capability ceiling: evaluated from published benchmarks and pricing) and <b>Qwen</b> (open-weight, self-hosted: Qwen3-4B ran every number on this page). Kimi is a paid API and its 1T weights are heavy to host, so I ran the free, self-hostable Qwen and cite Kimi.</div></div>
+      <div class="row"><div class="k">In plain words</div><div class="v">Open-weight models are AI models you can run on your <b>own hardware</b> instead of a paid cloud API. That keeps client spend data in-house and makes cost predictable, which is exactly what OpenClaw's governed swarm needs for regulated clients.</div></div>
+      <div class="row"><div class="k">Use case</div><div class="v">Govern the spend of OpenClaw's 52-agent swarm: routine top-ups auto-clear, over-cap or suspicious items go to a human, fraud is blocked, and every decision is written to an audit ledger. The 80/20 model, made enforceable.</div></div>
+      <div class="row"><div class="k">Departments</div><div class="v"><b>Finance</b> (hard caps + audit trail) · <b>Engineering</b> (a reusable governed-agent pattern) · <b>IT/Infra</b> (self-hosted, no data egress) · <b>Product</b> (a shippable OpenClaw module for pitches) · <b>Strategy</b> (no vendor lock-in, data-residency ready) · <b>Operations</b> (people touch only the ~20% of exceptions).</div></div>
+    </div>
+
+    <div class="rev" style="transition-delay:.1s">
+      <p class="rsub">Risks &amp; limitations</p>
+      <div class="risks">
+        <div class="r"><b>Privacy:</b> self-hosted, so spend data never leaves the box.</div>
+        <div class="r"><b>Model accuracy:</b> 80% on a small 4B; every error was safe-direction (to a human, never auto-approved). A bigger model raises it.</div>
+        <div class="r"><b>Prompt injection:</b> field text is treated as untrusted data and flagged to a human; in production the amount comes from the authoritative PO record, not the model.</div>
+        <div class="r"><b>Hallucination:</b> the prompt forbids inventing figures; a fabricated high cost still hits a cap and routes to a human.</div>
+        <div class="r"><b>Hardware / integration:</b> size the model to the tier; a clean <code class="inline">classify()</code> boundary swaps mock, local, or cloud by one env var.</div>
+        <div class="r"><b>Reliability:</b> fail-closed by design: any model or parse error routes to a human, never to an approval.</div>
+      </div>
+
+      <p class="rsub">Cost, per month, for the 52-agent swarm</p>
+      <table class="ctab">
+        <tr><th>Option</th><th>Monthly</th><th>Scales?</th><th>Data leaves?</th></tr>
+        <tr><td><strong>Kimi K2.6 cloud</strong></td><td>~$170</td><td>yes</td><td>yes</td></tr>
+        <tr><td><strong>Qwen self-hosted</strong></td><td>~$200 flat</td><td>no (flat)</td><td><strong>no</strong></td></tr>
+        <tr><td>Mid-tier closed ($3/$15)</td><td>~$710</td><td>yes</td><td>yes</td></tr>
+        <tr><td>Frontier closed ($5/$25)</td><td>~$1,190</td><td>yes</td><td>yes</td></tr>
+      </table>
+      <p style="font-size:14px;color:var(--graphite);margin-top:2px">Open-weight is ~4× cheaper than mid-tier and ~7× than frontier, and only self-host keeps data on-prem. (Illustrative volume: 52 agents × 200 decisions/day; measured 468 tokens/decision.)</p>
+
+      <div class="vbox">
+        <div class="vl">Final recommendation</div>
+        <div class="vt">Test it — a controlled internal pilot.</div>
+        <ul>
+          <li>Pilot one OpenClaw branch on self-hosted <b>Qwen3.6-35B-A3B</b>, capped budget, humans clearing every hold for two weeks.</li>
+          <li>Set ship criteria: unsafe rate stays <b>0</b>, exact-match above 90% on a larger, adversarial set.</li>
+          <li>Operationalise the 20%: an approval SLA and a monthly ledger-verification check.</li>
+          <li>Expand branch by branch, only after the ledger proves the safety and cost case.</li>
+        </ul>
+      </div>
+
+      <p style="font-size:13.5px;color:var(--graphite);margin-top:22px">Prompts, the full 8-row risk table, the cost math, and method notes are in the <a href="report.html" style="color:#2b6cb0;font-weight:500">detailed report</a> and the <a href="https://github.com/malhiss/openclaw-budget-sentinel" style="color:#2b6cb0;font-weight:500">code repository</a>. The standalone <a href="landing/b/" style="color:#2b6cb0;font-weight:500">landing-page concept</a> (headline, problem, solution, three benefits, CTA, wireframe) is the marketing-page artifact the brief asked for.</p>
     </div>
   </div></section>
 
@@ -493,7 +543,7 @@
     </div>
     <div>
       <p class="kicker" style="margin-bottom:12px">On this page</p>
-      <p style="line-height:2"><a href="#replay" style="color:var(--slate)">The recorded run</a><br /><a href="#dashboard" style="color:var(--slate)">All twelve decisions</a><br /><a href="#benchmark" style="color:var(--slate)">Measured results</a><br /><a href="#summary" style="color:var(--slate)">Submission summary</a><br /><a href="report.html" style="color:var(--slate)">Full report</a><br /><a href="landing/b/" style="color:var(--slate)">Landing page concept</a><br /><a href="https://github.com/malhiss/openclaw-budget-sentinel" style="color:var(--slate)">Code repository</a></p>
+      <p style="line-height:2"><a href="#replay" style="color:var(--slate)">The recorded run</a><br /><a href="#dashboard" style="color:var(--slate)">All twelve decisions</a><br /><a href="#benchmark" style="color:var(--slate)">Measured results</a><br /><a href="#report" style="color:var(--slate)">The report</a><br /><a href="landing/b/" style="color:var(--slate)">Landing-page concept</a><br /><a href="report.html" style="color:var(--slate)">Detailed report</a><br /><a href="https://github.com/malhiss/openclaw-budget-sentinel" style="color:var(--slate)">Code repository</a></p>
     </div>
   </div></footer>
 
