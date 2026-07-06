@@ -275,6 +275,10 @@
     .rl .row .k{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.02em;color:var(--graphite);padding-top:2px}
     .rl .row .v{font-size:15.5px;color:var(--slate);line-height:1.5}
     .rl .row .v b{color:var(--navy)}
+    .rl .row .v ul{list-style:none;margin:2px 0 0;padding:0}
+    .rl .row .v li{position:relative;padding-left:15px;margin:5px 0;line-height:1.45}
+    .rl .row .v li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:99px;background:var(--mint)}
+    .rl .row .v .note{font-size:14px;color:var(--graphite);margin-top:7px}
     .rsub{font-size:17px;font-weight:600;margin:32px 0 6px}
     .risks{display:grid;grid-template-columns:1fr 1fr;gap:11px 26px;margin-top:8px}
     .risks .r{font-size:14.5px;color:var(--slate);line-height:1.5;padding-left:15px;position:relative}
@@ -487,9 +491,29 @@
       <h2>The whole assessment, in brief.</h2>
     </div>
     <div class="rl rev" style="transition-delay:.06s">
-      <div class="row"><div class="k">Selected model</div><div class="v"><b>Kimi K2.6</b> (open-weight, the cloud capability ceiling: evaluated from published benchmarks and pricing) and <b>Qwen</b> (open-weight, self-hosted: Qwen3-4B ran every number on this page). Kimi is a paid API and its 1T weights are heavy to host, so I ran the free, self-hostable Qwen and cite Kimi.</div></div>
-      <div class="row"><div class="k">In plain words</div><div class="v">Open-weight models are AI models you can run on your <b>own hardware</b> instead of a paid cloud API. That keeps client spend data in-house and makes cost predictable, which is exactly what OpenClaw's governed swarm needs for regulated clients.</div></div>
-      <div class="row"><div class="k">Use case</div><div class="v">Govern the spend of OpenClaw's 52-agent swarm: routine top-ups auto-clear, over-cap or suspicious items go to a human, fraud is blocked, and every decision is written to an audit ledger. The 80/20 model, made enforceable.</div></div>
+      <div class="row"><div class="k">Selected model</div><div class="v">
+        <ul>
+          <li><b>Kimi K2.6</b> — open-weight, the cloud capability ceiling (evaluated from published benchmarks and pricing).</li>
+          <li><b>Qwen</b> — open-weight, self-hosted; Qwen3-4B ran every number on this page.</li>
+        </ul>
+        <div class="note">Kimi is a paid API with heavy 1T weights, so I ran the free, self-hostable Qwen and cite Kimi.</div>
+      </div></div>
+      <div class="row"><div class="k">In plain words</div><div class="v">
+        <ul>
+          <li>Open-weight models run on your <b>own hardware</b> instead of a paid cloud API.</li>
+          <li>That keeps client spend data in-house and makes cost predictable, exactly what OpenClaw's governed swarm needs for regulated clients.</li>
+        </ul>
+      </div></div>
+      <div class="row"><div class="k">Use case</div><div class="v">
+        Govern the spend of OpenClaw's 52-agent swarm:
+        <ul>
+          <li>routine top-ups <b>auto-clear</b>;</li>
+          <li>over-cap or suspicious items <b>go to a human</b>;</li>
+          <li>fraud is <b>blocked</b>;</li>
+          <li>every decision is written to an <b>audit ledger</b>.</li>
+        </ul>
+        <div class="note">The 80/20 model, made enforceable.</div>
+      </div></div>
     </div>
 
     <div class="rev" style="transition-delay:.1s">
