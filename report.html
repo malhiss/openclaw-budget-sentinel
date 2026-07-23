@@ -180,6 +180,7 @@
     <ul style="font-size:14.5px">
       <li>The 25 benchmark cases are <strong>synthetic and non-adversarial</strong>; ground-truth verdicts are my own reading of the policy rules (external adjudication recommended before production).</li>
       <li>The safety metric uses the strict definition: <strong>any</strong> item that should not have auto-approved (BLOCK, HOLD, or ESCALATE) but did. It was 0/25 on every run.</li>
+      <li>That 0/25 covers the <strong>stateless risk classes</strong> the eval can express (per-request category, cost, flags, confidence); <strong>cross-request velocity/duplicate risk is out of the eval's scope and currently delegated to the model</strong> — the one duplicate-style case (E14) is caught only because its description narrates the duplication, not by a deterministic rule (<code class="inline">decide()</code> is stateless; a ledger-derived deterministic check is the named fix, not built here).</li>
       <li>The site's interactive replay uses a <strong>separate 12-action illustrative run</strong>, not the 25-case benchmark.</li>
       <li>The ledger detects any modification or reordering of recorded entries; detecting deletion of the newest entries also needs the latest hash <strong>anchored externally</strong> (a standard extension, not built here).</li>
       <li>The eval is pinned (temperature 0.2, fixed seed), so <code class="inline">npm run eval</code> reproduces the committed 18/25 run exactly; across 5 unpinned runs exact-match ranged 19–20/25 (76–80%) while unsafe stayed 0.</li>

@@ -86,7 +86,11 @@ exact-match rate; it would not change the safety floor, which is already 0% by c
 *Method and honest limits:* the 25 benchmark cases are synthetic and non-adversarial, and the ground-truth
 verdicts are my own interpretation of the policy (external adjudication recommended for production). The safety
 metric uses the strict definition — **any** item that should not have auto-approved (BLOCK, HOLD, or ESCALATE)
-but did — and it was 0/25 on every run. The eval is pinned (temperature 0.2, fixed seed), so `npm run eval`
+but did — and it was 0/25 on every run. That 0/25 covers the **stateless risk classes** the eval can express
+(per-request category, cost, flags, confidence); **cross-request velocity/duplicate risk is out of the eval's
+scope and currently delegated to the model** — the one duplicate-style case (E14) is caught only because its
+description narrates the duplication, not by a deterministic rule (`decide()` is stateless; a ledger-derived
+deterministic check is the named fix, not built here). The eval is pinned (temperature 0.2, fixed seed), so `npm run eval`
 reproduces the committed 18/25 run exactly; across 5 unpinned runs exact-match ranged 19–20/25 (76–80%) while
 unsafe stayed 0. These are small counts on a 25-case set — read them as directional, not precise. The site's
 interactive replay uses a separate 12-action illustrative run, not the 25-case benchmark. The hash-chained

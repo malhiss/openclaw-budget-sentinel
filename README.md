@@ -40,7 +40,7 @@ node src/approve.js A5 reject  "phishing / lottery scam"
 Run the tests (deterministic core — schema, governance, ledger):
 
 ```bash
-npm test                    # node --test, 14 tests, zero test deps
+npm test                    # node --test, 22 tests, zero test deps
 ```
 
 ## Run it on the real open model (optional)
@@ -57,9 +57,10 @@ in the report are produced exactly this way. To point it at **Kimi (K2.6)** clou
 
 ## The landing page
 
-Two design directions for the product concept live in [`landing/`](landing/): `a/` (dark instrument) and
-`b/` (light institutional). Open either `index.html` in a browser, or see the deployed version linked in the
-submission email.
+The standalone landing-page concept the brief asked for lives in [`landing/b/`](landing/b/) (light
+institutional). The other design direction — dark instrument — became the design language of the main site
+itself (`index.html`), so it ships as the live submission page rather than a separate concept. Open
+`landing/b/index.html` in a browser, or see the deployed version linked in the submission email.
 
 ---
 
