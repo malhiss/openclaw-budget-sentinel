@@ -1,7 +1,40 @@
 import { createHash } from "node:crypto";
-import { appendFileSync, readFileSync, existsSync } from "node:fs";
+import { appendFileSync, readFileSync, existsSync, openSync, closeSync, writeSync, statSync, rmSync } from "node:fs";
 
 const GENESIS = "0".repeat(64);
+
+const LOCK_TIMEOUT_MS = () => Number(process.env.LEDGER_LOCK_TIMEOUT_MS || 5_000);
+const LOCK_STALE_MS = () => Number(process.env.LEDGER_LOCK_STALE_MS || 10_000);
+
+function sleepSync(ms) { Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms); }
+
+// Advisory lock: one writer at a time, so concurrent appends can never read the
+// same tail and fork the hash chain (append is read-then-write). O_EXCL create is
+// atomic on every platform; a lock older than LEDGER_LOCK_STALE_MS is treated as
+// a crashed writer and broken. Serializing the writer is also the prerequisite
+// for any ledger-derived velocity/idempotency check.
+function acquireLock(path) {
+  const lockPath = path + ".lock";
+  const deadline = Date.now() + LOCK_TIMEOUT_MS();
+  for (;;) {
+    try {
+      const fd = openSync(lockPath, "wx");
+      writeSync(fd, String(process.pid));
+      closeSync(fd);
+      return lockPath;
+    } catch (err) {
+      if (err.code !== "EEXIST") throw err;
+      try {
+        if (Date.now() - statSync(lockPath).mtimeMs > LOCK_STALE_MS()) {
+          rmSync(lockPath, { force: true });
+          continue;
+        }
+      } catch { /* lock vanished between check and stat — retry */ }
+      if (Date.now() >= deadline) throw new Error(`ledger lock timeout — another writer holds ${lockPath}`);
+      sleepSync(20);
+    }
+  }
+}
 
 export function canonical(obj) {
   if (obj === null || typeof obj !== "object") return JSON.stringify(obj);
@@ -20,15 +53,23 @@ export function readAll(path) {
 }
 
 export function append(path, payload) {
-  const entries = readAll(path);
-  const prev = entries.length ? entries[entries.length - 1] : null;
-  const prev_hash = prev ? prev.hash : GENESIS;
-  const seq = entries.length;
-  const ts = new Date().toISOString();
-  const hash = hashEntry(prev_hash, { seq, ts, payload });
-  const entry = { seq, ts, payload, prev_hash, hash };
-  appendFileSync(path, JSON.stringify(entry) + "\n");
-  return entry;
+  const lock = acquireLock(path);
+  try {
+    const entries = readAll(path);
+    const prev = entries.length ? entries[entries.length - 1] : null;
+    const prev_hash = prev ? prev.hash : GENESIS;
+    const seq = entries.length;
+    const ts = new Date().toISOString();
+    const hash = hashEntry(prev_hash, { seq, ts, payload });
+    const entry = { seq, ts, payload, prev_hash, hash };
+    appendFileSync(path, JSON.stringify(entry) + "\n");
+    // append-and-check: fail loudly if a non-cooperating writer raced us anyway
+    if (readAll(path)[seq]?.hash !== hash)
+      throw new Error("ledger append raced by an unserialized writer — chain integrity not guaranteed");
+    return entry;
+  } finally {
+    rmSync(lock, { force: true });
+  }
 }
 
 // Detects any modification or reordering of recorded entries. It does NOT detect

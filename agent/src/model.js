@@ -1,8 +1,10 @@
 import { SYSTEM, buildUserMessage } from "./prompt.js";
 import { toAdvisoryOrFallback, FAILCLOSED_ADVISORY } from "./schema.js";
 
-const OLLAMA_URL = process.env.OLLAMA_URL || "http://127.0.0.1:11434";
 const OLLAMA_MODEL = process.env.OLLAMA_MODEL || "qwen3:4b";
+
+// A hung model server must fail CLOSED to human review, never hang the gate.
+const MODEL_TIMEOUT_MS = () => Number(process.env.MODEL_TIMEOUT_MS || 60_000);
 
 function extractJson(text) {
   // tolerate models that wrap JSON in prose / code fences / <think> blocks
@@ -21,8 +23,10 @@ async function callLocal(action) {
     think: false,
     options: { temperature: 0.2, seed: 42 } // fixed seed → reproducible eval at the sampling temperature
   };
-  const res = await fetch(`${OLLAMA_URL}/api/chat`, {
-    method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body)
+  const base = process.env.OLLAMA_URL || "http://127.0.0.1:11434";
+  const res = await fetch(`${base}/api/chat`, {
+    method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body),
+    signal: AbortSignal.timeout(MODEL_TIMEOUT_MS())
   });
   if (!res.ok) throw new Error(`ollama ${res.status}`);
   const data = await res.json();
@@ -41,7 +45,8 @@ async function callCloud(action) {
       model: process.env.KIMI_MODEL || "kimi-k2",
       messages: [ { role: "system", content: SYSTEM }, { role: "user", content: buildUserMessage(action) } ],
       temperature: 0.2, response_format: { type: "json_object" }
-    })
+    }),
+    signal: AbortSignal.timeout(MODEL_TIMEOUT_MS())
   });
   if (!res.ok) throw new Error(`kimi ${res.status}`);
   const data = await res.json();
