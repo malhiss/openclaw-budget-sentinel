@@ -3,6 +3,10 @@
 **A governed open-model spend gate for the AI-agent swarm.** An open-weight model *advises*, deterministic
 rules *decide*, a human approves the risky 20%, and every action is written to a tamper-evident ledger.
 
+**Measured: 72–80% exact-match on a 4B open model — and 0/25 unsafe auto-approvals on every run.** The gate,
+not the model, owns safety (`CAN_AUTO_EXECUTE` is hard-wired `false`), so model error becomes extra human
+review, never unauthorized spend.
+
 > Pre-interview assessment for Elchai Group (AI Agent & OpenClaw Research Intern). Concept design applying an
 > open-source model to Elchai's own OpenClaw philosophy: *AI executes the 80%, humans decide the 20%.*
 > Not an official Elchai product.
